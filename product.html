@@ -10,10 +10,9 @@
 <body>
   <header class="site-header">
     <div class="container header-inner">
-      <a href="/" class="logo">
-        <img src="images/logo.jpg" alt="COJJ Gadgets Logo" style="height: 40px; width: auto;" />
-        
-      </a><span style="margin-left: 10px; font-weight: 800; font-size: 22px; letter-spacing: 0.8px; color: #fff;">COJJ</span>
+             <a href="/" class="logo">
+         <span style="font-weight: 800; font-size: 22px; letter-spacing: 0.8px; color: #fff;">COJJ<img src="images/logo.jpg" alt="COJJ Gadgets Logo" style="height: 16px; width: auto; margin-left: 2px; vertical-align: middle;" /></span>
+       </a>
       <nav class="nav">
         <a href="/">Home</a>
         <a href="cart.html">Cart (<span id=\"cartCount\">0</span>)</a>
@@ -30,8 +29,9 @@
   <footer class="site-footer">
     <div class="container footer-inner">
       <div>
-        <strong>COJJ Gadgets</strong>
-        <p>Admiralty Mall, Lekki Phase 1, Lagos</p>
+                 <strong>COJJ Gadgets</strong>
+         <p>Admiralty Mall, Lekki Phase 1, Lagos</p>
+         <p><a href="tel:+2347036140846" style="text-decoration: none; color: var(--accent-2);">📞 Call us</a> | <a href="https://wa.me/2347036140846" style="text-decoration: none; color: var(--accent-2);">✉️ Write us</a></p>
       </div>
       <div>
         <a href="cart.html" class="btn">View Cart</a>
@@ -57,14 +57,34 @@
         return;
       }
       document.title = p.name + ' — COJJ Gadgets Lagos';
-      document.getElementById('product').innerHTML = `
-        <div class="gallery">
-          <img src="${p.image}" alt="${p.name}" />
-          <div class="thumbs">
-            <img src="${p.images[0]}" alt="${p.name} view 2" />
-            <img src="${p.images[1]}" alt="${p.name} view 3" />
-          </div>
-        </div>
+             document.getElementById('product').innerHTML = `
+         <div class="gallery">
+           <div class="swipe-indicator">🔄 Swipe to see more images</div>
+           <div class="image-slider">
+             <button class="slider-arrow prev" onclick="prevSlide()">‹</button>
+             <button class="slider-arrow next" onclick="nextSlide()">›</button>
+             <div class="slide active">
+               <img src="${p.image}" alt="${p.name}" />
+             </div>
+             <div class="slide">
+               <img src="${p.images[0]}" alt="${p.name} view 2" />
+             </div>
+             <div class="slide">
+               <img src="${p.images[1]}" alt="${p.name} view 3" />
+             </div>
+           </div>
+           <div class="thumbnail-container">
+             <div class="thumbnail active" onclick="currentSlide(0)">
+               <img src="${p.image}" alt="${p.name} thumbnail" />
+             </div>
+             <div class="thumbnail" onclick="currentSlide(1)">
+               <img src="${p.images[0]}" alt="${p.name} thumbnail 2" />
+             </div>
+             <div class="thumbnail" onclick="currentSlide(2)">
+               <img src="${p.images[1]}" alt="${p.name} thumbnail 3" />
+             </div>
+           </div>
+         </div>
         <div class="details">
           <h1>${p.name}</h1>
           <div class="price">${formatNaira(p.price)}</div>
@@ -79,9 +99,93 @@
         alert('Added to cart');
       });
     }
-    const id = qs('id');
-    const product = getProductById(id);
-    renderProduct(product);
+         const id = qs('id');
+     const product = getProductById(id);
+     renderProduct(product);
+     
+     // Image slider functionality
+     let currentSlideIndex = 0;
+     const slides = document.querySelectorAll('.slide');
+     const dots = document.querySelectorAll('.dot');
+     
+     function showSlide(index) {
+       // Hide all slides
+       slides.forEach(slide => slide.classList.remove('active'));
+       
+       // Remove active class from all thumbnails
+       const thumbnails = document.querySelectorAll('.thumbnail');
+       thumbnails.forEach(thumb => thumb.classList.remove('active'));
+       
+       // Show current slide
+       if (slides[index]) {
+         slides[index].classList.add('active');
+         thumbnails[index].classList.add('active');
+         currentSlideIndex = index;
+       }
+     }
+     
+     function currentSlide(index) {
+       showSlide(index);
+     }
+     
+     function nextSlide() {
+       const nextIndex = (currentSlideIndex + 1) % slides.length;
+       showSlide(nextIndex);
+     }
+     
+     function prevSlide() {
+       const prevIndex = (currentSlideIndex - 1 + slides.length) % slides.length;
+       showSlide(prevIndex);
+     }
+     
+     // Touch/swipe functionality
+     let startX = 0;
+     let endX = 0;
+     
+     const slider = document.querySelector('.image-slider');
+     if (slider) {
+       slider.addEventListener('touchstart', (e) => {
+         startX = e.touches[0].clientX;
+       });
+       
+       slider.addEventListener('touchend', (e) => {
+         endX = e.changedTouches[0].clientX;
+         handleSwipe();
+       });
+       
+       slider.addEventListener('mousedown', (e) => {
+         startX = e.clientX;
+       });
+       
+       slider.addEventListener('mouseup', (e) => {
+         endX = e.clientX;
+         handleSwipe();
+       });
+     }
+     
+     function handleSwipe() {
+       const swipeThreshold = 50;
+       const diff = startX - endX;
+       
+       if (Math.abs(diff) > swipeThreshold) {
+         if (diff > 0) {
+           // Swipe left - next slide
+           nextSlide();
+         } else {
+           // Swipe right - previous slide
+           prevSlide();
+         }
+       }
+     }
+     
+     // Auto-hide swipe indicator after 3 seconds
+     setTimeout(() => {
+       const indicator = document.querySelector('.swipe-indicator');
+       if (indicator) {
+         indicator.style.opacity = '0';
+         indicator.style.transition = 'opacity 0.5s ease';
+       }
+     }, 3000);
   </script>
 </body>
 </html>

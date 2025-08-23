@@ -10,10 +10,9 @@
 <body>
   <header class="site-header">
     <div class="container header-inner">
-      <a href="/" class="logo">
-        <img src="images/logo.jpg" alt="COJJ Gadgets Logo" style="height: 40px; width: auto;" />
-        
-      </a><span style="margin-left: 10px; font-weight: 800; font-size: 22px; letter-spacing: 0.8px; color: #fff;">COJJ</span>
+             <a href="/" class="logo">
+         <span style="font-weight: 800; font-size: 22px; letter-spacing: 0.8px; color: #fff;">COJJ<img src="images/logo.jpg" alt="COJJ Gadgets Logo" style="height: 16px; width: auto; margin-left: 2px; vertical-align: middle;" /></span>
+       </a>
       <nav class="nav">
         <a href="/">Home</a>
         <a href="cart.html">Cart (<span id=\"cartCount\">0</span>)</a>
@@ -77,15 +76,15 @@
           </select>
         </div>
 
-        <div class="field">
-          <label>Transfer Details</label>
-          <div class="transfer-box">
-            <div><strong>Total:</strong> <span id="totalAmount">₦0</span></div>
-            <div>Bank Name: <strong>Monie Point</strong></div>
-            <div>Account Number: <strong id="acctNo">5026485782</strong> <button type="button" class="copy" onclick="copyAcct()">Copy</button></div>
-            <div>Account Name: <strong>COJJ Gadgets</strong></div>
-          </div>
-        </div>
+                 <div class="field">
+           <button type="button" id="showTransferBtn" class="btn" style="margin-bottom: 10px;">Show Transfer Details</button>
+           <div id="transferDetails" class="transfer-box" style="display: none;">
+             <div><strong>Total:</strong> <span id="totalAmount">₦0</span></div>
+             <div>Bank Name: <strong>Monie Point</strong></div>
+             <div>Account Number: <strong id="acctNo">5026485782</strong> <button type="button" class="copy" onclick="copyAcct()">Copy</button></div>
+             <div>Account Name: <strong>COJJ Gadgets</strong></div>
+           </div>
+         </div>
 
         <div class="field">
           <label for="receipt">Attach Transfer Receipt (image)</label>
@@ -100,9 +99,9 @@
   <footer class="site-footer">
     <div class="container footer-inner">
       <div>
-        <strong>COJJ Gadgets</strong>
-        <p>Admiralty Mall, Lekki Phase 1, Lagos</p>
-        <p>Phone: <a href="tel:+2347036140846">+234 703 614 0846</a></p>
+                 <strong>COJJ Gadgets</strong>
+         <p>Admiralty Mall, Lekki Phase 1, Lagos</p>
+         <p><a href="tel:+2347036140846" style="text-decoration: none; color: var(--accent-2);">📞 Call us</a> | <a href="https://wa.me/2347036140846" style="text-decoration: none; color: var(--accent-2);">✉️ Write us</a></p>
       </div>
       <div>
         <a href="/" class="btn">Back to Home</a>
@@ -119,11 +118,23 @@
 
   <script src="assets/js/data.js"></script>
   <script>
-    function copyAcct(){
-      const el = document.getElementById('acctNo');
-      navigator.clipboard.writeText(el.textContent);
-      alert('Account number copied');
-    }
+         function copyAcct(){
+       const el = document.getElementById('acctNo');
+       navigator.clipboard.writeText(el.textContent);
+       alert('Account number copied');
+     }
+     
+     function toggleTransferDetails(){
+       const details = document.getElementById('transferDetails');
+       const btn = document.getElementById('showTransferBtn');
+       if(details.style.display === 'none'){
+         details.style.display = 'block';
+         btn.textContent = 'Hide Transfer Details';
+       } else {
+         details.style.display = 'none';
+         btn.textContent = 'Show Transfer Details';
+       }
+     }
     function total(){
       return getCart().reduce((sum, it)=>{
         const p = getProductById(it.id) || { price: it.price };
@@ -133,7 +144,10 @@
     if(!getProducts().length){
       document.querySelector('.form').insertAdjacentHTML('afterbegin','<div class="transfer-box">No products loaded. Please return to <a href="/">Home</a> first.</div>');
     }
-    document.getElementById('totalAmount').textContent = formatNaira(total());
+         document.getElementById('totalAmount').textContent = formatNaira(total());
+     
+     // Add event listener to the show transfer details button
+     document.getElementById('showTransferBtn').addEventListener('click', toggleTransferDetails);
 
     document.getElementById('checkoutForm').addEventListener('submit', async (e)=>{
       e.preventDefault();
