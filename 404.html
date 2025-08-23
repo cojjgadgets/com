@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found — COJJ Gadgets</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <style>
+    .error-page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+    }
+    .error-content {
+      max-width: 500px;
+    }
+    .error-code {
+      font-size: 120px;
+      font-weight: 900;
+      color: var(--accent);
+      margin: 0;
+      line-height: 1;
+    }
+    .error-message {
+      font-size: 24px;
+      color: #fff;
+      margin: 20px 0;
+    }
+    .error-description {
+      color: var(--muted);
+      margin-bottom: 30px;
+    }
+    .home-btn {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #001018;
+      padding: 15px 30px;
+      border-radius: 10px;
+      font-weight: 700;
+      text-decoration: none;
+      font-size: 16px;
+      transition: all 0.2s ease;
+    }
+    .home-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(26, 188, 156, 0.3);
+    }
+  </style>
+</head>
+<body>
+  <div class="error-page">
+    <div class="error-content">
+      <h1 class="error-code">404</h1>
+      <h2 class="error-message">Page Not Found</h2>
+      <p class="error-description">The page you're looking for doesn't exist. It might have been moved or deleted.</p>
+      <a href="./" class="home-btn">Go Back Home</a>
+    </div>
+  </div>
+  
+  <script>
+    // Auto-redirect after 5 seconds
+    setTimeout(() => {
+      window.location.href = './';
+    }, 5000);
+  </script>
+</body>
+</html>

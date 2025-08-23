@@ -10,11 +10,11 @@
 <body>
   <header class="site-header">
     <div class="container header-inner">
-             <a href="/" class="logo">
+             <a href="./" class="logo">
          <span style="font-weight: 800; font-size: 22px; letter-spacing: 0.8px; color: #fff;">COJJ<img src="images/logo.jpg" alt="COJJ Gadgets Logo" style="height: 16px; width: auto; margin-left: 2px; vertical-align: middle;" /></span>
        </a>
       <nav class="nav">
-        <a href="index.html">Home</a>
+        <a href="./">Home</a>
         <a href="cart.html">Cart (<span id=\"cartCount\">0</span>)</a>
       </nav>
     </div>
@@ -104,7 +104,7 @@
          <p><a href="tel:+2347036140846" style="text-decoration: none; color: var(--accent-2);">📞 Call us</a> | <a href="https://wa.me/2347036140846" style="text-decoration: none; color: var(--accent-2);">✉️ Write us</a></p>
       </div>
       <div>
-        <a href="/" class="btn">Back to Home</a>
+        <a href="./" class="btn">Back to Home</a>
       </div>
     </div>
   </footer>
@@ -142,7 +142,7 @@
       }, 0);
     }
     if(!getProducts().length){
-      document.querySelector('.form').insertAdjacentHTML('afterbegin','<div class="transfer-box">No products loaded. Please return to <a href="/">Home</a> first.</div>');
+      document.querySelector('.form').insertAdjacentHTML('afterbegin','<div class="transfer-box">No products loaded. Please return to <a href="./">Home</a> first.</div>');
     }
          document.getElementById('totalAmount').textContent = formatNaira(total());
      
