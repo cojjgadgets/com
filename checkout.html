@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout — COJJ Gadgets Lagos</title>
+  <meta name="description" content="Checkout at COJJ Gadgets. Enter your details and pay by direct bank transfer. Best gadgets in Lagos at Admiralty Mall, Lekki Phase 1." />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="logo">
+        <img src="images/logo.jpg" alt="COJJ Gadgets Logo" style="height: 40px; width: auto;" />
+        
+      </a><span style="margin-left: 10px; font-weight: 800; font-size: 22px; letter-spacing: 0.8px; color: #fff;">COJJ</span>
+      <nav class="nav">
+        <a href="/">Home</a>
+        <a href="cart.html">Cart (<span id=\"cartCount\">0</span>)</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="checkout">
+    <div class="container">
+      <h1>Checkout</h1>
+      <form id="checkoutForm" class="form" enctype="multipart/form-data">
+        <div class="inline">
+          <div class="field">
+            <label for="name">Full Name</label>
+            <input id="name" name="name" type="text" required />
+          </div>
+          <div class="field">
+            <label for="phone">Phone Number</label>
+            <input id="phone" name="phone" type="tel" required />
+          </div>
+        </div>
+        <div class="field">
+          <label for="address">Address</label>
+          <textarea id="address" name="address" rows="3" placeholder="House number, street, city"></textarea>
+        </div>
+        <div class="inline">
+          <div class="field">
+            <label for="fulfillment">Pickup or Delivery</label>
+            <select id="fulfillment" name="fulfillment">
+              <option value="Pickup at Admiralty Mall, Lekki Phase 1">In-store Pickup (Admiralty Mall, Lekki Phase 1)</option>
+              <option value="Delivery">Delivery</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="payment">Payment Method</label>
+            <select id="payment" name="payment">
+              <option value="Direct Bank Transfer">Direct Bank Transfer</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="color">Preferred Color (if applicable)</label>
+          <select id="color" name="color">
+            <option value="">Select color preference</option>
+            <option value="Black">Black</option>
+            <option value="White">White</option>
+            <option value="Gold">Gold</option>
+            <option value="Silver">Silver</option>
+            <option value="Blue">Blue</option>
+            <option value="Green">Green</option>
+            <option value="Purple">Purple</option>
+            <option value="Pink">Pink</option>
+            <option value="Red">Red</option>
+            <option value="Orange">Orange</option>
+            <option value="Yellow">Yellow</option>
+            <option value="Gray">Gray</option>
+            <option value="Brown">Brown</option>
+            <option value="Transparent">Transparent</option>
+            <option value="Any available">Any available</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Transfer Details</label>
+          <div class="transfer-box">
+            <div><strong>Total:</strong> <span id="totalAmount">₦0</span></div>
+            <div>Bank Name: <strong>Monie Point</strong></div>
+            <div>Account Number: <strong id="acctNo">5026485782</strong> <button type="button" class="copy" onclick="copyAcct()">Copy</button></div>
+            <div>Account Name: <strong>COJJ Gadgets</strong></div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="receipt">Attach Transfer Receipt (image)</label>
+          <input id="receipt" name="receipt" type="file" accept="image/*" />
+        </div>
+
+        <button class="btn" type="submit">Send Order</button>
+      </form>
+    </div>
+  </main>
+
+  <script src="assets/js/data.js"></script>
+  <script>
+    function copyAcct(){
+      const el = document.getElementById('acctNo');
+      navigator.clipboard.writeText(el.textContent);
+      alert('Account number copied');
+    }
+    function total(){
+      return getCart().reduce((sum, it)=>{
+        const p = getProductById(it.id) || { price: it.price };
+        return sum + ((p.price||0) * it.qty);
+      }, 0);
+    }
+    if(!getProducts().length){
+      document.querySelector('.form').insertAdjacentHTML('afterbegin','<div class="transfer-box">No products loaded. Please return to <a href="/">Home</a> first.</div>');
+    }
+    document.getElementById('totalAmount').textContent = formatNaira(total());
+
+    document.getElementById('checkoutForm').addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const address = document.getElementById('address').value.trim();
+      const fulfillment = document.getElementById('fulfillment').value;
+      const payment = document.getElementById('payment').value;
+      const color = document.getElementById('color').value;
+      const cart = getCart().map(it=>{
+        const p = getProductById(it.id) || { name: it.name, price: it.price };
+        return `${p.name} x${it.qty} — ${formatNaira((p.price||0)*it.qty)}`;
+      }).join('%0A');
+      const totalStr = formatNaira(total());
+
+      // If an image is attached, we cannot upload it via WhatsApp link; instruct user to send after opening chat.
+      const hasReceipt = document.getElementById('receipt').files.length > 0;
+
+      const msg = `Hello COJJ Gadgets,%0A%0AOrder Details:%0A${cart}%0A%0ATotal: ${encodeURIComponent(totalStr)}%0A%0ACustomer:%0AName: ${encodeURIComponent(name)}%0APhone: ${encodeURIComponent(phone)}%0AAddress: ${encodeURIComponent(address||'-')}%0AFulfillment: ${encodeURIComponent(fulfillment)}%0APayment: ${encodeURIComponent(payment)}%0AColor Preference: ${encodeURIComponent(color||'Not specified')}%0A%0ABank Transfer Details:%0ABank: Monie Point%0AAccount: 5026485782%0AAccount Name: COJJ Gadgets%0A%0A${hasReceipt?encodeURIComponent('I will send the receipt image here.'):encodeURIComponent('No receipt attached.')}`;
+      const wa = `https://wa.me/2347036140846?text=${msg}`;
+      window.location.href = wa;
+    });
+  </script>
+</body>
+</html>
+
+

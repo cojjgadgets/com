@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cart — COJJ Gadgets Lagos</title>
+  <meta name="description" content="Your COJJ Gadgets shopping cart. Best gadgets in Lagos at Admiralty Mall, Lekki Phase 1." />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="logo">
+        <img src="images/logo.jpg" alt="COJJ Gadgets Logo" style="height: 40px; width: auto;" />
+        
+      </a><span style="margin-left: 10px; font-weight: 800; font-size: 22px; letter-spacing: 0.8px; color: #fff;">COJJ</span>
+      <nav class="nav">
+        <a href="/">Home</a>
+        <a class="active" href="cart.html">Cart (<span id=\"cartCount\">0</span>)</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="cart">
+    <div class="container">
+      <h1>Your Cart</h1>
+      <div id="cartList" class="cart-list"></div>
+      <div class="cart-summary">
+        <div>
+          <strong>Total:</strong> <span id="cartTotal">₦0</span>
+        </div>
+        <div>
+          <a class="btn" href="checkout.html">Make Payment</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="assets/js/data.js"></script>
+  <script>
+    function updateHeaderCount(){
+      const el = document.getElementById('cartCount');
+      if(!el) return;
+      const totalQty = getCart().reduce((n,i)=> n + (i.qty||0), 0);
+      el.textContent = String(totalQty);
+    }
+    function render(){
+      const list = document.getElementById('cartList');
+      const totalEl = document.getElementById('cartTotal');
+      const cart = getCart();
+      if(cart.length===0){
+        list.innerHTML = '<p>Your cart is empty.</p>';
+        totalEl.textContent = '₦0';
+        updateHeaderCount();
+        return;
+      }
+      let total = 0;
+      list.innerHTML = cart.map(it=>{
+        const p = getProductById(it.id) || { name: it.name, price: it.price, image: it.image };
+        const line = (p.price||0) * it.qty; total += line;
+        return `
+        <div class="cart-item">
+          <img src="${p.image||''}" alt="${p.name||''}" />
+          <div>
+            <div style="font-weight:700">${p.name||'Item'}</div>
+            <div>${formatNaira(p.price||0)}</div>
+          </div>
+          <div class="qty">
+            <button onclick="decQty('${it.id}')">-</button>
+            <span>${it.qty}</span>
+            <button onclick="incQty('${it.id}')">+</button>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <div style="font-weight:700;">${formatNaira(line)}</div>
+            <button onclick="removeItem('${it.id}')" style="padding:6px 10px;border-radius:8px;border:1px solid #4b5563;background:#111827;color:#e5e7eb">Remove</button>
+          </div>
+        </div>`;
+      }).join('');
+      totalEl.textContent = formatNaira(total);
+      updateHeaderCount();
+    }
+    function incQty(id){ const c=getCart(); const i=c.find(x=>x.id===id); if(i){i.qty++; saveCart(c); render();} }
+    function decQty(id){ const c=getCart(); const i=c.find(x=>x.id===id); if(i){ i.qty=Math.max(1,i.qty-1); saveCart(c); render(); } }
+    function removeItem(id){ removeFromCart(id); render(); }
+    render();
+  </script>
+</body>
+</html>
+
+

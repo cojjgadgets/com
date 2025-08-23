@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product — COJJ Gadgets Lagos</title>
+  <meta name="description" content="View product details, price, and specs at COJJ Gadgets, Admiralty Mall Lekki Phase 1 — the best gadgets in Lagos." />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="/" class="logo">
+        <img src="images/logo.jpg" alt="COJJ Gadgets Logo" style="height: 40px; width: auto;" />
+        
+      </a><span style="margin-left: 10px; font-weight: 800; font-size: 22px; letter-spacing: 0.8px; color: #fff;">COJJ</span>
+      <nav class="nav">
+        <a href="/">Home</a>
+        <a href="cart.html">Cart (<span id=\"cartCount\">0</span>)</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="product-wrap">
+    <div class="container">
+      <div id="product" class="product" aria-live="polite"></div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>
+        <strong>COJJ Gadgets</strong>
+        <p>Admiralty Mall, Lekki Phase 1, Lagos</p>
+      </div>
+      <div>
+        <a href="cart.html" class="btn">View Cart</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/data.js"></script>
+  <script>
+    function qs(name){
+      const p = new URLSearchParams(location.search); return p.get(name);
+    }
+    function renderProduct(p){
+      if(!p){
+        document.getElementById('product').innerHTML = '<p>Product not found. Please return to <a href="/">Home</a> so products can load.</p>';
+        return;
+      }
+      document.title = p.name + ' — COJJ Gadgets Lagos';
+      document.getElementById('product').innerHTML = `
+        <div class="gallery">
+          <img src="${p.image}" alt="${p.name}" />
+          <div class="thumbs">
+            <img src="${p.images[0]}" alt="${p.name} view 2" />
+            <img src="${p.images[1]}" alt="${p.name} view 3" />
+          </div>
+        </div>
+        <div class="details">
+          <h1>${p.name}</h1>
+          <div class="price">${formatNaira(p.price)}</div>
+          <p class="specs">${p.specs}</p>
+          <div style="margin-top:12px; display:flex; gap:8px; align-items:center;">
+            <button id="add" class="btn">Add to Cart</button>
+            <a href="cart.html" class="btn" style="background:transparent;border:1px solid #334155;color:#e5e7eb;">Go to Cart</a>
+          </div>
+        </div>`;
+      document.getElementById('add').addEventListener('click', ()=>{
+        addToCart(p.id, 1);
+        alert('Added to cart');
+      });
+    }
+    const id = qs('id');
+    const product = getProductById(id);
+    renderProduct(product);
+  </script>
+</body>
+</html>
+
+
