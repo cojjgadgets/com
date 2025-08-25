@@ -9,7 +9,7 @@ a{color:var(--accent-2);text-decoration:none}
 .site-header{position:sticky;top:0;z-index:50;background:rgba(11,12,16,.8);backdrop-filter:blur(6px);border-bottom:1px solid #1f2937}
 .header-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
 .logo{font-weight:800;font-size:28px;letter-spacing:1.2px;color:#fff;text-decoration:none;position:relative;padding:8px 12px;border-radius:8px;text-shadow:0 0 20px rgba(255, 255, 255, 0.3)}
-.logo::before{content:'';position:absolute;inset:0;border-radius:8px;padding:1px;background:linear-gradient(135deg,var(--accent),var(--accent-2));mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask-composite:exclude}
+.logo::before{content:'';position:absolute;inset:0;border-radius:8px;padding:1px;background:#fff;mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask-composite:exclude}
 .nav a{margin-left:16px;color:#dbeafe;font-size:14px}
 .nav a.active{color:#fff;font-weight:700}
 
