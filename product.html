@@ -15,8 +15,13 @@
        </a>
       <nav class="nav">
         <a href="./">Home</a>
-        <a href="cart.html">Cart (<span id=\"cartCount\">0</span>)</a>
+        <a href="cart.html">Cart (<span id="cartCount">0</span>)</a>
       </nav>
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
     </div>
   </header>
 
@@ -96,10 +101,39 @@
         </div>`;
       document.getElementById('add').addEventListener('click', ()=>{
         addToCart(p.id, 1);
-        alert('Added to cart');
+        updateCartCount();
       });
     }
-         const id = qs('id');
+         // Cart count update function
+     function updateCartCount(){
+       const cartCountEl = document.getElementById('cartCount');
+       if(!cartCountEl) return;
+       const totalQty = getCart().reduce((n,i)=> n + (i.qty||0), 0);
+       cartCountEl.textContent = String(totalQty);
+     }
+     
+     // Initialize cart count
+     updateCartCount();
+     
+     // Hamburger Menu
+     const hamburger = document.getElementById('hamburger');
+     const nav = document.querySelector('.nav');
+     if (hamburger && nav) {
+       hamburger.addEventListener('click', () => {
+         hamburger.classList.toggle('active');
+         nav.classList.toggle('active');
+       });
+       
+       // Close menu when clicking outside
+       document.addEventListener('click', (e) => {
+         if (!hamburger.contains(e.target) && !nav.contains(e.target)) {
+           hamburger.classList.remove('active');
+           nav.classList.remove('active');
+         }
+       });
+     }
+     
+     const id = qs('id');
      const product = getProductById(id);
      renderProduct(product);
      

@@ -13,6 +13,22 @@ a{color:var(--accent-2);text-decoration:none}
 .nav a{margin-left:16px;color:#dbeafe;font-size:14px}
 .nav a.active{color:#fff;font-weight:700}
 
+/* Hamburger Menu */
+.hamburger{display:none;flex-direction:column;cursor:pointer;padding:8px;z-index:100}
+.hamburger span{width:25px;height:3px;background:#fff;margin:3px 0;transition:0.3s;border-radius:2px}
+.hamburger.active span:nth-child(1){transform:rotate(-45deg) translate(-5px,6px)}
+.hamburger.active span:nth-child(2){opacity:0}
+.hamburger.active span:nth-child(3){transform:rotate(45deg) translate(-5px,-6px)}
+
+/* Mobile Navigation */
+@media (max-width: 768px){
+  .hamburger{display:flex}
+  .nav{position:fixed;top:0;right:-100%;width:250px;height:100vh;background:rgba(11,12,16,0.95);backdrop-filter:blur(10px);flex-direction:column;padding:80px 20px 20px;transition:right 0.3s ease;z-index:99}
+  .nav.active{right:0}
+  .nav a{margin:16px 0;font-size:16px;padding:12px;border-radius:8px;transition:background 0.2s ease}
+  .nav a:hover{background:rgba(255,255,255,0.1)}
+}
+
 .hero{position:relative}
 .slider{position:relative;overflow:hidden;height:52vh;min-height:360px}
 .slides{display:flex;width:100%;height:100%;transition:transform .6s ease}
@@ -142,7 +158,6 @@ a{color:var(--accent-2);text-decoration:none}
   .container{padding:0 12px}
   .header-inner{padding:12px 0}
   .logo{font-size:24px}
-  .nav a{margin-left:12px;font-size:13px}
   .hero-overlay h1{font-size:24px}
   .hero-overlay p{font-size:14px}
   .sticky-search{top:60px;padding:8px 0;position:sticky}

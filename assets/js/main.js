@@ -11,6 +11,24 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   updateCartCount();
 
+  // Hamburger Menu
+  const hamburger = document.getElementById('hamburger');
+  const nav = document.querySelector('.nav');
+  if (hamburger && nav) {
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      nav.classList.toggle('active');
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!hamburger.contains(e.target) && !nav.contains(e.target)) {
+        hamburger.classList.remove('active');
+        nav.classList.remove('active');
+      }
+    });
+  }
+
   // Slider
   const slider = document.getElementById('heroSlider');
   if (slider){
@@ -62,10 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
       grid.querySelectorAll('button.add').forEach(btn=>{
         btn.addEventListener('click', ()=>{
           addToCart(btn.dataset.id, 1);
-          btn.textContent = 'Added';
           updateCartCount();
-          alert('Added to cart');
-          setTimeout(()=> btn.textContent = 'Add to Cart', 1200);
         });
       });
     };
