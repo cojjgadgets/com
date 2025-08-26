@@ -44,10 +44,15 @@ document.addEventListener('DOMContentLoaded', () => {
     setInterval(()=> go(index+1), 4500);
   }
 
-  // Render products grid
+  // Render products grid with pagination
   const grid = document.getElementById('productsGrid');
   const searchInput = document.getElementById('searchInput');
   const searchButton = document.getElementById('searchButton');
+  const pagination = document.getElementById('pagination');
+  const prevPageBtn = document.getElementById('prevPage');
+  const nextPageBtn = document.getElementById('nextPage');
+  const pageNumbers = document.getElementById('pageNumbers');
+  
   if (grid){
     // If HTML source is present, parse and persist
     const source = document.getElementById('productsSource');
@@ -63,8 +68,18 @@ document.addEventListener('DOMContentLoaded', () => {
       if (htmlProducts.length) setProducts(htmlProducts);
     }
 
-    const render = (items)=>{
-      grid.innerHTML = items.map(p => `
+    // Pagination variables
+    const productsPerPage = 50;
+    let currentPage = 1;
+    let currentProducts = [];
+    let filteredProducts = [];
+
+    const render = (items, page = 1)=>{
+      const startIndex = (page - 1) * productsPerPage;
+      const endIndex = startIndex + productsPerPage;
+      const pageItems = items.slice(startIndex, endIndex);
+      
+      grid.innerHTML = pageItems.map(p => `
         <article class="card" aria-label="${p.name}">
           <img src="${p.image}" alt="${p.name} - gadgets in Lagos" loading="lazy" />
           <div class="content">
@@ -77,6 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
         </article>
       `).join('');
+      
       grid.querySelectorAll('button.add').forEach(btn=>{
         btn.addEventListener('click', ()=>{
           addToCart(btn.dataset.id, 1);
@@ -84,21 +100,76 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       });
     };
-    const products = getProducts();
-    if(!products.length){
-      grid.innerHTML = '<p>Loading products... If nothing appears, please reload Home.</p>';
-    } else {
-      render(products);
-    }
+
+    const renderPagination = (totalItems, currentPage) => {
+      const totalPages = Math.ceil(totalItems / productsPerPage);
+      
+      // Update prev/next buttons
+      prevPageBtn.disabled = currentPage <= 1;
+      nextPageBtn.disabled = currentPage >= totalPages;
+      
+      // Generate page numbers
+      let pageNumbersHTML = '';
+      const maxVisiblePages = 5;
+      let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
+      let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+      
+      if (endPage - startPage + 1 < maxVisiblePages) {
+        startPage = Math.max(1, endPage - maxVisiblePages + 1);
+      }
+      
+      for (let i = startPage; i <= endPage; i++) {
+        pageNumbersHTML += `<button class="page-number ${i === currentPage ? 'active' : ''}" data-page="${i}">${i}</button>`;
+      }
+      
+      pageNumbers.innerHTML = pageNumbersHTML;
+      
+      // Add click events to page numbers
+      pageNumbers.querySelectorAll('.page-number').forEach(btn => {
+        btn.addEventListener('click', () => {
+          goToPage(parseInt(btn.dataset.page));
+        });
+      });
+    };
+
+    const goToPage = (page) => {
+      currentPage = page;
+      render(filteredProducts, currentPage);
+      renderPagination(filteredProducts.length, currentPage);
+      window.scrollTo({ top: grid.offsetTop - 100, behavior: 'smooth' });
+    };
 
     const doSearch = ()=>{
       const q = (searchInput?.value||'').toLowerCase().trim();
       const all = getProducts();
-      const filtered = all.filter(p => p.name.toLowerCase().includes(q) || (p.specs||'').toLowerCase().includes(q));
-      render(filtered);
+      filteredProducts = all.filter(p => p.name.toLowerCase().includes(q) || (p.specs||'').toLowerCase().includes(q));
+      currentPage = 1; // Reset to first page on search
+      render(filteredProducts, currentPage);
+      renderPagination(filteredProducts.length, currentPage);
     };
+
+    // Initialize
+    const products = getProducts();
+    if(!products.length){
+      grid.innerHTML = '<p>Loading products... If nothing appears, please reload Home.</p>';
+    } else {
+      filteredProducts = products;
+      render(filteredProducts, currentPage);
+      renderPagination(filteredProducts.length, currentPage);
+    }
+
+    // Event listeners
     if (searchButton) searchButton.addEventListener('click', doSearch);
     if (searchInput) searchInput.addEventListener('input', doSearch);
+    
+    if (prevPageBtn) prevPageBtn.addEventListener('click', () => {
+      if (currentPage > 1) goToPage(currentPage - 1);
+    });
+    
+    if (nextPageBtn) nextPageBtn.addEventListener('click', () => {
+      const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
+      if (currentPage < totalPages) goToPage(currentPage + 1);
+    });
   }
 });
 

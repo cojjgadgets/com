@@ -7,11 +7,18 @@ a{color:var(--accent-2);text-decoration:none}
 .btn{display:inline-block;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#001018;padding:10px 16px;border-radius:10px;font-weight:700;border:none;cursor:pointer;font-size:14px;transition:all 0.2s ease}
 
 .site-header{position:sticky;top:0;z-index:50;background:rgba(11,12,16,.8);backdrop-filter:blur(6px);border-bottom:1px solid #1f2937}
-.header-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+.header-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 0;gap:20px}
 .logo{font-weight:800;font-size:28px;letter-spacing:1.2px;color:#fff;text-decoration:none;position:relative;padding:8px 12px;border-radius:8px;text-shadow:0 0 20px rgba(255, 255, 255, 0.3)}
 .logo::before{content:'';position:absolute;inset:0;border-radius:8px;padding:1px;background:#fff;mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask-composite:exclude}
 .nav a{margin-left:16px;color:#dbeafe;font-size:14px}
 .nav a.active{color:#fff;font-weight:700}
+
+/* Navigation Search Bar */
+.nav-search{flex:1;max-width:400px;margin:0 20px}
+.nav-search .search{display:flex;gap:8px;width:100%}
+.nav-search .search input{flex:1;padding:8px 12px;border-radius:8px;border:1px solid #2b3440;background:#0f1218;color:#fff;font-size:14px}
+.nav-search .search button{padding:8px 16px;border-radius:8px;border:1px solid #2b3440;background:#111827;color:#e5e7eb;font-weight:600;font-size:14px;cursor:pointer;white-space:nowrap}
+.nav-search .search button:hover{background:#0b1220}
 
 /* Hamburger Menu */
 .hamburger{display:none;flex-direction:column;cursor:pointer;padding:8px;z-index:100}
@@ -27,6 +34,9 @@ a{color:var(--accent-2);text-decoration:none}
   .nav.active{right:0}
   .nav a{margin:16px 0;font-size:16px;padding:12px;border-radius:8px;transition:background 0.2s ease}
   .nav a:hover{background:rgba(255,255,255,0.1)}
+  .nav-search{display:none}
+  .pagination{flex-direction:column;gap:12px}
+  .page-numbers{flex-wrap:wrap;justify-content:center}
 }
 
 .hero{position:relative}
@@ -45,16 +55,7 @@ a{color:var(--accent-2);text-decoration:none}
 .search button{padding:12px 16px;border-radius:12px;border:1px solid #2b3440;background:#111827;color:#e5e7eb;font-weight:700;font-size:14px;cursor:pointer}
 .search button:hover{background:#0b1220}
 
-/* Sticky Search Bar */
-.sticky-search{position:sticky;top:70px;z-index:40;background:rgba(11,12,16,0.95);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid #ecedee;padding:12px 0;transition:all 0.3s ease;will-change:transform}
-.sticky-search .search{max-width:560px;margin:0 auto}
 
-/* Ensure sticky works on iOS Safari */
-@supports (-webkit-touch-callout: none) {
-  .sticky-search {
-    position: -webkit-sticky;
-  }
-}
 
 .about{padding:48px 0;border-top:1px solid #f5f5f5;border-bottom:1px solid #e2e4e7;background:linear-gradient(180deg,#0b0c10,#0e1016)}
 .about h2{margin:0 0 8px;color:#fff}
@@ -81,6 +82,16 @@ a{color:var(--accent-2);text-decoration:none}
 .social-links a{color:var(--accent-2);text-decoration:none;font-size:14px;transition:color 0.2s ease}
 .social-links a:hover{color:var(--accent)}
 .copyright{text-align:center;color:#94a3b8;margin:16px 0 0}
+
+/* Pagination */
+.pagination{display:flex;justify-content:center;align-items:center;gap:16px;margin-top:32px;padding:20px 0}
+.pagination-btn{background:var(--accent);color:#fff;border:none;padding:10px 16px;border-radius:8px;cursor:pointer;font-weight:600;transition:all 0.2s ease}
+.pagination-btn:hover{background:var(--accent-2);transform:translateY(-1px)}
+.pagination-btn:disabled{background:#6b7280;cursor:not-allowed;transform:none}
+.page-numbers{display:flex;gap:8px;align-items:center}
+.page-number{background:#374151;color:#fff;border:none;padding:8px 12px;border-radius:6px;cursor:pointer;font-weight:500;transition:all 0.2s ease;min-width:40px;text-align:center}
+.page-number:hover{background:#4b5563}
+.page-number.active{background:var(--accent);color:#fff}
 
 /* Product page */
 .product-wrap{padding:28px 0}
