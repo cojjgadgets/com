@@ -15,6 +15,9 @@ a{color:var(--accent-2);text-decoration:none}
 
 /* Navigation Search Bar */
 .nav-search{flex:1;max-width:400px;margin:0 20px}
+.search-container{display:flex;flex-direction:column;gap:8px;width:100%}
+.go-back-btn{padding:6px 12px;background:rgba(255,255,255,0.1);color:#fff;border:1px solid #374151;border-radius:6px;font-size:12px;cursor:pointer;transition:all 0.2s ease;align-self:flex-start;font-weight:500}
+.go-back-btn:hover{background:rgba(255,255,255,0.2);border-color:var(--accent)}
 .nav-search .search{display:flex;gap:8px;width:100%}
 .nav-search .search input{flex:1;padding:8px 12px;border-radius:8px;border:1px solid #2b3440;background:#0f1218;color:#fff;font-size:14px}
 .nav-search .search button{padding:8px 16px;border-radius:8px;border:1px solid #2b3440;background:#111827;color:#e5e7eb;font-weight:600;font-size:14px;cursor:pointer;white-space:nowrap}
@@ -35,6 +38,8 @@ a{color:var(--accent-2);text-decoration:none}
   .nav a{margin:16px 0;font-size:16px;padding:12px;border-radius:8px;transition:background 0.2s ease}
   .nav a:hover{background:rgba(255,255,255,0.1)}
   .nav-search{max-width:100%;margin:0 10px}
+  .search-container{flex-direction:column;gap:6px}
+  .go-back-btn{align-self:center;font-size:11px;padding:5px 10px}
   .nav-search .search{flex-direction:column;gap:8px}
   .nav-search .search input,.nav-search .search button{width:100%}
   .pagination{flex-direction:column;gap:12px}
@@ -250,6 +255,8 @@ a{color:var(--accent-2);text-decoration:none}
   .sticky-search{top:55px;padding:6px 0;position:sticky}
   .search{max-width:100%}
   .nav-search{margin:0 8px}
+  .search-container{flex-direction:column;gap:4px}
+  .go-back-btn{align-self:center;font-size:10px;padding:4px 8px}
   .nav-search .search input,.nav-search .search button{padding:8px 10px;font-size:12px}
   .social-links{font-size:13px}
   .about{padding:24px 0}
@@ -289,6 +296,8 @@ a{color:var(--accent-2);text-decoration:none}
   .sticky-search{top:50px;padding:4px 0;position:sticky}
   .hero-overlay p{font-size:12px}
   .nav-search{margin:0 6px}
+  .search-container{flex-direction:column;gap:3px}
+  .go-back-btn{align-self:center;font-size:9px;padding:3px 6px}
   .nav-search .search input,.nav-search .search button{padding:6px 8px;font-size:11px}
   .social-links{font-size:12px;gap:6px}
   .about{padding:20px 0}

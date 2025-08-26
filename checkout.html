@@ -14,10 +14,13 @@
          <span style="font-weight: 800; font-size: 22px; letter-spacing: 0.8px; color: #fff;">COJJ<img src="images/logo.jpg" alt="COJJ Gadgets Logo" style="height: 16px; width: auto; margin-left: 2px; vertical-align: middle;" /></span>
        </a>
       <div class="nav-search">
-        <form class="search" role="search" aria-label="Search products" onsubmit="return false;">
-          <input id="searchInput" type="search" placeholder="Search products..." aria-label="Search gadgets" />
-          <button id="searchButton" type="button">Search</button>
-        </form>
+        <div class="search-container">
+          <button onclick="history.back()" class="go-back-btn" aria-label="Go back to previous page">← Go Back</button>
+          <form class="search" role="search" aria-label="Search products" onsubmit="return false;">
+            <input id="searchInput" type="search" placeholder="Search products..." aria-label="Search gadgets" />
+            <button id="searchButton" type="button">Search</button>
+          </form>
+        </div>
       </div>
       <nav class="nav">
         <a href="./">Home</a>
