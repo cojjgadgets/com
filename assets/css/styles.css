@@ -144,6 +144,24 @@ a{color:var(--accent-2);text-decoration:none}
 .transfer-box p{margin:4px 0;font-size:14px}
 .copy{cursor:pointer;color:#0c556b;text-decoration:underline}
 
+/* About Us Page */
+.about-page{padding:48px 0}
+.about-hero{text-align:center;margin-bottom:48px}
+.about-hero h1{font-size:36px;margin:0 0 12px;color:#fff;font-weight:800}
+.about-hero .tagline{font-size:18px;color:var(--muted);margin-bottom:32px}
+.about-image{margin:32px 0;border-radius:16px;overflow:hidden;box-shadow:0 8px 32px rgba(0,0,0,0.3)}
+.about-image img{width:100%;max-width:800px;height:auto;display:block;margin:0 auto}
+.about-text{text-align:left;max-width:800px;margin:0 auto;background:var(--surface);padding:32px;border-radius:16px;border:1px solid #1f2937}
+.about-text h2{font-size:24px;margin:32px 0 16px;color:#fff;font-weight:700}
+.about-text h2:first-child{margin-top:0}
+.about-text p{font-size:16px;line-height:1.7;color:#c7d2fe;margin-bottom:16px}
+.features{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:24px;margin:24px 0}
+.feature{background:rgba(255,255,255,0.05);padding:20px;border-radius:12px;border:1px solid #2b3440}
+.feature h3{font-size:18px;margin:0 0 12px;color:#fff;font-weight:600}
+.feature p{font-size:14px;line-height:1.6;color:#a8b3cf;margin:0}
+.cta-buttons{display:flex;gap:16px;justify-content:center;margin-top:32px;flex-wrap:wrap}
+.cta-buttons .btn{min-width:160px;text-align:center}
+
 /* Chat Button */
 .chat-btn{position:fixed;bottom:20px;left:20px;background:#011408;color:#fff;width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:24px;box-shadow:0 4px 12px rgba(37,211,102,0.3);z-index:1000;transition:transform 0.2s ease}
 .chat-btn:hover{transform:scale(1.1)}
@@ -180,6 +198,16 @@ a{color:var(--accent-2);text-decoration:none}
   .about{padding:32px 0}
   .about h2{font-size:20px}
   .about p{font-size:14px}
+  .about-page{padding:32px 0}
+  .about-hero h1{font-size:28px}
+  .about-hero .tagline{font-size:16px}
+  .about-text{padding:20px}
+  .about-text h2{font-size:20px}
+  .about-text p{font-size:14px}
+  .features{grid-template-columns:1fr;gap:16px}
+  .feature{padding:16px}
+  .cta-buttons{flex-direction:column;align-items:center}
+  .cta-buttons .btn{width:100%;max-width:280px}
   .products{padding:24px 0 48px}
   .products h2{font-size:20px}
   .grid{gap:12px}

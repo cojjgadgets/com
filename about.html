@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us — COJJ Gadgets Lagos</title>
+  <meta name="description" content="Learn about COJJ Gadgets - the leading gadget store in Lagos. Discover our story, mission, and commitment to providing the best technology products at Admiralty Mall, Lekki Phase 1." />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="./" class="logo">
+        <span style="font-weight: 800; font-size: 22px; letter-spacing: 0.8px; color: #fff;">COJJ<img src="images/logo.jpg" alt="COJJ Gadgets Logo" style="height: 16px; width: auto; margin-left: 2px; vertical-align: middle;" /></span>
+      </a>
+      <div class="nav-search">
+        <form class="search" role="search" aria-label="Search products" onsubmit="return false;">
+          <input id="searchInput" type="search" placeholder="Search products..." aria-label="Search gadgets" />
+          <button id="searchButton" type="button">Search</button>
+        </form>
+      </div>
+      <nav class="nav">
+        <a href="./">Home</a>
+        <a href="about.html" class="active">About</a>
+        <a href="cart.html">Cart (<span id="cartCount">0</span>)</a>
+      </nav>
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </header>
+
+  <main class="about-page">
+    <div class="container">
+      <div class="about-hero">
+        <div class="about-content">
+          <h1>About COJJ Gadgets</h1>
+          <p class="tagline">Your Trusted Technology Partner in Lagos</p>
+          
+          <div class="about-image">
+            <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?w=1400&q=80&auto=format&fit=crop" alt="COJJ Gadgets Store - Admiralty Mall, Lekki Phase 1" />
+          </div>
+          
+          <div class="about-text">
+            <h2>Our Story</h2>
+            <p>Founded with a passion for technology and innovation, COJJ has established itself as the premier destination for cutting-edge gadgets and electronics in Lagos. Located at the prestigious Admiralty Mall in Lekki Phase 1, we've been serving tech enthusiasts, professionals, and everyday consumers since our inception.</p>
+            
+            <h2>Our Mission</h2>
+            <p>At COJJ, our mission is simple yet powerful: to provide our customers with access to the latest and most reliable technology products while delivering exceptional service and expert guidance. We believe that everyone deserves access to quality technology that enhances their daily lives.</p>
+            
+            <h2>Why Choose COJJ?</h2>
+            <div class="features">
+              <div class="feature">
+                <h3>🏆 Premium Quality</h3>
+                <p>We carefully curate our product selection to ensure only the highest quality gadgets make it to our shelves. Every item is authentic and backed by manufacturer warranties.</p>
+              </div>
+              
+              <div class="feature">
+                <h3>📱 Latest Technology</h3>
+                <p>Stay ahead of the curve with our constantly updated inventory featuring the newest smartphones, tablets, smartwatches, and accessories from leading brands.</p>
+              </div>
+              
+              <div class="feature">
+                <h3>💡 Expert Knowledge</h3>
+                <p>Our team of technology experts is always ready to provide personalized recommendations and technical support to help you make informed decisions.</p>
+              </div>
+              
+              <div class="feature">
+                <h3>🛡️ Trust & Reliability</h3>
+                <p>With years of experience in the industry, we've built a reputation for honesty, transparency, and customer satisfaction that speaks for itself.</p>
+              </div>
+            </div>
+            
+            <h2>Our Product Range</h2>
+            <p>From the latest iPhone models to cutting-edge Samsung devices, premium headphones, smartwatches, and essential accessories, COJJ Gadgets offers a comprehensive selection of technology products. Whether you're a business professional, student, or tech enthusiast, we have exactly what you need.</p>
+            
+            <h2>Our Location</h2>
+            <p>Conveniently located at Admiralty Mall, Lekki Phase 1, Lagos, our store is easily accessible and provides a comfortable shopping environment. We invite you to visit us and experience the COJJ Gadgets difference firsthand.</p>
+            
+            <h2>Get in Touch</h2>
+            <p>Ready to discover the perfect gadget for your needs? Visit our store, browse our online catalog, or contact us directly. We're here to help you find the technology that fits your lifestyle and budget.</p>
+            
+            <div class="cta-buttons">
+              <a href="./" class="btn">Browse Products</a>
+              <a href="https://wa.me/2347036140846" class="btn" style="background: #25D366; border: 1px solid #25D366;">Chat with Us</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>
+        <strong>COJJ Gadgets</strong>
+        <p>Admiralty Mall, Lekki Phase 1, Lagos</p>
+        <p><a href="tel:+2347036140846" style="text-decoration: none; color: var(--accent-2);">📞 Call us</a> | <a href="https://wa.me/2347036140846" style="text-decoration: none; color: var(--accent-2);">✉️ Write us</a></p>
+      </div>
+      <div class="social-links">
+        <a href="https://instagram.com/cojj.ng" target="_blank" aria-label="Follow us on Instagram">📷 Instagram</a>
+        <a href="https://facebook.com/cojj.ng" target="_blank" aria-label="Follow us on Facebook">📘 Facebook</a>
+        <a href="https://threads.net/cojj.ng" target="_blank" aria-label="Follow us on Thread">🧵 Threads</a>
+      </div>
+    </div>
+    <div class="copyright">
+      <p>&copy; <span id="year">2024</span> COJJ Gadgets. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Chat Button -->
+  <a href="https://wa.me/2347036140846" class="chat-btn" aria-label="Chat with us on WhatsApp">
+    💬
+  </a>
+
+  <script src="assets/js/data.js"></script>
+  <script>
+    // Update year
+    document.getElementById('year').textContent = new Date().getFullYear();
+    
+    // Update cart count
+    function updateCartCount(){
+      const cartCountEl = document.getElementById('cartCount');
+      if(!cartCountEl) return;
+      const totalQty = getCart().reduce((n,i)=> n + (i.qty||0), 0);
+      cartCountEl.textContent = String(totalQty);
+    }
+    updateCartCount();
+    
+    // Hamburger Menu
+    const hamburger = document.getElementById('hamburger');
+    const nav = document.querySelector('.nav');
+    if (hamburger && nav) {
+      hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        nav.classList.toggle('active');
+      });
+      
+      // Close menu when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!hamburger.contains(e.target) && !nav.contains(e.target)) {
+          hamburger.classList.remove('active');
+          nav.classList.remove('active');
+        }
+      });
+    }
+  </script>
+</body>
+</html>
