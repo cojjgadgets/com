@@ -34,7 +34,9 @@ a{color:var(--accent-2);text-decoration:none}
   .nav.active{right:0}
   .nav a{margin:16px 0;font-size:16px;padding:12px;border-radius:8px;transition:background 0.2s ease}
   .nav a:hover{background:rgba(255,255,255,0.1)}
-  .nav-search{display:none}
+  .nav-search{max-width:100%;margin:0 10px}
+  .nav-search .search{flex-direction:column;gap:8px}
+  .nav-search .search input,.nav-search .search button{width:100%}
   .pagination{flex-direction:column;gap:12px}
   .page-numbers{flex-wrap:wrap;justify-content:center}
 }
@@ -219,6 +221,8 @@ a{color:var(--accent-2);text-decoration:none}
   .hero-overlay p{font-size:13px}
   .sticky-search{top:55px;padding:6px 0;position:sticky}
   .search{max-width:100%}
+  .nav-search{margin:0 8px}
+  .nav-search .search input,.nav-search .search button{padding:8px 10px;font-size:12px}
   .social-links{font-size:13px}
   .about{padding:24px 0}
   .about h2{font-size:18px}
@@ -256,6 +260,8 @@ a{color:var(--accent-2);text-decoration:none}
   .hero-overlay h1{font-size:18px}
   .sticky-search{top:50px;padding:4px 0;position:sticky}
   .hero-overlay p{font-size:12px}
+  .nav-search{margin:0 6px}
+  .nav-search .search input,.nav-search .search button{padding:6px 8px;font-size:11px}
   .social-links{font-size:12px;gap:6px}
   .about{padding:20px 0}
   .about h2{font-size:16px}
