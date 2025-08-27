@@ -46,11 +46,11 @@ a{color:var(--accent-2);text-decoration:none}
   .page-numbers{flex-wrap:wrap;justify-content:center}
   .categories{padding:32px 0}
   .categories h2{font-size:24px;margin-bottom:20px}
-  .category-grid{grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
-  .category-card{padding:24px 16px;gap:12px}
-  .category-icon{font-size:36px}
-  .category-card h3{font-size:18px}
-  .category-card p{font-size:13px}
+  .category-grid{grid-template-columns:repeat(2,1fr);gap:12px}
+  .category-card{padding:20px 12px;gap:10px}
+  .category-icon{font-size:32px}
+  .category-card h3{font-size:16px}
+  .category-card p{font-size:12px}
   .category-hero{padding:40px 0}
   .category-hero h1{font-size:28px}
   .category-hero p{font-size:16px}
@@ -270,10 +270,15 @@ a{color:var(--accent-2);text-decoration:none}
   .footer-inner{flex-direction:column;gap:16px;text-align:center}
   .chat-btn{width:50px;height:50px;font-size:20px;bottom:15px;left:15px}
   .whatsapp-btn{width:50px;height:50px;font-size:20px;bottom:15px;right:15px}
+  .category-card{padding:16px 12px;gap:8px}
+  .category-icon{font-size:28px}
+  .category-card h3{font-size:14px}
+  .category-card p{font-size:11px}
 }
 
 @media (max-width: 600px){
-  .grid{grid-template-columns:1fr}
+  .grid{grid-template-columns:repeat(2,1fr);gap:8px}
+  .category-grid{grid-template-columns:repeat(2,1fr);gap:8px}
   .slider{min-height:280px}
   .hero-overlay h1{font-size:20px}
   .hero-overlay p{font-size:13px}
@@ -289,7 +294,7 @@ a{color:var(--accent-2);text-decoration:none}
   .about p{font-size:13px}
   .products{padding:20px 0 40px}
   .products h2{font-size:18px}
-  .card img{height:160px}
+  .card img{height:140px}
   .card .content h3{font-size:13px}
   .price{font-size:15px}
   .product-wrap{padding:16px 0}
@@ -311,6 +316,10 @@ a{color:var(--accent-2);text-decoration:none}
   .transfer-box p{font-size:12px}
   .chat-btn{width:45px;height:45px;font-size:18px;bottom:10px;left:10px}
   .whatsapp-btn{width:45px;height:45px;font-size:18px;bottom:10px;right:10px}
+  .category-card{padding:14px 10px;gap:6px}
+  .category-icon{font-size:24px}
+  .category-card h3{font-size:13px}
+  .category-card p{font-size:10px}
 }
 
 @media (max-width: 480px){
@@ -330,13 +339,15 @@ a{color:var(--accent-2);text-decoration:none}
   .about p{font-size:12px}
   .products{padding:16px 0 32px}
   .products h2{font-size:16px}
-  .grid{gap:8px}
-  .card .content{padding:8px 10px}
-  .card .content h3{font-size:12px}
-  .price{font-size:14px}
-  .card .actions{padding:8px 10px}
+  .grid{grid-template-columns:repeat(2,1fr);gap:6px}
+  .category-grid{grid-template-columns:repeat(2,1fr);gap:6px}
+  .card img{height:120px}
+  .card .content{padding:6px 8px}
+  .card .content h3{font-size:11px}
+  .price{font-size:13px}
+  .card .actions{padding:6px 8px}
   .card .actions .btn,
-  .card .actions .add{font-size:10px;padding:5px 8px;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#001018;border:none;border-radius:6px;font-weight:700;cursor:pointer;transition:all 0.2s ease}
+  .card .actions .add{font-size:9px;padding:4px 6px;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#001018;border:none;border-radius:6px;font-weight:700;cursor:pointer;transition:all 0.2s ease}
   .product-wrap{padding:12px 0}
   .product .details h1{font-size:16px}
   .product .details .price{font-size:18px}
@@ -356,6 +367,10 @@ a{color:var(--accent-2);text-decoration:none}
   .transfer-box p{font-size:11px}
   .chat-btn{width:40px;height:40px;font-size:16px;bottom:8px;left:8px}
   .whatsapp-btn{width:40px;height:40px;font-size:16px;bottom:8px;right:8px}
+  .category-card{padding:12px 8px;gap:4px}
+  .category-icon{font-size:20px}
+  .category-card h3{font-size:12px}
+  .category-card p{font-size:9px}
 }
 
 /* Ensure images don't overflow on mobile */
@@ -367,14 +382,25 @@ img{max-width:100%;height:auto}
   .container{padding:0 6px}
   .hero-overlay h1{font-size:16px}
   .hero-overlay p{font-size:11px}
-  .card .content h3{font-size:11px}
-  .price{font-size:13px}
+  .grid{grid-template-columns:repeat(2,1fr);gap:4px}
+  .category-grid{grid-template-columns:repeat(2,1fr);gap:4px}
+  .card img{height:100px}
+  .card .content{padding:4px 6px}
+  .card .content h3{font-size:10px}
+  .price{font-size:12px}
+  .card .actions{padding:4px 6px}
+  .card .actions .btn,
+  .card .actions .add{font-size:8px;padding:3px 5px;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#001018;border:none;border-radius:4px;font-weight:700;cursor:pointer;transition:all 0.2s ease}
   .product .details h1{font-size:14px}
   .product .details .price{font-size:16px}
   .cart-item .info h3{font-size:11px}
   .cart-item .info .price{font-size:9px}
   .chat-btn{width:35px;height:35px;font-size:14px;bottom:5px;left:5px}
   .whatsapp-btn{width:35px;height:35px;font-size:14px;bottom:5px;right:5px}
+  .category-card{padding:10px 6px;gap:3px}
+  .category-icon{font-size:18px}
+  .category-card h3{font-size:11px}
+  .category-card p{font-size:8px}
 }
 
 
