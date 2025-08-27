@@ -108,12 +108,13 @@ a{color:var(--accent-2);text-decoration:none}
 .card .actions .btn:hover,
 .card .actions .add:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(26,188,156,0.3)}
 
-.site-footer{border-top:1px solid #1f2937;padding:24px 0;background:#0c0f14}
-.footer-inner{display:flex;justify-content:space-between;align-items:center}
-.social-links{display:flex;gap:12px;margin-top:8px}
-.social-links a{color:var(--accent-2);text-decoration:none;font-size:14px;transition:color 0.2s ease}
-.social-links a:hover{color:var(--accent)}
-.copyright{text-align:center;color:#94a3b8;margin:16px 0 0}
+.site-footer{border-top:1px solid #1f2937;padding:48px 0 24px;background:#0c0f14}
+.footer-inner{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:32px;margin-bottom:32px}
+.social-links{display:flex;flex-direction:column;gap:16px;margin-top:16px}
+.social-links a{color:var(--accent-2);text-decoration:none;font-size:18px;font-weight:600;transition:all 0.2s ease;display:flex;align-items:center;gap:12px;padding:8px 0}
+.social-links a:hover{color:var(--accent);transform:translateX(8px)}
+.social-links a i{font-size:24px;width:24px;text-align:center}
+.copyright{text-align:center;color:#94a3b8;margin:16px 0 0;padding-top:24px;border-top:1px solid #1f2937}
 
 /* Pagination */
 .pagination{display:flex;justify-content:center;align-items:center;gap:16px;margin-top:32px;padding:20px 0}
@@ -192,6 +193,43 @@ a{color:var(--accent-2);text-decoration:none}
 .cta-buttons{display:flex;gap:16px;justify-content:center;margin-top:32px;flex-wrap:wrap}
 .cta-buttons .btn{min-width:160px;text-align:center}
 
+/* Contact Page */
+.contact-hero{padding:60px 0;background:linear-gradient(135deg,#0b0c10,#1a1b26);text-align:center}
+.contact-hero h1{margin:0 0 16px;color:#fff;font-size:36px;font-weight:800}
+.contact-hero p{margin:0;color:var(--accent-2);font-size:18px;opacity:0.9}
+
+.contact-form-section{padding:48px 0;background:var(--bg)}
+.contact-content{display:grid;grid-template-columns:1fr 1fr;gap:48px;max-width:1000px;margin:0 auto}
+.contact-info h2{margin:0 0 16px;color:#fff;font-size:28px;font-weight:700}
+.contact-info p{margin:0 0 32px;color:var(--muted);font-size:16px;line-height:1.6}
+
+.contact-details{display:grid;gap:24px}
+.contact-item{display:flex;gap:16px;align-items:flex-start}
+.contact-icon{font-size:24px;margin-top:4px}
+.contact-item h3{margin:0 0 8px;color:#fff;font-size:18px;font-weight:600}
+.contact-item p{margin:0;color:var(--muted);font-size:14px;line-height:1.5}
+
+.contact-form-container{background:var(--surface);border:1px solid #1f2937;border-radius:16px;padding:32px}
+.contact-form h3{margin:0 0 24px;color:#fff;font-size:24px;font-weight:700;text-align:center}
+.form-group{margin-bottom:20px}
+.form-group label{display:block;margin-bottom:8px;color:#e5e7eb;font-weight:600;font-size:14px}
+.form-group input,.form-group textarea{padding:12px 16px;border-radius:8px;border:1px solid #374151;background:#0f1218;color:#fff;font-size:14px;width:100%;transition:border-color 0.2s ease}
+.form-group input:focus,.form-group textarea:focus{outline:none;border-color:var(--accent)}
+.form-group textarea{resize:vertical;min-height:120px}
+
+.submit-btn{width:100%;padding:14px 24px;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#001018;border:none;border-radius:10px;font-weight:700;font-size:16px;cursor:pointer;transition:all 0.2s ease;margin-top:8px}
+.submit-btn:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(26,188,156,0.3)}
+.submit-btn:disabled{opacity:0.7;cursor:not-allowed;transform:none}
+
+/* Footer Sections */
+.footer-section{margin-bottom:24px}
+.footer-section h3{margin:0 0 16px;color:#fff;font-size:18px;font-weight:600}
+.footer-section p{margin:0 0 12px;color:var(--muted);font-size:14px;line-height:1.5}
+.footer-section ul{list-style:none;padding:0;margin:0}
+.footer-section ul li{margin-bottom:8px}
+.footer-section ul li a{color:var(--muted);text-decoration:none;font-size:14px;transition:color 0.2s ease}
+.footer-section ul li a:hover{color:var(--accent-2)}
+
 /* Chat Button */
 .chat-btn{position:fixed;bottom:20px;left:20px;background:#011408;color:#fff;width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:24px;box-shadow:0 4px 12px rgba(37,211,102,0.3);z-index:1000;transition:transform 0.2s ease}
 .chat-btn:hover{transform:scale(1.1)}
@@ -267,13 +305,21 @@ a{color:var(--accent-2);text-decoration:none}
   .checkout{padding:20px 0}
   .form{gap:10px}
   .field input,.field select,.field textarea{padding:10px 12px;font-size:13px}
-  .footer-inner{flex-direction:column;gap:16px;text-align:center}
+  .footer-inner{grid-template-columns:1fr;gap:24px;text-align:center}
+  .social-links{flex-direction:row;justify-content:center;gap:20px}
+  .social-links a{font-size:16px}
+  .social-links a i{font-size:20px}
   .chat-btn{width:50px;height:50px;font-size:20px;bottom:15px;left:15px}
   .whatsapp-btn{width:50px;height:50px;font-size:20px;bottom:15px;right:15px}
   .category-card{padding:16px 12px;gap:8px}
   .category-icon{font-size:28px}
   .category-card h3{font-size:14px}
   .category-card p{font-size:11px}
+  .contact-content{grid-template-columns:1fr;gap:32px}
+  .contact-hero h1{font-size:24px}
+  .contact-hero p{font-size:16px}
+  .contact-info h2{font-size:24px}
+  .contact-form-container{padding:24px}
 }
 
 @media (max-width: 600px){
@@ -320,6 +366,12 @@ a{color:var(--accent-2);text-decoration:none}
   .category-icon{font-size:24px}
   .category-card h3{font-size:13px}
   .category-card p{font-size:10px}
+  .contact-hero h1{font-size:20px}
+  .contact-hero p{font-size:14px}
+  .contact-info h2{font-size:20px}
+  .contact-form-container{padding:20px}
+  .social-links a{font-size:15px}
+  .social-links a i{font-size:18px}
 }
 
 @media (max-width: 480px){
@@ -371,6 +423,13 @@ a{color:var(--accent-2);text-decoration:none}
   .category-icon{font-size:20px}
   .category-card h3{font-size:12px}
   .category-card p{font-size:9px}
+  .contact-hero h1{font-size:18px}
+  .contact-hero p{font-size:13px}
+  .contact-info h2{font-size:18px}
+  .contact-form-container{padding:16px}
+  .social-links{flex-direction:column;gap:12px}
+  .social-links a{font-size:14px}
+  .social-links a i{font-size:16px}
 }
 
 /* Ensure images don't overflow on mobile */
@@ -401,6 +460,12 @@ img{max-width:100%;height:auto}
   .category-icon{font-size:18px}
   .category-card h3{font-size:11px}
   .category-card p{font-size:8px}
+  .contact-hero h1{font-size:16px}
+  .contact-hero p{font-size:12px}
+  .contact-info h2{font-size:16px}
+  .contact-form-container{padding:12px}
+  .social-links a{font-size:13px}
+  .social-links a i{font-size:15px}
 }
 
 
