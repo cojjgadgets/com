@@ -175,6 +175,12 @@ a{color:var(--accent-2);text-decoration:none}
 .transfer-box p{margin:4px 0;font-size:14px}
 .copy{cursor:pointer;color:#0c556b;text-decoration:underline}
 
+/* Payment Sections */
+.payment-section{margin-top:8px}
+.paystack-btn{background:linear-gradient(135deg,#0c4a6e,#0369a1);border:1px solid #0c4a6e;color:#fff;font-weight:600;transition:all 0.3s ease}
+.paystack-btn:hover{background:linear-gradient(135deg,#0a3a5a,#025a8a);transform:translateY(-2px);box-shadow:0 8px 25px rgba(12,74,110,0.3)}
+.paystack-btn:active{transform:translateY(0)}
+
 /* About Us Page */
 .about-page{padding:48px 0}
 .about-hero{text-align:center;margin-bottom:48px}

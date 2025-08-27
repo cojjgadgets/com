@@ -63,8 +63,9 @@
           </div>
           <div class="field">
             <label for="payment">Payment Method</label>
-            <select id="payment" name="payment">
-              <option value="Direct Bank Transfer">Direct Bank Transfer</option>
+            <select id="payment" name="payment" onchange="togglePaymentMethod()">
+              <option value="paystack">Paystack (Card/Bank Transfer)</option>
+              <option value="direct_transfer">Direct Bank Transfer</option>
             </select>
           </div>
         </div>
@@ -91,19 +92,35 @@
           </select>
         </div>
 
-                 <div class="field">
-           <button type="button" id="showTransferBtn" class="btn" style="margin-bottom: 10px;">Show Transfer Details</button>
-           <div id="transferDetails" class="transfer-box" style="display: none;">
-             <div><strong>Total:</strong> <span id="totalAmount">₦0</span></div>
-             <div>Bank Name: <strong>Monie Point</strong></div>
-             <div>Account Number: <strong id="acctNo">5026485782</strong> <button type="button" class="copy" onclick="copyAcct()">Copy</button></div>
-             <div>Account Name: <strong>COJJ Gadgets</strong></div>
-           </div>
-         </div>
+        <!-- Paystack Payment Section -->
+        <div id="paystackSection" class="payment-section">
+          <div class="field">
+            <label for="email">Email Address (for payment receipt)</label>
+            <input id="email" name="email" type="email" required />
+          </div>
+          <div class="field">
+            <button type="button" id="paystackBtn" class="btn paystack-btn">
+              Pay with Paystack - <span id="paystackAmount">₦0</span>
+            </button>
+          </div>
+        </div>
 
-        <div class="field">
-          <label for="receipt">Attach Transfer Receipt (image)</label>
-          <input id="receipt" name="receipt" type="file" accept="image/*" />
+        <!-- Direct Transfer Section -->
+        <div id="directTransferSection" class="payment-section" style="display: none;">
+          <div class="field">
+            <button type="button" id="showTransferBtn" class="btn" style="margin-bottom: 10px;">Show Transfer Details</button>
+            <div id="transferDetails" class="transfer-box" style="display: none;">
+              <div><strong>Total:</strong> <span id="totalAmount">₦0</span></div>
+              <div>Bank Name: <strong>Monie Point</strong></div>
+              <div>Account Number: <strong id="acctNo">5026485782</strong> <button type="button" class="copy" onclick="copyAcct()">Copy</button></div>
+              <div>Account Name: <strong>COJJ Gadgets</strong></div>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="receipt">Attach Transfer Receipt (image)</label>
+            <input id="receipt" name="receipt" type="file" accept="image/*" />
+          </div>
         </div>
 
         <button class="btn" type="submit">Send Order</button>
@@ -131,75 +148,155 @@
 
   
 
-  <script src="assets/js/data.js"></script>
+    <script src="assets/js/data.js"></script>
+  <script src="assets/js/paystack-config.js"></script>
+  <!-- Paystack JavaScript SDK -->
+  <script src="https://js.paystack.co/v1/inline.js"></script>
   <script>
-         function copyAcct(){
-       const el = document.getElementById('acctNo');
-       navigator.clipboard.writeText(el.textContent);
-       alert('Account number copied');
-     }
-     
-     function toggleTransferDetails(){
-       const details = document.getElementById('transferDetails');
-       const btn = document.getElementById('showTransferBtn');
-       if(details.style.display === 'none'){
-         details.style.display = 'block';
-         btn.textContent = 'Hide Transfer Details';
-       } else {
-         details.style.display = 'none';
-         btn.textContent = 'Show Transfer Details';
-       }
-     }
+    // Paystack configuration from config file
+    const PAYSTACK_PUBLIC_KEY = PAYSTACK_CONFIG.PUBLIC_KEY;
+    
+    function copyAcct(){
+      const el = document.getElementById('acctNo');
+      navigator.clipboard.writeText(el.textContent);
+      alert('Account number copied');
+    }
+    
+    function toggleTransferDetails(){
+      const details = document.getElementById('transferDetails');
+      const btn = document.getElementById('showTransferBtn');
+      if(details.style.display === 'none'){
+        details.style.display = 'block';
+        btn.textContent = 'Hide Transfer Details';
+      } else {
+        details.style.display = 'none';
+        btn.textContent = 'Show Transfer Details';
+      }
+    }
+
+    function togglePaymentMethod(){
+      const paymentMethod = document.getElementById('payment').value;
+      const paystackSection = document.getElementById('paystackSection');
+      const directTransferSection = document.getElementById('directTransferSection');
+      
+      if(paymentMethod === 'paystack') {
+        paystackSection.style.display = 'block';
+        directTransferSection.style.display = 'none';
+        // Make email required for Paystack
+        document.getElementById('email').required = true;
+        document.getElementById('receipt').required = false;
+      } else {
+        paystackSection.style.display = 'none';
+        directTransferSection.style.display = 'block';
+        // Make receipt required for direct transfer
+        document.getElementById('email').required = false;
+        document.getElementById('receipt').required = true;
+      }
+    }
+
+    function initializePaystack(){
+      const handler = PaystackPop.setup({
+        key: PAYSTACK_PUBLIC_KEY,
+        email: document.getElementById('email').value,
+        amount: total() * 100, // Paystack expects amount in kobo
+        currency: 'NGN',
+        callback: function(response){
+          // Payment successful
+          const msg = `Hello COJJ Gadgets,%0A%0AOrder Details:%0A${getCartItemsText()}%0A%0ATotal: ${encodeURIComponent(formatNaira(total()))}%0A%0ACustomer:%0AName: ${encodeURIComponent(document.getElementById('name').value.trim())}%0APhone: ${encodeURIComponent(document.getElementById('phone').value.trim())}%0AAddress: ${encodeURIComponent(document.getElementById('address').value.trim()||'-')}%0AFulfillment: ${encodeURIComponent(document.getElementById('fulfillment').value)}%0APayment: Paystack (Reference: ${response.reference})%0AColor Preference: ${encodeURIComponent(document.getElementById('color').value||'Not specified')}%0A%0APayment Status: ✅ PAID via Paystack%0AReference: ${response.reference}`;
+          const wa = `https://wa.me/2347036140846?text=${msg}`;
+          window.location.href = wa;
+        },
+        onClose: function(){
+          alert('Payment cancelled. Please try again or choose a different payment method.');
+        }
+      });
+      handler.openIframe();
+    }
+
+    function getCartItemsText(){
+      return getCart().map(it=>{
+        const p = getProductById(it.id) || { name: it.name, price: it.price };
+        return `${p.name} x${it.qty} — ${formatNaira((p.price||0)*it.qty)}`;
+      }).join('%0A');
+    }
+
     function total(){
       return getCart().reduce((sum, it)=>{
         const p = getProductById(it.id) || { price: it.price };
         return sum + ((p.price||0) * it.qty);
       }, 0);
     }
+
+    // Initialize page
     if(!getProducts().length){
       document.querySelector('.form').insertAdjacentHTML('afterbegin','<div class="transfer-box">No products loaded. Please return to <a href="./">Home</a> first.</div>');
     }
-         document.getElementById('totalAmount').textContent = formatNaira(total());
-     
-     // Add event listener to the show transfer details button
-     document.getElementById('showTransferBtn').addEventListener('click', toggleTransferDetails);
-     
-     // Hamburger Menu
-     const hamburger = document.getElementById('hamburger');
-     const nav = document.querySelector('.nav');
-     if (hamburger && nav) {
-       hamburger.addEventListener('click', () => {
-         hamburger.classList.toggle('active');
-         nav.classList.toggle('active');
-       });
-       
-       // Close menu when clicking outside
-       document.addEventListener('click', (e) => {
-         if (!hamburger.contains(e.target) && !nav.contains(e.target)) {
-           hamburger.classList.remove('active');
-           nav.classList.remove('active');
-         }
-       });
-     }
+    
+    // Update amounts
+    document.getElementById('totalAmount').textContent = formatNaira(total());
+    document.getElementById('paystackAmount').textContent = formatNaira(total());
+    
+    // Add event listeners
+    document.getElementById('showTransferBtn').addEventListener('click', toggleTransferDetails);
+    document.getElementById('paystackBtn').addEventListener('click', function(e){
+      e.preventDefault();
+      const email = document.getElementById('email').value.trim();
+      if(!email) {
+        alert('Please enter your email address for payment receipt');
+        return;
+      }
+      initializePaystack();
+    });
+    
+    // Initialize payment method display
+    togglePaymentMethod();
+    
+    // Hamburger Menu
+    const hamburger = document.getElementById('hamburger');
+    const nav = document.querySelector('.nav');
+    if (hamburger && nav) {
+      hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        nav.classList.toggle('active');
+      });
+      
+      // Close menu when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!hamburger.contains(e.target) && !nav.contains(e.target)) {
+          hamburger.classList.remove('active');
+          nav.classList.remove('active');
+        }
+      });
+    }
 
     document.getElementById('checkoutForm').addEventListener('submit', async (e)=>{
       e.preventDefault();
+      const paymentMethod = document.getElementById('payment').value;
+      
+      if(paymentMethod === 'paystack') {
+        // For Paystack, validate email and trigger payment
+        const email = document.getElementById('email').value.trim();
+        if(!email) {
+          alert('Please enter your email address for payment receipt');
+          return;
+        }
+        initializePaystack();
+        return;
+      }
+      
+      // For direct transfer, proceed with WhatsApp flow
       const name = document.getElementById('name').value.trim();
       const phone = document.getElementById('phone').value.trim();
       const address = document.getElementById('address').value.trim();
       const fulfillment = document.getElementById('fulfillment').value;
-      const payment = document.getElementById('payment').value;
       const color = document.getElementById('color').value;
-      const cart = getCart().map(it=>{
-        const p = getProductById(it.id) || { name: it.name, price: it.price };
-        return `${p.name} x${it.qty} — ${formatNaira((p.price||0)*it.qty)}`;
-      }).join('%0A');
+      const cart = getCartItemsText();
       const totalStr = formatNaira(total());
 
       // If an image is attached, we cannot upload it via WhatsApp link; instruct user to send after opening chat.
       const hasReceipt = document.getElementById('receipt').files.length > 0;
 
-      const msg = `Hello COJJ Gadgets,%0A%0AOrder Details:%0A${cart}%0A%0ATotal: ${encodeURIComponent(totalStr)}%0A%0ACustomer:%0AName: ${encodeURIComponent(name)}%0APhone: ${encodeURIComponent(phone)}%0AAddress: ${encodeURIComponent(address||'-')}%0AFulfillment: ${encodeURIComponent(fulfillment)}%0APayment: ${encodeURIComponent(payment)}%0AColor Preference: ${encodeURIComponent(color||'Not specified')}%0A%0ABank Transfer Details:%0ABank: Monie Point%0AAccount: 5026485782%0AAccount Name: COJJ Gadgets%0A%0A${hasReceipt?encodeURIComponent('I will send the receipt image here.'):encodeURIComponent('No receipt attached.')}`;
+      const msg = `Hello COJJ Gadgets,%0A%0AOrder Details:%0A${cart}%0A%0ATotal: ${encodeURIComponent(totalStr)}%0A%0ACustomer:%0AName: ${encodeURIComponent(name)}%0APhone: ${encodeURIComponent(phone)}%0AAddress: ${encodeURIComponent(address||'-')}%0AFulfillment: ${encodeURIComponent(fulfillment)}%0APayment: Direct Bank Transfer%0AColor Preference: ${encodeURIComponent(color||'Not specified')}%0A%0ABank Transfer Details:%0ABank: Monie Point%0AAccount: 5026485782%0AAccount Name: COJJ Gadgets%0A%0A${hasReceipt?encodeURIComponent('I will send the receipt image here.'):encodeURIComponent('No receipt attached.')}`;
       const wa = `https://wa.me/2347036140846?text=${msg}`;
       window.location.href = wa;
     });
