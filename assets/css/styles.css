@@ -44,6 +44,16 @@ a{color:var(--accent-2);text-decoration:none}
   .nav-search .search input,.nav-search .search button{width:100%}
   .pagination{flex-direction:column;gap:12px}
   .page-numbers{flex-wrap:wrap;justify-content:center}
+  .categories{padding:32px 0}
+  .categories h2{font-size:24px;margin-bottom:20px}
+  .category-grid{grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px}
+  .category-card{padding:24px 16px;gap:12px}
+  .category-icon{font-size:36px}
+  .category-card h3{font-size:18px}
+  .category-card p{font-size:13px}
+  .category-hero{padding:40px 0}
+  .category-hero h1{font-size:28px}
+  .category-hero p{font-size:16px}
 }
 
 .hero{position:relative}
@@ -67,6 +77,21 @@ a{color:var(--accent-2);text-decoration:none}
 .about{padding:48px 0;border-top:1px solid #f5f5f5;border-bottom:1px solid #e2e4e7;background:linear-gradient(180deg,#0b0c10,#0e1016)}
 .about h2{margin:0 0 8px;color:#fff}
 .about p{margin:0;color:#c7d2fe}
+
+/* Categories Section */
+.categories{padding:48px 0;background:linear-gradient(180deg,#0e1016,#0b0c10)}
+.categories h2{margin:0 0 24px;color:#fff;text-align:center;font-size:28px}
+.category-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:24px;max-width:1000px;margin:0 auto}
+.category-card{background:var(--card);border:1px solid #374151;border-radius:16px;padding:32px 24px;text-decoration:none;text-align:center;transition:all 0.3s ease;display:flex;flex-direction:column;align-items:center;gap:16px}
+.category-card:hover{transform:translateY(-4px);box-shadow:0 12px 30px rgba(0,0,0,0.2);border-color:var(--accent)}
+.category-icon{font-size:48px;margin-bottom:8px}
+.category-card h3{margin:0;color:var(--text);font-size:20px;font-weight:700}
+.category-card p{margin:0;color:#6b7280;font-size:14px;line-height:1.5}
+
+/* Category Hero Section */
+.category-hero{padding:60px 0;background:linear-gradient(135deg,#0b0c10,#1a1b26);text-align:center}
+.category-hero h1{margin:0 0 16px;color:#fff;font-size:36px;font-weight:800}
+.category-hero p{margin:0;color:var(--accent-2);font-size:18px;opacity:0.9}
 
 .products{padding:36px 0 64px}
 .products h2{margin:0 0 18px;color:#fff}
