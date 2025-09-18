@@ -53,7 +53,7 @@
           <strong>Total:</strong> <span id="cartTotal">₦0</span>
         </div>
         <div>
-          <a class="btn" href="checkout.html">Make Payment</a>
+          <a class="btn" href="checkout.html" id="makePaymentBtn">Make Payment</a>
         </div>
       </div>
     </div>
@@ -85,6 +85,27 @@
   <script src="assets/js/auth-modals.js"></script>
   <script src="assets/js/main.js"></script>
   <script>
+    // Simple warning toast
+    function showWarning(message){
+      const existing = document.querySelector('.form-warning');
+      if (existing) existing.remove();
+      const note = document.createElement('div');
+      note.className = 'form-warning';
+      note.setAttribute('role','alert');
+      note.style.position = 'fixed';
+      note.style.top = '20px';
+      note.style.right = '20px';
+      note.style.background = '#b91c1c';
+      note.style.color = '#fff';
+      note.style.padding = '12px 16px';
+      note.style.borderRadius = '8px';
+      note.style.boxShadow = '0 6px 20px rgba(0,0,0,0.3)';
+      note.style.zIndex = '9999';
+      note.textContent = message;
+      document.body.appendChild(note);
+      setTimeout(()=>{ note.style.opacity = '0'; note.style.transition = 'opacity .4s'; setTimeout(()=>note.remove(), 400); }, 2500);
+    }
+
     // Use the standard updateCartCount function from main.js
     function render(){
       const list = document.getElementById('cartList');
@@ -124,6 +145,20 @@
     function incQty(id){ const c=getCart(); const i=c.find(x=>x.id===id); if(i){i.qty++; saveCart(c); render();} }
     function decQty(id){ const c=getCart(); const i=c.find(x=>x.id===id); if(i){ i.qty=Math.max(1,i.qty-1); saveCart(c); render(); } }
     function removeItem(id){ removeFromCart(id); render(); }
+    
+    // Guard Make Payment when cart is empty
+    document.addEventListener('DOMContentLoaded', ()=>{
+      const pay = document.getElementById('makePaymentBtn');
+      if (pay){
+        pay.addEventListener('click', (e)=>{
+          const cart = getCart();
+          if (!Array.isArray(cart) || cart.length === 0){
+            e.preventDefault();
+            showWarning('Add products to cart first before making payment.');
+          }
+        });
+      }
+    });
     
     // Hamburger Menu
     const hamburger = document.getElementById('hamburger');
