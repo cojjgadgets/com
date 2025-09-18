@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Auth Test - COJJ Gadgets</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #1a1a1a; color: #fff; }
+    .test-section { margin: 20px 0; padding: 15px; border: 1px solid #333; border-radius: 8px; }
+    .success { color: #4ade80; }
+    .error { color: #f87171; }
+    .info { color: #60a5fa; }
+    button { padding: 10px 15px; margin: 5px; background: #3b82f6; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    button:hover { background: #2563eb; }
+    pre { background: #2a2a2a; padding: 10px; border-radius: 5px; overflow-x: auto; }
+  </style>
+</head>
+<body>
+  <h1>Authentication Test Page</h1>
+  
+  <div class="test-section">
+    <h2>Auth Status</h2>
+    <div id="authStatus">Loading...</div>
+    <button onclick="checkAuth()">Check Auth</button>
+  </div>
+
+  <div class="test-section">
+    <h2>User Profile Test</h2>
+    <div id="profileStatus">Loading...</div>
+    <button onclick="testProfile()">Test Profile</button>
+  </div>
+
+  <div class="test-section">
+    <h2>Orders Test</h2>
+    <div id="ordersStatus">Loading...</div>
+    <button onclick="testOrders()">Test Orders</button>
+  </div>
+
+  <div class="test-section">
+    <h2>Database Tables Test</h2>
+    <div id="tablesStatus">Loading...</div>
+    <button onclick="testTables()">Test Tables</button>
+  </div>
+
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script src="assets/js/supabase-config.js"></script>
+  <script>
+    const SUPABASE_URL = 'https://ysspubgmjadtamozwtby.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inlzc3B1YmdtamFkdGFtb3p3dGJ5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTcxMDEyMDQsImV4cCI6MjA3MjY3NzIwNH0.ATgegDQJKgJ3lzUwjwlVmZUeDFtZr1kcqfjxIc5I2_8';
+    
+    const { createClient } = supabase;
+    const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    async function checkAuth() {
+      const statusDiv = document.getElementById('authStatus');
+      statusDiv.innerHTML = '<div class="info">Checking...</div>';
+      
+      try {
+        // Check session
+        const { data: { session }, error: sessionError } = await supabaseClient.auth.getSession();
+        
+        // Check functions
+        const isLoggedInCheck = typeof isLoggedIn === 'function' ? isLoggedIn() : 'Function not available';
+        const getCurrentUserCheck = typeof getCurrentUser === 'function' ? getCurrentUser() : 'Function not available';
+        
+        statusDiv.innerHTML = `
+          <div class="info">Session: ${session ? 'Active' : 'None'}</div>
+          <div class="info">isLoggedIn(): ${isLoggedInCheck}</div>
+          <div class="info">getCurrentUser(): ${getCurrentUserCheck ? 'Available' : 'None'}</div>
+          <pre>${JSON.stringify({ session, isLoggedInCheck, getCurrentUserCheck }, null, 2)}</pre>
+        `;
+      } catch (error) {
+        statusDiv.innerHTML = `<div class="error">Error: ${error.message}</div>`;
+      }
+    }
+
+    async function testProfile() {
+      const statusDiv = document.getElementById('profileStatus');
+      statusDiv.innerHTML = '<div class="info">Testing...</div>';
+      
+      try {
+        const currentUser = getCurrentUser();
+        if (!currentUser) {
+          statusDiv.innerHTML = '<div class="error">No current user</div>';
+          return;
+        }
+
+        const { data: profile, error } = await supabaseClient
+          .from('user_profiles')
+          .select('*')
+          .eq('user_id', currentUser.id)
+          .single();
+
+        statusDiv.innerHTML = `
+          <div class="info">User ID: ${currentUser.id}</div>
+          <div class="info">Profile Found: ${profile ? 'Yes' : 'No'}</div>
+          <div class="info">Error: ${error ? error.message : 'None'}</div>
+          <pre>${JSON.stringify({ profile, error }, null, 2)}</pre>
+        `;
+      } catch (error) {
+        statusDiv.innerHTML = `<div class="error">Error: ${error.message}</div>`;
+      }
+    }
+
+    async function testOrders() {
+      const statusDiv = document.getElementById('ordersStatus');
+      statusDiv.innerHTML = '<div class="info">Testing...</div>';
+      
+      try {
+        const currentUser = getCurrentUser();
+        if (!currentUser) {
+          statusDiv.innerHTML = '<div class="error">No current user</div>';
+          return;
+        }
+
+        const { data: orders, error } = await supabaseClient
+          .from('orders')
+          .select('*')
+          .eq('user_id', currentUser.id);
+
+        statusDiv.innerHTML = `
+          <div class="info">User ID: ${currentUser.id}</div>
+          <div class="info">Orders Found: ${orders ? orders.length : 0}</div>
+          <div class="info">Error: ${error ? error.message : 'None'}</div>
+          <pre>${JSON.stringify({ orders, error }, null, 2)}</pre>
+        `;
+      } catch (error) {
+        statusDiv.innerHTML = `<div class="error">Error: ${error.message}</div>`;
+      }
+    }
+
+    async function testTables() {
+      const statusDiv = document.getElementById('tablesStatus');
+      statusDiv.innerHTML = '<div class="info">Testing...</div>';
+      
+      try {
+        // Test user_profiles table
+        const { data: profiles, error: profilesError } = await supabaseClient
+          .from('user_profiles')
+          .select('count')
+          .limit(1);
+
+        // Test orders table
+        const { data: orders, error: ordersError } = await supabaseClient
+          .from('orders')
+          .select('count')
+          .limit(1);
+
+        statusDiv.innerHTML = `
+          <div class="info">User Profiles Table: ${profilesError ? 'Error' : 'OK'}</div>
+          <div class="info">Orders Table: ${ordersError ? 'Error' : 'OK'}</div>
+          <div class="error">Profiles Error: ${profilesError ? profilesError.message : 'None'}</div>
+          <div class="error">Orders Error: ${ordersError ? ordersError.message : 'None'}</div>
+        `;
+      } catch (error) {
+        statusDiv.innerHTML = `<div class="error">Error: ${error.message}</div>`;
+      }
+    }
+
+    // Auto-run tests on load
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => {
+        checkAuth();
+        testProfile();
+        testOrders();
+        testTables();
+      }, 1000);
+    });
+  </script>
+</body>
+</html>

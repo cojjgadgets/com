@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cart — COJJ Gadgets Lagos</title>
+  <meta name="description" content="Your COJJ Gadgets shopping cart. Best gadgets in Lagos at Admiralty Mall, Lekki Phase 1." />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+             <a href="./" class="logo">
+         <span style="font-weight: 800; font-size: 22px; letter-spacing: 0.8px; color: #fff;">COJJ<img src="images/logo.jpg" alt="COJJ Gadgets Logo" style="height: 16px; width: auto; margin-left: 2px; vertical-align: middle;" /></span>
+       </a>
+      <div class="nav-search">
+        <div class="search-container">
+          <button onclick="history.back()" class="go-back-btn" aria-label="Go back to previous page">← Go Back</button>
+          <form class="search" role="search" aria-label="Search products" onsubmit="return false;">
+            <input id="searchInput" type="search" placeholder="Search products..." aria-label="Search gadgets" />
+            <button id="searchButton" type="button">Search</button>
+          </form>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="./">Home</a>
+        <a href="about.html">About</a>
+        <a class="active" href="cart.html">Cart (<span id="cartCount">0</span>)</a>
+        <a href="account.html">My Account</a>
+        <div class="auth-buttons-mobile">
+          <button class="btn btn-sm" onclick="showLoginModal()">Login</button>
+          <button class="btn btn-sm" onclick="showSignupModal()">Sign Up</button>
+        </div>
+      </nav>
+      <div class="auth-buttons">
+        <button class="btn btn-sm" onclick="showLoginModal()">Login</button>
+        <button class="btn btn-sm" onclick="showSignupModal()">Sign Up</button>
+      </div>
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </header>
+
+  <main class="cart">
+    <div class="container">
+      <h1>Your Cart</h1>
+      <div id="cartList" class="cart-list"></div>
+      <div class="cart-summary">
+        <div>
+          <strong>Total:</strong> <span id="cartTotal">₦0</span>
+        </div>
+        <div>
+          <a class="btn" href="checkout.html">Make Payment</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>
+                 <strong>COJJ Gadgets</strong>
+         <p>Admiralty Mall, Lekki Phase 1, Lagos</p>
+         <p><a href="tel:+2347036140846" style="text-decoration: none; color: var(--accent-2);">📞 Call us</a> | <a href="https://wa.me/2347036140846" style="text-decoration: none; color: var(--accent-2);">✉️ Write us</a></p>
+      </div>
+      <div>
+        <a href="./" class="btn">Back to Home</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Chat Button -->
+  <a href="https://wa.me/2347036140846" class="chat-btn" aria-label="Chat with us on WhatsApp">
+    💬
+  </a>
+
+  
+
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/supabase-config.js"></script>
+  <script src="assets/js/auth-modals.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+    // Use the standard updateCartCount function from main.js
+    function render(){
+      const list = document.getElementById('cartList');
+      const totalEl = document.getElementById('cartTotal');
+      const cart = getCart();
+      if(cart.length===0){
+        list.innerHTML = '<p>Your cart is empty.</p>';
+        totalEl.textContent = '₦0';
+        updateHeaderCount();
+        return;
+      }
+      let total = 0;
+      list.innerHTML = cart.map(it=>{
+        const p = getProductById(it.id) || { name: it.name, price: it.price, image: it.image };
+        const line = (p.price||0) * it.qty; total += line;
+        return `
+        <div class="cart-item">
+          <img src="${p.image||''}" alt="${p.name||''}" />
+          <div>
+            <div style="font-weight:700">${p.name||'Item'}</div>
+            <div>${formatNaira(p.price||0)}</div>
+          </div>
+          <div class="qty">
+            <button onclick="decQty('${it.id}')">-</button>
+            <span>${it.qty}</span>
+            <button onclick="incQty('${it.id}')">+</button>
+          </div>
+          <div style="display:flex; align-items:center; gap:8px;">
+            <div style="font-weight:700;">${formatNaira(line)}</div>
+            <button onclick="removeItem('${it.id}')" style="padding:6px 10px;border-radius:8px;border:1px solid #4b5563;background:#111827;color:#e5e7eb">Remove</button>
+          </div>
+        </div>`;
+      }).join('');
+      totalEl.textContent = formatNaira(total);
+      updateCartCount();
+    }
+    function incQty(id){ const c=getCart(); const i=c.find(x=>x.id===id); if(i){i.qty++; saveCart(c); render();} }
+    function decQty(id){ const c=getCart(); const i=c.find(x=>x.id===id); if(i){ i.qty=Math.max(1,i.qty-1); saveCart(c); render(); } }
+    function removeItem(id){ removeFromCart(id); render(); }
+    
+    // Hamburger Menu
+    const hamburger = document.getElementById('hamburger');
+    const nav = document.querySelector('.nav');
+    if (hamburger && nav) {
+      hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        nav.classList.toggle('active');
+      });
+      
+      // Close menu when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!hamburger.contains(e.target) && !nav.contains(e.target)) {
+          hamburger.classList.remove('active');
+          nav.classList.remove('active');
+        }
+      });
+    }
+    
+    render();
+  </script>
+</body>
+</html>
+
+

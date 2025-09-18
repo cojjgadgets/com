@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - COJJ Gadgets</title>
+    <meta name="description" content="Contact COJJ Gadgets in Lagos. Get in touch for inquiries about our premium gadgets and electronics.">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Contact Us - COJJ Gadgets">
+    <meta property="og:description" content="Contact COJJ Gadgets in Lagos. Get in touch for inquiries about our premium gadgets and electronics.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourdomain.com/contact">
+    
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Contact Us - COJJ Gadgets">
+    <meta name="twitter:description" content="Contact COJJ Gadgets in Lagos. Get in touch for inquiries about our premium gadgets and electronics.">
+    
+    <!-- Local Business Schema -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "COJJ Gadgets",
+        "description": "Premium gadgets and electronics store in Lagos",
+        "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "Admiralty Mall",
+            "addressLocality": "Lekki Phase 1",
+            "addressRegion": "Lagos",
+            "addressCountry": "NG"
+        },
+        "telephone": "+2347036140846",
+        "email": "cojjcompanylimited@gmail.com",
+        "url": "https://yourdomain.com"
+    }
+    </script>
+    
+    <link rel="stylesheet" href="./assets/css/styles.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="site-header">
+        <div class="container">
+            <div class="header-inner">
+                <a href="./" class="logo">
+                    COJJ<img src="./images/logo.jpg" alt="COJJ Logo" style="width: 24px; height: 24px; margin-left: 2px; border-radius: 4px;">
+                </a>
+                
+                <!-- Search Bar -->
+                <div class="nav-search">
+                    <div class="search-container">
+                        <button onclick="history.back()" class="go-back-btn">← Go Back</button>
+                        <form class="search" onsubmit="return false;">
+                            <input type="text" id="searchInput" placeholder="Search products..." oninput="doSearch()">
+                            <button type="button" onclick="doSearch()">Search</button>
+                        </form>
+                    </div>
+                </div>
+                
+                <nav class="nav">
+                    <a href="./">Home</a>
+                    <a href="./about.html">About</a>
+                    <a href="./contact.html" class="active">Contact</a>
+                    <a href="./cart.html">Cart <span id="cartCount">0</span></a>
+                    <a href="account.html">My Account</a>
+                    <div class="auth-buttons-mobile">
+                        <button class="btn btn-sm" onclick="showLoginModal()">Login</button>
+                        <button class="btn btn-sm" onclick="showSignupModal()">Sign Up</button>
+                    </div>
+                </nav>
+                <div class="auth-buttons">
+                    <button class="btn btn-sm" onclick="showLoginModal()">Login</button>
+                    <button class="btn btn-sm" onclick="showSignupModal()">Sign Up</button>
+                </div>
+                
+                <!-- Hamburger Menu -->
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Contact Hero Section -->
+        <section class="contact-hero">
+            <div class="container">
+                <h1>Contact Us</h1>
+                <p>Get in touch with COJJ Gadgets. We're here to help with all your gadget needs!</p>
+            </div>
+        </section>
+
+        <!-- Contact Form Section -->
+        <section class="contact-form-section">
+            <div class="container">
+                <div class="contact-content">
+                    <div class="contact-info">
+                        <h2>Get In Touch</h2>
+                        <p>Have questions about our products? Need assistance with your order? We'd love to hear from you!</p>
+                        
+                        <div class="contact-details">
+                            <div class="contact-item">
+                                <div class="contact-icon">📍</div>
+                                <div>
+                                    <h3>Address</h3>
+                                    <p>Admiralty Mall, Lekki Phase 1, Lagos, Nigeria</p>
+                                </div>
+                            </div>
+                            
+                            <div class="contact-item">
+                                <div class="contact-icon">📞</div>
+                                <div>
+                                    <h3>Phone</h3>
+                                    <p>+234 703 614 0846</p>
+                                </div>
+                            </div>
+                            
+                            <div class="contact-item">
+                                <div class="contact-icon">✉️</div>
+                                <div>
+                                    <h3>Email</h3>
+                                    <p>cojjcompanylimited@gmail.com</p>
+                                </div>
+                            </div>
+                            
+                            <div class="contact-item">
+                                <div class="contact-icon">🕒</div>
+                                <div>
+                                    <h3>Business Hours</h3>
+                                    <p>Monday - Saturday: 9:00 AM - 8:00 PM<br>Sunday: 12:00 PM - 6:00 PM</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-form-container">
+                        <form class="contact-form" id="contactForm">
+                            <h3>Send us a Message</h3>
+                            
+                            <div class="form-group">
+                                <label for="name">Full Name *</label>
+                                <input type="text" id="name" name="name" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="phone">Phone Number *</label>
+                                <input type="tel" id="phone" name="phone" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="email">Email Address</label>
+                                <input type="email" id="email" name="email">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="message">Message *</label>
+                                <textarea id="message" name="message" rows="5" required placeholder="Tell us how we can help you..."></textarea>
+                            </div>
+                            
+                            <button type="submit" class="submit-btn">
+                                <span class="btn-text">Send Message</span>
+                                <span class="btn-loading" style="display: none;">Sending...</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-inner">
+                <div class="footer-section">
+                    <h3>COJJ Gadgets</h3>
+                    <p>Your trusted source for premium gadgets and electronics in Lagos.</p>
+                    <div class="social-links">
+                        <a href="https://instagram.com/cojjgadgets" target="_blank" rel="noopener">
+                            <i class="fab fa-instagram"></i> COJJ Instagram
+                        </a>
+                        <a href="https://facebook.com/cojjgadgets" target="_blank" rel="noopener">
+                            <i class="fab fa-facebook"></i> COJJ Facebook
+                        </a>
+                        <a href="https://threads.net/@cojjgadgets" target="_blank" rel="noopener">
+                            <i class="fab fa-threads"></i> 🧵 COJJ Threads
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="./">Home</a></li>
+                        <li><a href="./about.html">About Us</a></li>
+                        <li><a href="./contact.html">Contact</a></li>
+                        <li><a href="./cart.html">Cart</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
+                    <p>📍 Admiralty Mall, Lekki Phase 1, Lagos</p>
+                    <p>📞 +234 703 614 0846</p>
+                    <p>✉️ cojjcompanylimited@gmail.com</p>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2024 COJJ Gadgets. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- WhatsApp Button -->
+    <a href="https://wa.me/2347036140846" class="whatsapp-btn" target="_blank" rel="noopener">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script>
+        // Hamburger Menu Toggle
+        const hamburger = document.querySelector('.hamburger');
+        const nav = document.querySelector('.nav');
+        
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            nav.classList.toggle('active');
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!hamburger.contains(e.target) && !nav.contains(e.target)) {
+                hamburger.classList.remove('active');
+                nav.classList.remove('active');
+            }
+        });
+        
+        // Contact Form Submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            
+            // Show loading state
+            const btnText = document.querySelector('.btn-text');
+            const btnLoading = document.querySelector('.btn-loading');
+            btnText.style.display = 'none';
+            btnLoading.style.display = 'inline';
+            
+            // Format message for WhatsApp
+            const whatsappMessage = `*New Contact Form Submission*\n\n*Name:* ${name}\n*Phone:* ${phone}\n*Email:* ${email || 'Not provided'}\n\n*Message:*\n${message}`;
+            
+            // Encode message for WhatsApp URL
+            const encodedMessage = encodeURIComponent(whatsappMessage);
+            const whatsappUrl = `https://wa.me/2347036140846?text=${encodedMessage}`;
+            
+            // Open WhatsApp
+            window.open(whatsappUrl, '_blank');
+            
+            // Reset form and button state
+            setTimeout(() => {
+                document.getElementById('contactForm').reset();
+                btnText.style.display = 'inline';
+                btnLoading.style.display = 'none';
+            }, 1000);
+        });
+        
+        // Cart count update function is now handled by main.js
+        
+        // Initialize cart count
+        updateCartCount();
+    </script>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <script src="./assets/js/data.js"></script>
+    <script src="./assets/js/supabase-config.js"></script>
+    <script src="./assets/js/auth-modals.js"></script>
+    <script src="./assets/js/main.js"></script>
+</body>
+</html>

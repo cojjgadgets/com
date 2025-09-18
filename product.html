@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product — COJJ Gadgets Lagos</title>
+  <meta name="description" content="View product details, price, and specs at COJJ Gadgets, Admiralty Mall Lekki Phase 1 — the best gadgets in Lagos." />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+             <a href="./" class="logo">
+         <span style="font-weight: 800; font-size: 22px; letter-spacing: 0.8px; color: #fff;">COJJ<img src="images/logo.jpg" alt="COJJ Gadgets Logo" style="height: 16px; width: auto; margin-left: 2px; vertical-align: middle;" /></span>
+       </a>
+      <div class="nav-search">
+        <div class="search-container">
+          <button onclick="history.back()" class="go-back-btn" aria-label="Go back to previous page">← Go Back</button>
+          
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="./">Home</a>
+        <a href="about.html">About</a>
+        <a href="cart.html">Cart (<span id="cartCount">0</span>)</a>
+        <a href="account.html">My Account</a>
+        <div class="auth-buttons-mobile">
+          <button class="btn btn-sm" onclick="showLoginModal()">Login</button>
+          <button class="btn btn-sm" onclick="showSignupModal()">Sign Up</button>
+        </div>
+      </nav>
+      <div class="auth-buttons">
+        <button class="btn btn-sm" onclick="showLoginModal()">Login</button>
+        <button class="btn btn-sm" onclick="showSignupModal()">Sign Up</button>
+      </div>
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </header>
+
+  <main class="product-wrap">
+    <div class="container">
+      <div id="product" class="product" aria-live="polite"></div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>
+                 <strong>COJJ Gadgets</strong>
+         <p>Admiralty Mall, Lekki Phase 1, Lagos</p>
+         <p><a href="tel:+2347036140846" style="text-decoration: none; color: var(--accent-2);">📞 Call us</a> | <a href="https://wa.me/2347036140846" style="text-decoration: none; color: var(--accent-2);">✉️ Write us</a></p>
+      </div>
+      <div>
+        <a href="cart.html" class="btn">View Cart</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Chat Button -->
+  <a href="https://wa.me/2347036140846" class="chat-btn" aria-label="Chat with us on WhatsApp">
+    💬
+  </a>
+
+  
+
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/supabase-config.js"></script>
+  <script src="assets/js/auth-modals.js"></script>
+  <script>
+    function qs(name){
+      const p = new URLSearchParams(location.search); return p.get(name);
+    }
+    function renderProduct(p){
+      if(!p){
+                 document.getElementById('product').innerHTML = '<p>Product not found. Please return to <a href="./">Home</a> so products can load.</p>';
+        return;
+      }
+      document.title = p.name + ' — COJJ Gadgets Lagos';
+             const extraImages = Array.isArray(p.images) ? p.images.filter(Boolean) : [];
+             const img1 = p.image || '';
+             const img2 = extraImages[0] || '';
+             const img3 = extraImages[1] || '';
+             
+             document.getElementById('product').innerHTML = `
+         <div class="gallery">
+           <div class="swipe-indicator">🔄 Swipe to see more images</div>
+           <div class="image-slider">
+             <button class="slider-arrow prev" onclick="prevSlide()">‹</button>
+             <button class="slider-arrow next" onclick="nextSlide()">›</button>
+            ${img1 ? `<div class="slide active"><img src="${img1}" alt="${p.name}" onerror="this.style.display='none'" /></div>` : ''}
+            ${img2 ? `<div class="slide"><img src="${img2}" alt="${p.name} view 2" onerror="this.style.display='none'" /></div>` : ''}
+            ${img3 ? `<div class="slide"><img src="${img3}" alt="${p.name} view 3" onerror="this.style.display='none'" /></div>` : ''}
+           </div>
+           <div class="thumbnail-container">
+            ${img1 ? `<div class="thumbnail active" onclick="currentSlide(0)"><img src="${img1}" alt="${p.name} thumbnail" onerror="this.style.display='none'" /></div>` : ''}
+            ${img2 ? `<div class="thumbnail" onclick="currentSlide(1)"><img src="${img2}" alt="${p.name} thumbnail 2" onerror="this.style.display='none'" /></div>` : ''}
+            ${img3 ? `<div class="thumbnail" onclick="currentSlide(2)"><img src="${img3}" alt="${p.name} thumbnail 3" onerror="this.style.display='none'" /></div>` : ''}
+           </div>
+         </div>
+        <div class="details">
+          <h1>${p.name}</h1>
+          <div class="price">${formatNaira(p.price)}</div>
+          <p class="specs">${p.specs}</p>
+          <div style="margin-top:12px; display:flex; gap:8px; align-items:center;">
+            <button id="add" class="btn">Add to Cart</button>
+            <a href="cart.html" class="btn" style="background:transparent;border:1px solid #334155;color:#e5e7eb;">Go to Cart</a>
+          </div>
+        </div>`;
+      document.getElementById('add').addEventListener('click', ()=>{
+        addToCart(p.id, 1);
+        updateCartCount();
+      });
+    }
+    // Cart count update function is now handled by main.js
+     
+     // Initialize cart count
+     if (typeof updateCartCount === 'function') {
+       updateCartCount();
+     }
+     
+     // Hamburger Menu
+     const hamburger = document.getElementById('hamburger');
+     const nav = document.querySelector('.nav');
+     if (hamburger && nav) {
+       hamburger.addEventListener('click', () => {
+         hamburger.classList.toggle('active');
+         nav.classList.toggle('active');
+       });
+       
+       // Close menu when clicking outside
+       document.addEventListener('click', (e) => {
+         if (!hamburger.contains(e.target) && !nav.contains(e.target)) {
+           hamburger.classList.remove('active');
+           nav.classList.remove('active');
+         }
+       });
+     }
+     
+     const id = qs('id');
+     const product = getProductById(id);
+     renderProduct(product);
+     
+     // Image slider functionality
+     let currentSlideIndex = 0;
+     const slides = document.querySelectorAll('.slide');
+     const dots = document.querySelectorAll('.dot');
+     
+     function showSlide(index) {
+       // Hide all slides
+       slides.forEach(slide => slide.classList.remove('active'));
+       
+       // Remove active class from all thumbnails
+       const thumbnails = document.querySelectorAll('.thumbnail');
+       thumbnails.forEach(thumb => thumb.classList.remove('active'));
+       
+       // Show current slide
+       if (slides[index]) {
+         slides[index].classList.add('active');
+         thumbnails[index].classList.add('active');
+         currentSlideIndex = index;
+       }
+     }
+     
+     function currentSlide(index) {
+       showSlide(index);
+     }
+     
+     function nextSlide() {
+       const nextIndex = (currentSlideIndex + 1) % slides.length;
+       showSlide(nextIndex);
+     }
+     
+     function prevSlide() {
+       const prevIndex = (currentSlideIndex - 1 + slides.length) % slides.length;
+       showSlide(prevIndex);
+     }
+     
+     // Touch/swipe functionality
+     let startX = 0;
+     let endX = 0;
+     
+     const slider = document.querySelector('.image-slider');
+     if (slider) {
+       slider.addEventListener('touchstart', (e) => {
+         startX = e.touches[0].clientX;
+       });
+       
+       slider.addEventListener('touchend', (e) => {
+         endX = e.changedTouches[0].clientX;
+         handleSwipe();
+       });
+       
+       slider.addEventListener('mousedown', (e) => {
+         startX = e.clientX;
+       });
+       
+       slider.addEventListener('mouseup', (e) => {
+         endX = e.clientX;
+         handleSwipe();
+       });
+     }
+     
+     function handleSwipe() {
+       const swipeThreshold = 50;
+       const diff = startX - endX;
+       
+       if (Math.abs(diff) > swipeThreshold) {
+         if (diff > 0) {
+           // Swipe left - next slide
+           nextSlide();
+         } else {
+           // Swipe right - previous slide
+           prevSlide();
+         }
+       }
+     }
+     
+     // Auto-hide swipe indicator after 3 seconds
+     setTimeout(() => {
+       const indicator = document.querySelector('.swipe-indicator');
+       if (indicator) {
+         indicator.style.opacity = '0';
+         indicator.style.transition = 'opacity 0.5s ease';
+       }
+     }, 3000);
+  </script>
+</body>
+</html>
+
+
