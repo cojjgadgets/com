@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mens Fashion — COJJ</title>
+  <meta name="description" content="Shop Mens Fashion at COJJ: clothes and shoes." />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="./" class="logo"><span style="font-weight: 800; font-size: 22px; letter-spacing: 0.8px; color: #fff;">COJJ<img src="images/logo.jpg" alt="COJJ Gadgets Logo" style="height: 16px; width: auto; margin-left: 2px; vertical-align: middle;" /></span></a>
+      <div class="nav-search">
+        <div class="search-container">
+          <button onclick="history.back()" class="go-back-btn" aria-label="Go back">← Go Back</button>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="./">Home</a>
+        <a href="about.html">About</a>
+        <a href="cart.html">Cart (<span id="cartCount">0</span>)</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="category-hero">
+      <div class="container">
+        <h1>Mens Fashion</h1>
+        <p>Clothes and Shoes</p>
+      </div>
+    </section>
+
+    <section class="categories">
+      <div class="container">
+        <h2>Browse Subcategories</h2>
+        <div class="category-grid">
+          <a href="#" class="category-card" onclick="filterSub('clothes');return false;">
+            <div class="category-icon">👕</div>
+            <h3>Clothes</h3>
+          </a>
+          <a href="#" class="category-card" onclick="filterSub('shoes');return false;">
+            <div class="category-icon">👟</div>
+            <h3>Shoes</h3>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="products">
+      <div class="container">
+        <div id="productsSource" hidden>
+          <div data-product data-id="m1" data-name="Embroidery Long Sleeve Shirts White" data-price="70000" data-image="images/Embroidery Long Sleeve Shirts White1.jpeg" data-specs="Polo Ralph Lauren" data-category="mens" data-subcategory="clothes" data-size-type="clothes"></div>
+          <div data-product data-id="m2" data-name="PRL Long Sleeve Checkered Shirt" data-price="70000" data-image="images/PRL Long Sleeve Checkered Shirt1.jpeg" data-specs="Slim fit polo" data-category="mens" data-subcategory="clothes" data-size-type="clothes"></div>
+          <div data-product data-id="m3" data-name="Nike Air Max 2024 White" data-price="105000" data-image="images/Nike Air Max 2024 White1.jpeg" data-images="images/Nike Air Max 2024 White2.jpeg|images/Nike Air Max 2024 White3.jpeg" data-specs="Nike" data-category="mens" data-subcategory="shoes" data-size-type="shoes"></div>
+        </div>
+        <div id="productsGrid" class="grid" aria-live="polite"></div>
+        <div class="pagination">
+          <button id="prevPage" class="pagination-btn">Previous</button>
+          <div id="pageNumbers" class="page-numbers"></div>
+          <button id="nextPage" class="pagination-btn">Next</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p style="text-align:center;color:#94a3b8">&copy; <span id="year"></span> COJJ</p>
+    </div>
+  </footer>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+    function filterSub(sub){
+      const all = getProducts().filter(p=> (p.category||'')==='mens');
+      const items = sub ? all.filter(p=> (p.subcategory||'')===sub) : all;
+      const grid = document.getElementById('productsGrid');
+      if (!grid) return;
+      grid.innerHTML = items.map(p => {
+        const sizeType = (p.sizeType||'').toLowerCase();
+        const category = (p.category||'').toLowerCase();
+        const subcategory = (p.subcategory||'').toLowerCase();
+        const shoeSizes = category==='womens' ? ['37','38','39','40','41','42','43'] : ['40','41','42','43','44','45','46','47'];
+        const clothSizes = ['M','L','XL','XXL'];
+        const hasSizes = (sizeType==='shoes' || sizeType==='clothes') && subcategory!=='bags';
+        const sizeOptions = sizeType==='shoes' ? shoeSizes : (sizeType==='clothes' ? clothSizes : []);
+        
+        return `
+        <article class="card" aria-label="${p.name}">
+          <img src="${p.image}" alt="${p.name}" loading="lazy" />
+          <div class="content">
+            <h3>${p.name}</h3>
+            <div class="price">${formatNaira(p.price)}</div>
+            ${hasSizes ? `
+              <div class="size-selector" style="margin-top: 10px;">
+                <label for="size-${p.id}" style="font-size: 12px; color: #666; display: block; margin-bottom: 4px;">Select Size:</label>
+                <select id="size-${p.id}" class="form-select" style="width: 100%; padding: 6px; border: 1px solid #ddd; border-radius: 4px; font-size: 12px;">
+                  <option value="">Choose size...</option>
+                  ${sizeOptions.map(size => `<option value="${size}">${size}</option>`).join('')}
+                </select>
+              </div>
+            ` : ''}
+          </div>
+          <div class="actions">
+            <a class="btn" href="product.html?id=${encodeURIComponent(p.id)}">View</a>
+            <button type="button" class="add" data-id="${p.id}" ${hasSizes ? 'disabled' : ''}>Add to Cart</button>
+          </div>
+        </article>
+      `;
+      }).join('');
+      grid.querySelectorAll('button.add').forEach(btn=> {
+        btn.addEventListener('click', ()=>{
+          const sizeSelect = document.getElementById(`size-${btn.dataset.id}`);
+          const selectedSize = sizeSelect ? sizeSelect.value : null;
+          addToCart(btn.dataset.id, 1, selectedSize);
+          updateCartCount();
+        });
+      });
+      
+      // Add size change listeners to enable/disable add to cart buttons
+      grid.querySelectorAll('select[id^="size-"]').forEach(select => {
+        select.addEventListener('change', ()=>{
+          const productId = select.id.replace('size-', '');
+          const addBtn = grid.querySelector(`button[data-id="${productId}"]`);
+          if (addBtn) {
+            addBtn.disabled = !select.value;
+            addBtn.style.opacity = select.value ? '1' : '0.5';
+          }
+        });
+      });
+    }
+    document.addEventListener('DOMContentLoaded', ()=>{
+      // initialize year and default listing
+      const y=document.getElementById('year'); if (y) y.textContent=new Date().getFullYear();
+      // ensure the seeded products from this page are persisted
+      const source = document.getElementById('productsSource');
+      if (source){
+        const htmlProducts = Array.from(source.querySelectorAll('[data-product]')).map(el=>({
+          id: el.getAttribute('data-id'),
+          name: el.getAttribute('data-name'),
+          price: Number(el.getAttribute('data-price')||0),
+          image: el.getAttribute('data-image'),
+          images: (el.getAttribute('data-images')||'').split('|').filter(Boolean),
+          specs: el.getAttribute('data-specs')||'',
+          category: el.getAttribute('data-category')||'',
+          subcategory: el.getAttribute('data-subcategory')||'',
+          sizeType: el.getAttribute('data-size-type')||''
+        }));
+        const existing = getProducts();
+        // merge new products without duplicating ids
+        const ids = new Set(existing.map(p=>p.id));
+        const merged = existing.concat(htmlProducts.filter(p=>!ids.has(p.id)));
+        setProducts(merged);
+      }
+      filterSub('');
+    });
+  </script>
+</body>
+</html>

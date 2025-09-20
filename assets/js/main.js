@@ -63,7 +63,10 @@ document.addEventListener('DOMContentLoaded', () => {
         price: Number(el.getAttribute('data-price')||0),
         image: el.getAttribute('data-image'),
         images: (el.getAttribute('data-images')||'').split('|').filter(Boolean),
-        specs: el.getAttribute('data-specs')||''
+        specs: el.getAttribute('data-specs')||'',
+        category: el.getAttribute('data-category')||'',
+        subcategory: el.getAttribute('data-subcategory')||'',
+        sizeType: el.getAttribute('data-size-type')||''
       }));
       if (htmlProducts.length) setProducts(htmlProducts);
     }

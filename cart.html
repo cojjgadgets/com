@@ -121,11 +121,13 @@
       list.innerHTML = cart.map(it=>{
         const p = getProductById(it.id) || { name: it.name, price: it.price, image: it.image };
         const line = (p.price||0) * it.qty; total += line;
+        const sizeTag = (it.size && it.size.trim()) ? `<div style="color:#94a3b8; font-size:12px;">Size: ${it.size}</div>` : '';
         return `
         <div class="cart-item">
           <img src="${p.image||''}" alt="${p.name||''}" />
           <div>
             <div style="font-weight:700">${p.name||'Item'}</div>
+            ${sizeTag}
             <div>${formatNaira(p.price||0)}</div>
           </div>
           <div class="qty">

@@ -164,15 +164,83 @@
        }
      }
     function total(){
-      return getCart().reduce((sum, it)=>{
+      const cartTotal = getCart().reduce((sum, it)=>{
         const p = getProductById(it.id) || { price: it.price };
         return sum + ((p.price||0) * it.qty);
       }, 0);
+      
+      const delivery = document.getElementById('fulfillment').value === 'Delivery' ? 5000 : 0;
+      return cartTotal + delivery;
+    }
+    
+    function updateTotalDisplay(){
+      const cartTotal = getCart().reduce((sum, it)=>{
+        const p = getProductById(it.id) || { price: it.price };
+        return sum + ((p.price||0) * it.qty);
+      }, 0);
+      
+      const delivery = document.getElementById('fulfillment').value === 'Delivery' ? 5000 : 0;
+      const totalAmount = cartTotal + delivery;
+      
+      document.getElementById('totalAmount').textContent = formatNaira(totalAmount);
+      
+      // Show/hide delivery charge info
+      let deliveryInfo = document.getElementById('deliveryInfo');
+      if (delivery > 0) {
+        if (!deliveryInfo) {
+          deliveryInfo = document.createElement('div');
+          deliveryInfo.id = 'deliveryInfo';
+          deliveryInfo.style.cssText = 'background: #f0f9ff; border: 1px solid #0ea5e9; border-radius: 8px; padding: 12px; margin: 10px 0; font-size: 14px;';
+          document.getElementById('totalAmount').parentNode.parentNode.insertBefore(deliveryInfo, document.getElementById('totalAmount').parentNode.nextSibling);
+        }
+        deliveryInfo.innerHTML = `
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span><strong>Subtotal:</strong> ${formatNaira(cartTotal)}</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 5px;">
+            <span><strong>Delivery Charge:</strong> ${formatNaira(delivery)}</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 5px; padding-top: 5px; border-top: 1px solid #0ea5e9;">
+            <span><strong>Total:</strong> ${formatNaira(totalAmount)}</span>
+          </div>
+        `;
+      } else if (deliveryInfo) {
+        deliveryInfo.remove();
+      }
     }
     if(!getProducts().length){
       document.querySelector('.form').insertAdjacentHTML('afterbegin','<div class="transfer-box">No products loaded. Please return to <a href="./">Home</a> first.</div>');
     }
     document.getElementById('totalAmount').textContent = formatNaira(total());
+    
+    // Add event listener for fulfillment method change
+    document.getElementById('fulfillment').addEventListener('change', function() {
+      if (this.value === 'Delivery') {
+        // Show confirmation dialog for delivery charge
+        const confirmed = confirm(
+          'Delivery Charge Notice:\n\n' +
+          'A delivery charge of ₦5,000 will be added to your order total.\n\n' +
+          'Subtotal: ' + formatNaira(getCart().reduce((sum, it) => {
+            const p = getProductById(it.id) || { price: it.price };
+            return sum + ((p.price||0) * it.qty);
+          }, 0)) + '\n' +
+          'Delivery Charge: ₦5,000\n' +
+          'New Total: ' + formatNaira(getCart().reduce((sum, it) => {
+            const p = getProductById(it.id) || { price: it.price };
+            return sum + ((p.price||0) * it.qty);
+          }, 0) + 5000) + '\n\n' +
+          'Do you want to proceed with delivery?'
+        );
+        
+        if (!confirmed) {
+          // Reset to pickup if user cancels
+          this.value = 'Pickup at Admiralty Mall, Lekki Phase 1';
+        }
+      }
+      
+      // Update total display
+      updateTotalDisplay();
+    });
     
     // Pre-fill form for logged in users
     function prefillUserInfo() {
@@ -209,7 +277,8 @@
               id: item.id,
               name: product.name,
               price: product.price || 0,
-              quantity: item.qty
+              quantity: item.qty,
+              size: item.size || null
             };
           }),
           totalAmount: totalAmount,
@@ -295,6 +364,9 @@
       const cart = getCart();
       const totalAmount = total();
       const totalStr = formatNaira(totalAmount);
+      
+      // Check if delivery charge applies
+      const deliveryCharge = fulfillment === 'Delivery' ? 5000 : 0;
 
       // Check if user is logged in
       if (isLoggedIn()) {
@@ -315,11 +387,23 @@
         // Guest checkout - redirect to WhatsApp
         const cartText = cart.map(it=>{
           const p = getProductById(it.id) || { name: it.name, price: it.price };
-          return `${p.name} x${it.qty} — ${formatNaira((p.price||0)*it.qty)}`;
+          const sizeText = it.size ? ` (Size: ${it.size})` : '';
+          return `${p.name}${sizeText} x${it.qty} — ${formatNaira((p.price||0)*it.qty)}`;
         }).join('%0A');
         
         const hasReceipt = receiptFile ? true : false;
-        const msg = `Hello COJJ Gadgets,%0A%0AOrder Details:%0A${cartText}%0A%0ATotal: ${encodeURIComponent(totalStr)}%0A%0ACustomer:%0AName: ${encodeURIComponent(name)}%0APhone: ${encodeURIComponent(phone)}%0AAddress: ${encodeURIComponent(address||'-')}%0AFulfillment: ${encodeURIComponent(fulfillment)}%0APayment: ${encodeURIComponent(payment)}%0AColor Preference: ${encodeURIComponent(color||'Not specified')}%0A%0ABank Transfer Details:%0ABank: Monie Point%0AAccount: 5026485782%0AAccount Name: COJJ Gadgets%0A%0A${hasReceipt?encodeURIComponent('I will send the receipt image here.'):encodeURIComponent('No receipt attached.')}`;
+        const subtotal = getCart().reduce((sum, it) => {
+          const p = getProductById(it.id) || { price: it.price };
+          return sum + ((p.price||0) * it.qty);
+        }, 0);
+        
+        let totalBreakdown = `Subtotal: ${formatNaira(subtotal)}`;
+        if (deliveryCharge > 0) {
+          totalBreakdown += `%0ADelivery Charge: ${formatNaira(deliveryCharge)}`;
+        }
+        totalBreakdown += `%0ATotal: ${encodeURIComponent(totalStr)}`;
+        
+        const msg = `Hello COJJ Gadgets,%0A%0AOrder Details:%0A${cartText}%0A%0A${totalBreakdown}%0A%0ACustomer:%0AName: ${encodeURIComponent(name)}%0APhone: ${encodeURIComponent(phone)}%0AAddress: ${encodeURIComponent(address||'-')}%0AFulfillment: ${encodeURIComponent(fulfillment)}%0APayment: ${encodeURIComponent(payment)}%0AColor Preference: ${encodeURIComponent(color||'Not specified')}%0A%0ABank Transfer Details:%0ABank: Monie Point%0AAccount: 5026485782%0AAccount Name: COJJ Gadgets%0A%0A${hasReceipt?encodeURIComponent('I will send the receipt image here.'):encodeURIComponent('No receipt attached.')}`;
         const wa = `https://wa.me/2347036140846?text=${msg}`;
         window.location.href = wa;
       }

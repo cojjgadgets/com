@@ -29,10 +29,11 @@ function saveCart(cart){
   localStorage.setItem('cojj_cart', JSON.stringify(cart));
 }
 
-function addToCart(productId, qty=1){
+function addToCart(productId, qty=1, selectedSize){
   const cart = getCart();
-  const existing = cart.find(i=>i.id===productId);
   const product = getProductById(productId) || {};
+  const keyMatcher = (i)=> i.id===productId && (i.size||'')===(selectedSize||'');
+  const existing = cart.find(keyMatcher);
   
   if(existing){
     existing.qty += qty;
@@ -42,13 +43,15 @@ function addToCart(productId, qty=1){
       qty,
       name: product.name,
       price: product.price,
-      image: product.image
+      image: product.image,
+      size: selectedSize || ''
     });
   }
   saveCart(cart);
   
   // Show notification
-  showCartNotification(product.name, qty);
+  const displayName = product.name + (selectedSize ? ` — ${selectedSize}` : '');
+  showCartNotification(displayName, qty);
 }
 
 // Notification system for cart additions
