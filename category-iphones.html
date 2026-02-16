@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>iPhones — COJJ Gadgets Lagos</title>
+  <meta name="description" content="Shop the latest iPhones at COJJ Gadgets Lagos. iPhone X to iPhone 16 models available at Admiralty Mall, Lekki Phase 1." />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="./" class="logo">
+        <span style="font-weight: 800; font-size: 22px; letter-spacing: 0.8px; color: #fff;">COJJ<img src="images/logo.jpg" alt="COJJ Gadgets Logo" style="height: 16px; width: auto; margin-left: 2px; vertical-align: middle;" /></span>
+      </a>
+      <div class="nav-search">
+        <div class="search-container">
+          <button onclick="history.back()" class="go-back-btn" aria-label="Go back to previous page">← Go Back</button>
+          <form class="search" role="search" aria-label="Search products" onsubmit="return false;">
+            <input id="searchInput" type="search" placeholder="Search iPhones..." aria-label="Search iPhones" />
+            <button id="searchButton" type="button">Search</button>
+          </form>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="./">Home</a>
+        <a href="about.html">About</a>
+        <a href="cart.html">Cart (<span id="cartCount">0</span>)</a>
+        <a href="account.html">My Account</a>
+        <div class="auth-buttons-mobile">
+          <button class="btn btn-sm" onclick="showLoginModal()">Login</button>
+          <button class="btn btn-sm" onclick="showSignupModal()">Sign Up</button>
+        </div>
+      </nav>
+      <div class="auth-buttons">
+        <button class="btn btn-sm" onclick="showLoginModal()">Login</button>
+        <button class="btn btn-sm" onclick="showSignupModal()">Sign Up</button>
+      </div>
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="category-hero">
+      <div class="container">
+        <h1>iPhones</h1>
+        <p>Latest iPhone models from iPhone X to iPhone 16</p>
+      </div>
+    </section>
+
+    <section class="products">
+      <div class="container">
+        <div id="productsSource" hidden>
+          <div data-product data-id="p5" data-name="iPhone X 64GB" data-price="220000" data-image="images/iPhone X 64GB.jpg" data-images="images/iPhone X 64GB-1.jpg|images/iPhone X 64GB-2.jpg" data-specs="5.8&quot; OLED, A11 Bionic, 12MP dual camera, Face ID, iOS"></div>
+          <div data-product data-id="p6" data-name="iPhone XS 256GB" data-price="380000" data-image="images/iPhone XS 256GB.jpg" data-images="images/iPhone XS 256GB-1.jpg|images/iPhone XS 256GB-2.jpg" data-specs="5.8&quot; OLED, A12 Bionic, 12MP dual camera, Face ID, iOS"></div>
+          <div data-product data-id="p7" data-name="iPhone XR 128GB" data-price="350000" data-image="images/iPhone XR 128GB.jpg" data-images="images/iPhone XR 128GB-1.jpg|images/iPhone XR 128GB-2.jpg" data-specs="6.1&quot; LCD, A12 Bionic, 12MP camera, Face ID, iOS"></div>
+          <div data-product data-id="p8" data-name="iPhone 11 128GB" data-price="420000" data-image="images/iPhone 11 128GB.jpg" data-images="images/iPhone 11 128GB-1.jpg|images/iPhone 11 128GB-2.jpg" data-specs="6.1&quot; LCD, A13 Bionic, 12MP dual camera, Face ID, iOS"></div>
+          <div data-product data-id="p9" data-name="iPhone 11 Pro 256GB" data-price="580000" data-image="images/iPhone 11 Pro 256GB.jpg" data-images="images/iPhone 11 Pro 256GB-1.jpg|images/iPhone 11 Pro 256GB-2.jpg" data-specs="5.8&quot; OLED, A13 Bionic, 12MP triple camera, Face ID, iOS"></div>
+          <div data-product data-id="p10" data-name="iPhone 12 Mini 128GB" data-price="550000" data-image="images/iPhone 12 Mini 128GB.jpg" data-images="images/iPhone 12 Mini 128GB-1.jpg|images/iPhone 12 Mini 128GB-2.jpg" data-specs="5.4&quot; OLED, A14 Bionic, 12MP dual camera, 5G, MagSafe"></div>
+          <div data-product data-id="p11" data-name="iPhone 12 256GB" data-price="680000" data-image="images/iPhone 12 256GB.jpg" data-images="images/iPhone 12 256GB-1.jpg|images/iPhone 12 256GB-2.jpg" data-specs="6.1&quot; OLED, A14 Bionic, 12MP dual camera, 5G, MagSafe"></div>
+          <div data-product data-id="p12" data-name="iPhone 12 Pro 512GB" data-price="920000" data-image="images/iPhone 12 Pro 512GB.jpg" data-images="images/iPhone 12 Pro 512GB-1.jpg|images/iPhone 12 Pro 512GB-2.jpg" data-specs="6.1&quot; OLED, A14 Bionic, 12MP triple camera, LiDAR, 5G"></div>
+          <div data-product data-id="p13" data-name="iPhone 13 128GB" data-price="750000" data-image="images/iPhone 13 128GB.jpg" data-images="images/iPhone 13 128GB-1.jpg|images/iPhone 13 128GB-2.jpg" data-specs="6.1&quot; OLED, A15 Bionic, 12MP dual camera, 5G, Cinematic mode"></div>
+          <div data-product data-id="p14" data-name="iPhone 13 Mini 256GB" data-price="720000" data-image="images/iPhone 13 Mini 256GB.jpg" data-images="images/iPhone 13 Mini 256GB-1.jpg|images/iPhone 13 Mini 256GB-2.jpg" data-specs="5.4&quot; OLED, A15 Bionic, 12MP dual camera, 5G, Cinematic mode"></div>
+          <div data-product data-id="p15" data-name="iPhone 13 Pro 1TB" data-price="1250000" data-image="images/iPhone 13 Pro 1TB.jpg" data-images="images/iPhone 13 Pro 1TB-1.jpg|images/iPhone 13 Pro 1TB-2.jpg" data-specs="6.1&quot; OLED, A15 Bionic, 12MP triple camera, ProMotion, 5G"></div>
+          <div data-product data-id="p16" data-name="iPhone 14 256GB" data-price="850000" data-image="images/iPhone 14 256GB.jpg" data-images="images/iPhone 14 256GB-1.jpg|images/iPhone 14 256GB-2.jpg" data-specs="6.1&quot; OLED, A15 Bionic, 12MP dual camera, Action mode, Crash Detection"></div>
+          <div data-product data-id="p17" data-name="iPhone 14 Plus 512GB" data-price="1100000" data-image="images/iPhone 14 Plus 512GB.jpg" data-images="images/iPhone 14 Plus 512GB-1.jpg|images/iPhone 14 Plus 512GB-2.jpg" data-specs="6.7&quot; OLED, A15 Bionic, 12MP dual camera, Action mode, Crash Detection"></div>
+          <div data-product data-id="p18" data-name="iPhone 15 256GB" data-price="950000" data-image="images/iPhone 15 256GB.jpg" data-images="images/iPhone 15 256GB-1.jpg|images/iPhone 15 256GB-2.jpg" data-specs="6.1&quot; OLED, A16 Bionic, 48MP main camera, Dynamic Island, USB-C"></div>
+          <div data-product data-id="p19" data-name="iPhone 15 Plus 512GB" data-price="1200000" data-image="images/iPhone 15 Plus 512GB.jpg" data-images="images/iPhone 15 Plus 512GB-1.jpg|images/iPhone 15 Plus 512GB-2.jpg" data-specs="6.7&quot; OLED, A16 Bionic, 48MP main camera, Dynamic Island, USB-C"></div>
+          <div data-product data-id="p20" data-name="iPhone 15 Pro 1TB" data-price="1550000" data-image="images/iPhone 15 Pro 1TB.jpg" data-images="images/iPhone 15 Pro 1TB-1.jpg|images/iPhone 15 Pro 1TB-2.jpg" data-specs="6.1&quot; OLED, A17 Pro, 48MP triple camera, Titanium design, Action button"></div>
+          <div data-product data-id="p21" data-name="iPhone 15 Pro Max 1TB" data-price="1750000" data-image="images/iPhone 15 Pro Max 1TB.jpg" data-images="images/iPhone 15 Pro Max 1TB-1.jpg|images/iPhone 15 Pro Max 1TB-2.jpg" data-specs="6.7&quot; OLED, A17 Pro, 48MP triple camera, 5x telephoto, Titanium design"></div>
+          <div data-product data-id="p22" data-name="iPhone 16 256GB" data-price="1050000" data-image="images/iPhone 16 256GB.jpg" data-images="images/iPhone 16 256GB-1.jpg|images/iPhone 16 256GB-2.jpg" data-specs="6.3&quot; OLED, A18 Bionic, 48MP dual camera, Enhanced AI features, USB-C"></div>
+          <div data-product data-id="p23" data-name="iPhone 16 Pro 1TB" data-price="1650000" data-image="images/iPhone 16 Pro 1TB.jpg" data-images="images/iPhone 16 Pro 1TB-1.jpg|images/iPhone 16 Pro 1TB-2.jpg" data-specs="6.3&quot; OLED, A18 Pro, 48MP triple camera, Advanced computational photography"></div>
+          <div data-product data-id="p24" data-name="iPhone 17 Air 256GB" data-price="2549990" data-image="images/iphone 17 air 1.JPG" data-images="images/iphone 17 air 2.JPG|images/iphone 17 air 3.JPG" data-specs="6.9&quot; OLED, A18 Pro, 48MP quad camera, Periscope lens, Enhanced battery"></div>
+          <div data-product data-id="p25" data-name="iPhone 17 Air 512GB" data-price="2949990" data-image="images/iphone 17 air 1.JPG" data-images="images/iphone 17 air 2.JPG|images/iphone 17 air 3.JPG" data-specs="6.3&quot; OLED, A18 Bionic, 48MP dual camera, Enhanced AI features, USB-C"></div>
+          <div data-product data-id="p26" data-name="iPhone 17 Air 1TB" data-price="3349990" data-image="images/iphone 17 air 1.JPG" data-images="images/iphone 17 air 2.JPG|images/iphone 17 air 3.JPG" data-specs="6.3&quot; OLED, A18 Pro, 48MP triple camera, Advanced computational photography"></div>
+          <div data-product data-id="p27" data-name="iPhone 17 Pro 256GB White" data-price="2399990" data-image="images/iphone 17 pro white.JPG" data-images="images/iphone 17 pro.JPG|images/iphone 17 pro white.JPG" data-specs="6.3&quot; OLED, A18 Bionic, 48MP dual camera, Enhanced AI features, USB-C"></div>
+          <div data-product data-id="p28" data-name="iPhone 17 Pro 256GB Orange" data-price="2549990" data-image="images/iphone 17 pro orange.JPG" data-images="images/iphone 17 pro.JPG|images/iphone 17 pro orange.JPG" data-specs="6.3&quot; OLED, A18 Pro, 48MP triple camera, Advanced computational photography"></div>
+          <div data-product data-id="p29" data-name="iPhone 17 Pro 256GB Blue" data-price="2449990" data-image="images/iphone 17 pro blue.JPG" data-images="images/iphone 17 pro.JPG|images/iphone 17 pro blue.JPG" data-specs="6.3&quot; OLED, A18 Bionic, 48MP dual camera, Enhanced AI features, USB-C"></div>
+          <div data-product data-id="p30" data-name="iPhone 17 Pro Max 256GB White(Physical and E-SIM)" data-price="2999990" data-image="images/iphone 17 pro white.JPG" data-images="images/iphone 17 pro.JPG|images/iphone 17 pro orange.JPG" data-specs="6.3&quot; OLED, A18 Pro, 48MP triple camera, Advanced computational photography"></div>
+          <div data-product data-id="p31" data-name="iPhone 17 Pro Max 256GB Orange(Physical and E-SIM)" data-price="3249990" data-image="images/iphone 17 pro orange.JPG" data-images="images/iphone 17 pro.JPG|images/iphone 17 pro orange.JPG" data-specs="6.3&quot; OLED, A18 Pro, 48MP triple camera, Advanced computational photography"></div>
+          <div data-product data-id="p32" data-name="iPhone 17 Pro Max 256GB Blue(Physical and E-SIM)" data-price="3099990" data-image="images/iphone 17 pro blue.JPG" data-images="images/iphone 17 pro.JPG|images/iphone 17 pro orange.JPG" data-specs="6.3&quot; OLED, A18 Pro, 48MP triple camera, Advanced computational photography"></div>
+          <div data-product data-id="p33" data-name="iPhone 17 Pro Max 512GB Orange(Physical and E-SIM)" data-price="3549990" data-image="images/iphone 17 pro orange.JPG" data-images="images/iphone 17 pro.JPG|images/iphone 17 pro orange.JPG" data-specs="6.3&quot; OLED, A18 Pro, 48MP triple camera, Advanced computational photography"></div>
+          <div data-product data-id="p34" data-name="iPhone 17 Pro Max 512GB Blue(Physical and E-SIM)" data-price="3449990" data-image="images/iphone 17 pro blue.JPG" data-images="images/iphone 17 pro.JPG|images/iphone 17 pro orange.JPG" data-specs="6.3&quot; OLED, A18 Pro, 48MP triple camera, Advanced computational photography"></div>
+          <div data-product data-id="p35" data-name="iPhone 17 Pro Max 1TB Orange(Physical and E-SIM)" data-price="4049990" data-image="images/iphone 17 pro orange.JPG" data-images="images/iphone 17 pro.JPG|images/iphone 17 pro orange.JPG" data-specs="6.3&quot; OLED, A18 Pro, 48MP triple camera, Advanced computational photography"></div>
+          <div data-product data-id="p36" data-name="iPhone 17 Pro Max 1TB Blue(Physical and E-SIM)" data-price="4049990" data-image="images/iphone 17 pro blue.JPG" data-images="images/iphone 17 pro.JPG|images/iphone 17 pro orange.JPG" data-specs="6.3&quot; OLED, A18 Pro, 48MP triple camera, Advanced computational photography"></div>
+        </div>
+        <div id="productsGrid" class="grid"></div>
+        <div class="pagination">
+          <button id="prevPage" class="pagination-btn">Previous</button>
+          <div id="pageNumbers" class="page-numbers"></div>
+          <button id="nextPage" class="pagination-btn">Next</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>
+        <strong>COJJ Gadgets</strong>
+        <p>Admiralty Mall, Lekki Phase 1, Lagos</p>
+        <p><a href="tel:+2347036140846" style="text-decoration: none; color: var(--accent-2);">📞 Call us</a> | <a href="https://wa.me/2347036140846" style="text-decoration: none; color: var(--accent-2);">✉️ Write us</a></p>
+      </div>
+      <div class="social-links">
+        <a href="https://instagram.com/cojj.ng" target="_blank" aria-label="Follow us on Instagram">📷 Instagram</a>
+        <a href="https://facebook.com/cojj.ng" target="_blank" aria-label="Follow us on Facebook">📘 Facebook</a>
+        <a href="https://threads.net/cojj.ng" target="_blank" aria-label="Follow us on Thread">🧵 Threads</a>
+      </div>
+    </div>
+    <div class="copyright">
+      <p>&copy; <span id="year">2024</span> COJJ Gadgets. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- Chat Button -->
+  <a href="https://wa.me/2347036140846" class="chat-btn" aria-label="Chat with us on WhatsApp">
+    💬
+  </a>
+
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/supabase-config.js"></script>
+  <script src="assets/js/auth-modals.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+    // Update year
+    document.getElementById('year').textContent = new Date().getFullYear();
+    
+    // Cart count update function is now handled by main.js
+    updateCartCount();
+    
+    // Hamburger Menu
+    const hamburger = document.getElementById('hamburger');
+    const nav = document.querySelector('.nav');
+    if (hamburger && nav) {
+      hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        nav.classList.toggle('active');
+      });
+      
+      // Close menu when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!hamburger.contains(e.target) && !nav.contains(e.target)) {
+          hamburger.classList.remove('active');
+          nav.classList.remove('active');
+        }
+      });
+    }
+  </script>
+</body>
+</html>

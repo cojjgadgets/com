@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product — COJJ Gadgets Lagos</title>
+  <meta name="description" content="View product details, price, and specs at COJJ Gadgets, Admiralty Mall Lekki Phase 1 — the best gadgets in Lagos." />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+             <a href="./" class="logo">
+         <span style="font-weight: 800; font-size: 22px; letter-spacing: 0.8px; color: #fff;">COJJ<img src="images/logo.jpg" alt="COJJ Gadgets Logo" style="height: 16px; width: auto; margin-left: 2px; vertical-align: middle;" /></span>
+       </a>
+      <div class="nav-search">
+        <div class="search-container">
+          <button onclick="history.back()" class="go-back-btn" aria-label="Go back to previous page">← Go Back</button>
+          
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="./">Home</a>
+        <a href="about.html">About</a>
+        <a href="cart.html">Cart (<span id="cartCount">0</span>)</a>
+        <a href="account.html">My Account</a>
+        <div class="auth-buttons-mobile">
+          <button class="btn btn-sm" onclick="showLoginModal()">Login</button>
+          <button class="btn btn-sm" onclick="showSignupModal()">Sign Up</button>
+        </div>
+      </nav>
+      <div class="auth-buttons">
+        <button class="btn btn-sm" onclick="showLoginModal()">Login</button>
+        <button class="btn btn-sm" onclick="showSignupModal()">Sign Up</button>
+      </div>
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </header>
+
+  <main class="product-wrap">
+    <div class="container">
+      <div id="product" class="product" aria-live="polite"></div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    
+  </footer>
+
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/supabase-config.js"></script>
+  <script src="assets/js/auth-modals.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+    function qs(name){
+      const p = new URLSearchParams(location.search); return p.get(name);
+    }
+    function renderProduct(p){
+      if(!p){
+                 document.getElementById('product').innerHTML = '<p>Product not found. Please return to <a href="./">Home</a> so products can load.</p>';
+        return;
+      }
+      document.title = p.name + ' — COJJ Gadgets Lagos';
+             const extraImages = Array.isArray(p.images) ? p.images.filter(Boolean) : [];
+             const img1 = p.image || '';
+             const img2 = extraImages[0] || '';
+             const img3 = extraImages[1] || '';
+             
+             const sizeType = (p.sizeType||'').toLowerCase();
+             const category = (p.category||'').toLowerCase();
+             const subcategory = (p.subcategory||'').toLowerCase();
+             const shoeSizes = category==='womens' ? ['37','38','39','40','41','42','43'] : ['40','41','42','43','44','45','46','47'];
+             const clothSizes = ['M','L','XL','XXL'];
+             // Bags don't need size selection
+             const hasSizes = (sizeType==='shoes' || sizeType==='clothes') && subcategory!=='bags';
+             const sizeOptions = sizeType==='shoes' ? shoeSizes : (sizeType==='clothes' ? clothSizes : []);
+             
+             document.getElementById('product').innerHTML = `
+        <div class="gallery">
+          <div class="swipe-indicator">🔄 Swipe to see more images</div>
+          <div class="image-slider">
+            <button class="slider-arrow prev" onclick="prevSlide()">‹</button>
+            <button class="slider-arrow next" onclick="nextSlide()">›</button>
+           ${img1 ? `<div class="slide active"><img src="${img1}" alt="${p.name}" onerror="this.style.display='none'" /></div>` : ''}
+           ${img2 ? `<div class="slide"><img src="${img2}" alt="${p.name} view 2" onerror="this.style.display='none'" /></div>` : ''}
+           ${img3 ? `<div class="slide"><img src="${img3}" alt="${p.name} view 3" onerror="this.style.display='none'" /></div>` : ''}
+          </div>
+          <div class="thumbnail-container">
+           ${img1 ? `<div class="thumbnail active" onclick="currentSlide(0)"><img src="${img1}" alt="${p.name} thumbnail" onerror="this.style.display='none'" /></div>` : ''}
+           ${img2 ? `<div class="thumbnail" onclick="currentSlide(1)"><img src="${img2}" alt="${p.name} thumbnail 2" onerror="this.style.display='none'" /></div>` : ''}
+           ${img3 ? `<div class="thumbnail" onclick="currentSlide(2)"><img src="${img3}" alt="${p.name} thumbnail 3" onerror="this.style.display='none'" /></div>` : ''}
+          </div>
+        </div>
+       <div class="details">
+         <h1>${p.name}</h1>
+         <div class="price">${formatNaira(p.price)}</div>
+         <p class="specs">${p.specs}</p>
+         ${hasSizes ? `
+         <div style="margin:12px 0;">
+           <label for="sizeSelect" style="display:block;margin-bottom:6px;color:#e5e7eb;">Select ${sizeType==='shoes'?'Shoe':'Clothe'} Size</label>
+           <select id="sizeSelect" style="padding:10px 12px;border:1px solid #334155;background:#0f1218;color:#e5e7eb;border-radius:8px;">
+             <option value="">-- Choose size --</option>
+             ${sizeOptions.map(s=>`<option value="${s}">${s}</option>`).join('')}
+           </select>
+         </div>` : ''}
+         <div style="margin-top:12px; display:flex; gap:8px; align-items:center;">
+           <button id="add" class="btn">Add to Cart</button>
+           <a href="cart.html" class="btn" style="background:transparent;border:1px solid #334155;color:#e5e7eb;">Go to Cart</a>
+         </div>
+       </div>`;
+      document.getElementById('add').addEventListener('click', ()=>{
+        const sizeEl = document.getElementById('sizeSelect');
+        const selSize = sizeEl ? (sizeEl.value||'') : '';
+        if (hasSizes && !selSize){
+          alert('Please select a size before adding to cart.');
+          return;
+        }
+        addToCart(p.id, 1, selSize||undefined);
+        // Update cart count after adding item
+        setTimeout(() => {
+          if (typeof updateCartCount === 'function') {
+            updateCartCount();
+          }
+        }, 100);
+      });
+    }
+    // Initialize cart count and auth UI when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+      // Update cart count
+      if (typeof updateCartCount === 'function') {
+        updateCartCount();
+      }
+      
+      // Update auth UI
+      if (typeof updateAuthUI === 'function') {
+        updateAuthUI();
+      }
+    });
+     
+     // Hamburger Menu
+     const hamburger = document.getElementById('hamburger');
+     const nav = document.querySelector('.nav');
+     if (hamburger && nav) {
+       hamburger.addEventListener('click', () => {
+         hamburger.classList.toggle('active');
+         nav.classList.toggle('active');
+       });
+       
+       // Close menu when clicking outside
+       document.addEventListener('click', (e) => {
+         if (!hamburger.contains(e.target) && !nav.contains(e.target)) {
+           hamburger.classList.remove('active');
+           nav.classList.remove('active');
+         }
+       });
+     }
+     
+     const id = qs('id');
+     const product = getProductById(id);
+     renderProduct(product);
+     
+     // Image slider functionality
+     let currentSlideIndex = 0;
+     function querySlides(){ return document.querySelectorAll('.slide'); }
+     function queryThumbnails(){ return document.querySelectorAll('.thumbnail'); }
+     
+     function showSlide(index) {
+       const slides = querySlides();
+       const thumbnails = queryThumbnails();
+       slides.forEach(slide => slide.classList.remove('active'));
+       thumbnails.forEach(thumb => thumb.classList.remove('active'));
+       if (slides[index]) {
+         slides[index].classList.add('active');
+         if (thumbnails[index]) thumbnails[index].classList.add('active');
+         currentSlideIndex = index;
+       }
+     }
+     
+     function currentSlide(index) {
+       showSlide(index);
+     }
+     
+     function nextSlide() {
+       const slides = querySlides();
+       const nextIndex = slides.length ? (currentSlideIndex + 1) % slides.length : 0;
+       showSlide(nextIndex);
+     }
+     
+     function prevSlide() {
+       const slides = querySlides();
+       const prevIndex = slides.length ? (currentSlideIndex - 1 + slides.length) % slides.length : 0;
+       showSlide(prevIndex);
+     }
+     
+     window.currentSlide = currentSlide;
+     window.nextSlide = nextSlide;
+     window.prevSlide = prevSlide;
+  </script>
+</body>
+</html>
+
+

@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Order Management - COJJ Gadgets</title>
+  <meta name="description" content="Admin panel for managing orders at COJJ Gadgets">
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="icon" href="images/logo.jpg" type="image/png">
+  <style>
+    .admin-page { padding: 40px 0; min-height: 60vh; }
+    .admin-header { text-align: center; margin-bottom: 40px; }
+    .admin-header h1 { color: #fff; font-size: 32px; margin-bottom: 10px; }
+    .admin-header p { color: #dbeafe; font-size: 16px; }
+    
+    .admin-controls { 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      margin-bottom: 30px; 
+      flex-wrap: wrap; 
+      gap: 15px; 
+    }
+    
+    .status-filter { 
+      display: flex; 
+      gap: 10px; 
+      align-items: center; 
+    }
+    
+    .status-filter select { 
+      padding: 8px 12px; 
+      border-radius: 6px; 
+      border: 1px solid #374151; 
+      background: var(--surface); 
+      color: #fff; 
+    }
+    
+    .refresh-btn { 
+      background: var(--accent); 
+      color: #001018; 
+      border: none; 
+      padding: 8px 16px; 
+      border-radius: 6px; 
+      cursor: pointer; 
+      font-weight: 600; 
+    }
+    
+    .refresh-btn:hover { background: var(--accent-2); }
+    
+    .orders-table { 
+      background: var(--surface); 
+      border-radius: 12px; 
+      overflow: hidden; 
+      border: 1px solid #374151; 
+    }
+    
+    .table-header { 
+      background: #1f2937; 
+      padding: 20px; 
+      display: grid; 
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr; 
+      gap: 15px; 
+      font-weight: 600; 
+      color: #fff; 
+    }
+    
+    .order-row { 
+      padding: 20px; 
+      display: grid; 
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr; 
+      gap: 15px; 
+      border-bottom: 1px solid #374151; 
+      align-items: center; 
+    }
+    
+    .order-row:last-child { border-bottom: none; }
+    
+    .order-row:nth-child(even) { background: rgba(255, 255, 255, 0.02); }
+    
+    .order-number { 
+      font-family: monospace; 
+      color: var(--accent-2); 
+      font-weight: 600; 
+    }
+    
+    .customer-info { color: #dbeafe; }
+    .customer-info strong { color: #fff; }
+    
+    .status-select { 
+      padding: 6px 10px; 
+      border-radius: 4px; 
+      border: 1px solid #374151; 
+      background: var(--surface); 
+      color: #fff; 
+      font-size: 12px; 
+    }
+    
+    .update-btn { 
+      background: var(--accent); 
+      color: #001018; 
+      border: none; 
+      padding: 6px 12px; 
+      border-radius: 4px; 
+      cursor: pointer; 
+      font-size: 12px; 
+      font-weight: 600; 
+    }
+    
+    .update-btn:hover { background: var(--accent-2); }
+    .update-btn:disabled { 
+      background: #6b7280; 
+      cursor: not-allowed; 
+    }
+    
+    .loading { 
+      text-align: center; 
+      color: #9ca3af; 
+      padding: 40px; 
+      font-size: 16px; 
+    }
+    
+    .error { 
+      text-align: center; 
+      color: var(--danger); 
+      padding: 40px; 
+      font-size: 16px; 
+    }
+    
+    .no-orders { 
+      text-align: center; 
+      color: #9ca3af; 
+      padding: 40px; 
+      font-size: 16px; 
+    }
+    
+    @media (max-width: 768px) {
+      .admin-page { padding: 20px 0; }
+      .admin-header h1 { font-size: 24px; }
+      .admin-controls { flex-direction: column; align-items: stretch; }
+      .status-filter { justify-content: center; }
+      .table-header, .order-row { 
+        grid-template-columns: 1fr; 
+        gap: 10px; 
+        text-align: center; 
+      }
+      .table-header { display: none; }
+      .order-row { 
+        border: 1px solid #374151; 
+        border-radius: 8px; 
+        margin-bottom: 10px; 
+        padding: 15px; 
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="./" class="logo" aria-label="COJJ Gadgets Home">
+        <span style="font-weight: 800; font-size: 22px; letter-spacing: 0.8px; color: #fff;">COJJ<img src="images/logo.jpg" alt="COJJ Gadgets Logo" style="height: 16px; width: auto; margin-left: 2px; vertical-align: middle;" /></span>
+      </a>
+      <div class="nav-search">
+        <div class="search-container">
+          <button onclick="history.back()" class="go-back-btn" aria-label="Go back to previous page">← Go Back</button>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="./">Home</a>
+        <a href="about.html">About</a>
+        <a href="cart.html">Cart (<span id="cartCount">0</span>)</a>
+        <a href="contact.html">Contact</a>
+        <a href="account.html">My Account</a>
+        <div class="auth-buttons-mobile">
+          <button class="btn btn-sm" onclick="showLoginModal()">Login</button>
+          <button class="btn btn-sm" onclick="showSignupModal()">Sign Up</button>
+        </div>
+      </nav>
+      <div class="auth-buttons">
+        <button class="btn btn-sm" onclick="showLoginModal()">Login</button>
+        <button class="btn btn-sm" onclick="showSignupModal()">Sign Up</button>
+      </div>
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </header>
+
+  <main class="admin-page">
+    <div class="container">
+      <div class="admin-header">
+        <h1>Order Management</h1>
+        <p>Manage customer orders and update their status</p>
+      </div>
+
+      <div class="admin-controls">
+        <div class="status-filter">
+          <label for="statusFilter" style="color: #dbeafe;">Filter by status:</label>
+          <select id="statusFilter" onchange="filterOrders()">
+            <option value="">All Orders</option>
+            <option value="pending">Order Received</option>
+            <option value="confirmed">Confirmed</option>
+            <option value="processing">Processing</option>
+            <option value="shipped">Shipped</option>
+            <option value="delivered">Delivered</option>
+            <option value="cancelled">Cancelled</option>
+          </select>
+        </div>
+        <button class="refresh-btn" onclick="loadOrders()">🔄 Refresh Orders</button>
+      </div>
+
+      <div id="ordersContainer" class="orders-table">
+        <div class="loading">Loading orders...</div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>
+        <strong>COJJ Gadgets</strong>
+        <p>Admiralty Mall, Lekki Phase 1, Lagos</p>
+        <p><a href="tel:+2347036140846" style="text-decoration: none; color: var(--accent-2);">📞 Call us</a> | <a href="https://wa.me/2347036140846" style="text-decoration: none; color: var(--accent-2);">✉️ Write us</a></p>
+      </div>
+      <div>
+        <a href="./" class="btn">Back to Home</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/supabase-config.js"></script>
+  <script src="assets/js/auth-modals.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+    let allOrders = [];
+    let filteredOrders = [];
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      await loadOrders();
+    });
+
+    async function loadOrders() {
+      try {
+        const { data: orders, error } = await supabaseClient
+          .from('orders')
+          .select('*')
+          .order('created_at', { ascending: false });
+
+        if (error) {
+          console.error('Error loading orders:', error);
+          document.getElementById('ordersContainer').innerHTML = '<div class="error">Error loading orders. Please try again.</div>';
+          return;
+        }
+
+        allOrders = orders || [];
+        filteredOrders = [...allOrders];
+        displayOrders();
+      } catch (error) {
+        console.error('Error loading orders:', error);
+        document.getElementById('ordersContainer').innerHTML = '<div class="error">Error loading orders. Please try again.</div>';
+      }
+    }
+
+    function filterOrders() {
+      const statusFilter = document.getElementById('statusFilter').value;
+      
+      if (statusFilter === '') {
+        filteredOrders = [...allOrders];
+      } else {
+        filteredOrders = allOrders.filter(order => order.status === statusFilter);
+      }
+      
+      displayOrders();
+    }
+
+    function displayOrders() {
+      const container = document.getElementById('ordersContainer');
+      
+      if (filteredOrders.length === 0) {
+        container.innerHTML = '<div class="no-orders">No orders found.</div>';
+        return;
+      }
+
+      const tableHTML = `
+        <div class="table-header">
+          <div>Order Number</div>
+          <div>Customer</div>
+          <div>Total</div>
+          <div>Status</div>
+          <div>Date</div>
+          <div>Actions</div>
+        </div>
+        ${filteredOrders.map(order => `
+          <div class="order-row" data-order-id="${order.id}">
+            <div class="order-number">${order.order_number}</div>
+            <div class="customer-info">
+              <div><strong>${order.customer_name}</strong></div>
+              <div>${order.customer_email}</div>
+              <div>${order.customer_phone}</div>
+            </div>
+            <div>${formatNaira(order.total_amount)}</div>
+            <div>
+              <select class="status-select" id="status-${order.id}" onchange="updateOrderStatus('${order.id}')">
+                <option value="pending" ${order.status === 'pending' ? 'selected' : ''}>Order Received</option>
+                <option value="confirmed" ${order.status === 'confirmed' ? 'selected' : ''}>Confirmed</option>
+                <option value="processing" ${order.status === 'processing' ? 'selected' : ''}>Processing</option>
+                <option value="shipped" ${order.status === 'shipped' ? 'selected' : ''}>Shipped</option>
+                <option value="delivered" ${order.status === 'delivered' ? 'selected' : ''}>Delivered</option>
+                <option value="cancelled" ${order.status === 'cancelled' ? 'selected' : ''}>Cancelled</option>
+              </select>
+            </div>
+            <div>${new Date(order.created_at).toLocaleDateString()}</div>
+            <div>
+              <button class="update-btn" onclick="viewOrderDetails('${order.id}')">View Details</button>
+            </div>
+          </div>
+        `).join('')}
+      `;
+      
+      container.innerHTML = tableHTML;
+    }
+
+    async function updateOrderStatus(orderId) {
+      const statusSelect = document.getElementById(`status-${orderId}`);
+      const newStatus = statusSelect.value;
+      
+      try {
+        const { error } = await supabaseClient
+          .from('orders')
+          .update({ status: newStatus })
+          .eq('id', orderId);
+
+        if (error) {
+          console.error('Error updating order status:', error);
+          alert('Error updating order status. Please try again.');
+          return;
+        }
+
+        // Update local data
+        const orderIndex = allOrders.findIndex(order => order.id === orderId);
+        if (orderIndex !== -1) {
+          allOrders[orderIndex].status = newStatus;
+        }
+        
+        // Refresh filtered orders
+        filterOrders();
+        
+        alert('Order status updated successfully!');
+      } catch (error) {
+        console.error('Error updating order status:', error);
+        alert('Error updating order status. Please try again.');
+      }
+    }
+
+    function viewOrderDetails(orderId) {
+      const order = allOrders.find(o => o.id === orderId);
+      if (!order) return;
+
+      const items = JSON.parse(order.items);
+      const itemsText = items.map(item => 
+        `${item.name} x${item.quantity} - ${formatNaira(item.price * item.quantity)}`
+      ).join('\n');
+
+      const details = `
+Order Details:
+Order Number: ${order.order_number}
+Customer: ${order.customer_name}
+Email: ${order.customer_email}
+Phone: ${order.customer_phone}
+Address: ${order.customer_address}
+
+Items:
+${itemsText}
+
+Total: ${formatNaira(order.total_amount)}
+Delivery: ${order.fulfillment_method}
+Payment: ${order.payment_method}
+Color: ${order.color_preference || 'Not specified'}
+Status: ${getStatusText(order.status)}
+Date: ${new Date(order.created_at).toLocaleString()}
+      `;
+
+      alert(details);
+    }
+
+    function getStatusText(status) {
+      const statusMap = {
+        'pending': 'Order Received',
+        'confirmed': 'Confirmed',
+        'processing': 'Processing',
+        'shipped': 'Shipped',
+        'delivered': 'Delivered',
+        'cancelled': 'Cancelled'
+      };
+      return statusMap[status] || status;
+    }
+
+    // Make functions global
+    window.filterOrders = filterOrders;
+    window.updateOrderStatus = updateOrderStatus;
+    window.viewOrderDetails = viewOrderDetails;
+  </script>
+</body>
+</html>

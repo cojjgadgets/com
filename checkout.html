@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout — COJJ Gadgets Lagos</title>
+  <meta name="description" content="Checkout at COJJ Gadgets. Enter your details and pay by direct bank transfer. Best gadgets in Lagos at Admiralty Mall, Lekki Phase 1." />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+             <a href="./" class="logo">
+         <span style="font-weight: 800; font-size: 22px; letter-spacing: 0.8px; color: #fff;">COJJ<img src="images/logo.jpg" alt="COJJ Gadgets Logo" style="height: 16px; width: auto; margin-left: 2px; vertical-align: middle;" /></span>
+       </a>
+      <div class="nav-search">
+        <div class="search-container">
+          <button onclick="history.back()" class="go-back-btn" aria-label="Go back to previous page">← Go Back</button>
+          <form class="search" role="search" aria-label="Search products" onsubmit="return false;">
+            <input id="searchInput" type="search" placeholder="Search products..." aria-label="Search gadgets" />
+            <button id="searchButton" type="button">Search</button>
+          </form>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="./">Home</a>
+        <a href="about.html">About</a>
+        <a href="cart.html">Cart (<span id="cartCount">0</span>)</a>
+        <a href="account.html">My Account</a>
+        <div class="auth-buttons-mobile">
+          <button class="btn btn-sm" onclick="showLoginModal()">Login</button>
+          <button class="btn btn-sm" onclick="showSignupModal()">Sign Up</button>
+        </div>
+      </nav>
+      <div class="auth-buttons">
+        <button class="btn btn-sm" onclick="showLoginModal()">Login</button>
+        <button class="btn btn-sm" onclick="showSignupModal()">Sign Up</button>
+      </div>
+      <div class="hamburger" id="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+  </header>
+
+  <main class="checkout">
+    <div class="container">
+      <h1>Checkout</h1>
+      <form id="checkoutForm" class="form" enctype="multipart/form-data">
+        <div class="inline">
+          <div class="field">
+            <label for="name">Full Name</label>
+            <input id="name" name="name" type="text" required />
+          </div>
+          <div class="field">
+            <label for="phone">Phone Number</label>
+            <input id="phone" name="phone" type="tel" required />
+          </div>
+        </div>
+        <div class="field">
+          <label for="address">Address</label>
+          <textarea id="address" name="address" rows="3" placeholder="House number, street, city"></textarea>
+        </div>
+        <div class="inline">
+          <div class="field">
+            <label for="fulfillment">Pickup or Delivery</label>
+            <select id="fulfillment" name="fulfillment">
+              <option value="Pickup at Admiralty Mall, Lekki Phase 1">In-store Pickup (Admiralty Mall, Lekki Phase 1)</option>
+              <option value="Delivery">Delivery</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="payment">Payment Method</label>
+            <select id="payment" name="payment">
+              <option value="Direct Bank Transfer">Direct Bank Transfer</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="color">Preferred Color (if applicable)</label>
+          <select id="color" name="color">
+            <option value="">Select color preference</option>
+            <option value="Black">Black</option>
+            <option value="White">White</option>
+            <option value="Gold">Gold</option>
+            <option value="Silver">Silver</option>
+            <option value="Blue">Blue</option>
+            <option value="Green">Green</option>
+            <option value="Purple">Purple</option>
+            <option value="Pink">Pink</option>
+            <option value="Red">Red</option>
+            <option value="Orange">Orange</option>
+            <option value="Yellow">Yellow</option>
+            <option value="Gray">Gray</option>
+            <option value="Brown">Brown</option>
+            <option value="Transparent">Transparent</option>
+            <option value="Any available">Any available</option>
+          </select>
+        </div>
+
+                 <div class="field">
+           <button type="button" id="showTransferBtn" class="btn" style="margin-bottom: 10px;">Show Transfer Details</button>
+           <div id="transferDetails" class="transfer-box" style="display: none;">
+             <div><strong>Total:</strong> <span id="totalAmount">₦0</span></div>
+             <div>Bank Name: <strong>Monie Point</strong></div>
+             <div>Account Number: <strong id="acctNo">5026485782</strong> <button type="button" class="copy" onclick="copyAcct()">Copy</button></div>
+             <div>Account Name: <strong>COJJ Gadgets</strong></div>
+           </div>
+         </div>
+
+        <div class="field">
+          <label for="receipt">Attach Transfer Receipt (image)</label>
+          <input id="receipt" name="receipt" type="file" accept="image/*" required />
+        </div>
+
+        <button class="btn" type="submit">Send Order</button>
+      </form>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div>
+                 <strong>COJJ Gadgets</strong>
+         <p>Admiralty Mall, Lekki Phase 1, Lagos</p>
+         <p><a href="tel:+2347036140846" style="text-decoration: none; color: var(--accent-2);">📞 Call us</a> | <a href="https://wa.me/2347036140846" style="text-decoration: none; color: var(--accent-2);">✉️ Write us</a></p>
+      </div>
+      <div>
+        <a href="./" class="btn">Back to Home</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Chat Button -->
+  <a href="https://wa.me/2347036140846" class="chat-btn" aria-label="Chat with us on WhatsApp">
+    💬
+  </a>
+
+  
+
+  <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/supabase-config.js"></script>
+  <script src="assets/js/auth-modals.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+         function copyAcct(){
+       const el = document.getElementById('acctNo');
+       navigator.clipboard.writeText(el.textContent);
+       alert('Account number copied');
+     }
+     
+     function toggleTransferDetails(){
+       const details = document.getElementById('transferDetails');
+       const btn = document.getElementById('showTransferBtn');
+       if(details.style.display === 'none'){
+         details.style.display = 'block';
+         btn.textContent = 'Hide Transfer Details';
+       } else {
+         details.style.display = 'none';
+         btn.textContent = 'Show Transfer Details';
+       }
+     }
+    function total(){
+      const cartTotal = getCart().reduce((sum, it)=>{
+        const p = getProductById(it.id) || { price: it.price };
+        return sum + ((p.price||0) * it.qty);
+      }, 0);
+      
+      const delivery = document.getElementById('fulfillment').value === 'Delivery' ? 5000 : 0;
+      return cartTotal + delivery;
+    }
+    
+    function updateTotalDisplay(){
+      const cartTotal = getCart().reduce((sum, it)=>{
+        const p = getProductById(it.id) || { price: it.price };
+        return sum + ((p.price||0) * it.qty);
+      }, 0);
+      
+      const delivery = document.getElementById('fulfillment').value === 'Delivery' ? 5000 : 0;
+      const totalAmount = cartTotal + delivery;
+      
+      document.getElementById('totalAmount').textContent = formatNaira(totalAmount);
+      
+      // Show/hide delivery charge info
+      let deliveryInfo = document.getElementById('deliveryInfo');
+      if (delivery > 0) {
+        if (!deliveryInfo) {
+          deliveryInfo = document.createElement('div');
+          deliveryInfo.id = 'deliveryInfo';
+          deliveryInfo.style.cssText = 'background: #f0f9ff; border: 1px solid #0ea5e9; border-radius: 8px; padding: 12px; margin: 10px 0; font-size: 14px;';
+          document.getElementById('totalAmount').parentNode.parentNode.insertBefore(deliveryInfo, document.getElementById('totalAmount').parentNode.nextSibling);
+        }
+        deliveryInfo.innerHTML = `
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span><strong>Subtotal:</strong> ${formatNaira(cartTotal)}</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 5px;">
+            <span><strong>Delivery Charge:</strong> ${formatNaira(delivery)}</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 5px; padding-top: 5px; border-top: 1px solid #0ea5e9;">
+            <span><strong>Total:</strong> ${formatNaira(totalAmount)}</span>
+          </div>
+        `;
+      } else if (deliveryInfo) {
+        deliveryInfo.remove();
+      }
+    }
+    if(!getProducts().length){
+      document.querySelector('.form').insertAdjacentHTML('afterbegin','<div class="transfer-box">No products loaded. Please return to <a href="./">Home</a> first.</div>');
+    }
+    document.getElementById('totalAmount').textContent = formatNaira(total());
+    
+    // Add event listener for fulfillment method change
+    document.getElementById('fulfillment').addEventListener('change', function() {
+      if (this.value === 'Delivery') {
+        // Show confirmation dialog for delivery charge
+        const confirmed = confirm(
+          'Delivery Charge Notice:\n\n' +
+          'A delivery charge of ₦5,000 will be added to your order total.\n\n' +
+          'Subtotal: ' + formatNaira(getCart().reduce((sum, it) => {
+            const p = getProductById(it.id) || { price: it.price };
+            return sum + ((p.price||0) * it.qty);
+          }, 0)) + '\n' +
+          'Delivery Charge: ₦5,000\n' +
+          'New Total: ' + formatNaira(getCart().reduce((sum, it) => {
+            const p = getProductById(it.id) || { price: it.price };
+            return sum + ((p.price||0) * it.qty);
+          }, 0) + 5000) + '\n\n' +
+          'Do you want to proceed with delivery?'
+        );
+        
+        if (!confirmed) {
+          // Reset to pickup if user cancels
+          this.value = 'Pickup at Admiralty Mall, Lekki Phase 1';
+        }
+      }
+      
+      // Update total display
+      updateTotalDisplay();
+    });
+    
+    // Pre-fill form for logged in users
+    function prefillUserInfo() {
+      if (isLoggedIn()) {
+        const userProfile = getUserProfile();
+        if (userProfile) {
+          document.getElementById('name').value = userProfile.full_name || '';
+          document.getElementById('phone').value = userProfile.phone || '';
+          document.getElementById('address').value = userProfile.address || '';
+        }
+      }
+    }
+    
+    // Pre-fill when page loads
+    prefillUserInfo();
+    
+    // Background order processing function
+    async function processOrderInBackground(cart, totalAmount, name, phone, address, fulfillment, payment, color, receiptFile, orderNumber) {
+      try {
+        // Upload receipt if provided
+        let receiptUrl = null;
+        if (receiptFile) {
+          const uploadResult = await uploadReceipt(receiptFile);
+          if (uploadResult.success) {
+            receiptUrl = uploadResult.url;
+          }
+        }
+
+        // Submit order to Supabase
+        const orderData = {
+          items: cart.map(item => {
+            const product = getProductById(item.id) || { name: item.name, price: item.price };
+            return {
+              id: item.id,
+              name: product.name,
+              price: product.price || 0,
+              quantity: item.qty,
+              size: item.size || null
+            };
+          }),
+          totalAmount: totalAmount,
+          customerName: name,
+          customerEmail: getUserProfile()?.email || '',
+          customerPhone: phone,
+          customerAddress: address,
+          fulfillment: fulfillment,
+          payment: payment,
+          color: color,
+          receiptUrl: receiptUrl
+        };
+
+        const orderResult = await submitOrder(orderData);
+        console.log('Background order processing result:', orderResult);
+      } catch (error) {
+        console.warn('Background order processing failed:', error);
+        // Don't show error to user - order was already "successful"
+      }
+    }
+     
+     // Add event listener to the show transfer details button
+     document.getElementById('showTransferBtn').addEventListener('click', toggleTransferDetails);
+     
+     // Hamburger Menu
+     const hamburger = document.getElementById('hamburger');
+     const nav = document.querySelector('.nav');
+     if (hamburger && nav) {
+       hamburger.addEventListener('click', () => {
+         hamburger.classList.toggle('active');
+         nav.classList.toggle('active');
+       });
+       
+       // Close menu when clicking outside
+       document.addEventListener('click', (e) => {
+         if (!hamburger.contains(e.target) && !nav.contains(e.target)) {
+           hamburger.classList.remove('active');
+           nav.classList.remove('active');
+         }
+       });
+     }
+
+    // Simple notification helper
+    function showWarning(message){
+      const existing = document.querySelector('.form-warning');
+      if (existing) existing.remove();
+      const note = document.createElement('div');
+      note.className = 'form-warning';
+      note.setAttribute('role','alert');
+      note.style.position = 'fixed';
+      note.style.top = '20px';
+      note.style.right = '20px';
+      note.style.background = '#b91c1c';
+      note.style.color = '#fff';
+      note.style.padding = '12px 16px';
+      note.style.borderRadius = '8px';
+      note.style.boxShadow = '0 6px 20px rgba(0,0,0,0.3)';
+      note.style.zIndex = '9999';
+      note.textContent = message;
+      document.body.appendChild(note);
+      setTimeout(()=>{ note.style.opacity = '0'; note.style.transition = 'opacity .4s'; setTimeout(()=>note.remove(), 400); }, 2500);
+    }
+
+    document.getElementById('checkoutForm').addEventListener('submit', async (e)=>{
+      e.preventDefault();
+      
+      const name = document.getElementById('name').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const address = document.getElementById('address').value.trim();
+      const fulfillment = document.getElementById('fulfillment').value;
+      const payment = document.getElementById('payment').value;
+      const color = document.getElementById('color').value;
+      const receiptInput = document.getElementById('receipt');
+      const receiptFile = receiptInput.files[0];
+
+      // Require receipt image before proceeding
+      if (!receiptFile) {
+        showWarning('Attach receipt pls.');
+        receiptInput.focus();
+        return;
+      }
+      
+      const cart = getCart();
+      const totalAmount = total();
+      const totalStr = formatNaira(totalAmount);
+      
+      // Check if delivery charge applies
+      const deliveryCharge = fulfillment === 'Delivery' ? 5000 : 0;
+
+      // Check if user is logged in
+      if (isLoggedIn()) {
+        // Always show success popup - order processing is handled in background
+        const orderNumber = 'COJJ-' + Date.now() + '-' + Math.random().toString(36).substr(2, 5).toUpperCase();
+        
+        // Process order in background (don't wait for it)
+        processOrderInBackground(cart, totalAmount, name, phone, address, fulfillment, payment, color, receiptFile, orderNumber);
+        
+        // Show success popup immediately
+        showOrderSuccessPopup(orderNumber);
+        
+        // Clear cart and reset form
+        localStorage.removeItem('cart');
+        updateCartCount();
+        document.getElementById('checkoutForm').reset();
+      } else {
+        // Guest checkout - redirect to WhatsApp
+        const cartText = cart.map(it=>{
+          const p = getProductById(it.id) || { name: it.name, price: it.price };
+          const sizeText = it.size ? ` (Size: ${it.size})` : '';
+          return `${p.name}${sizeText} x${it.qty} — ${formatNaira((p.price||0)*it.qty)}`;
+        }).join('%0A');
+        
+        const hasReceipt = receiptFile ? true : false;
+        const subtotal = getCart().reduce((sum, it) => {
+          const p = getProductById(it.id) || { price: it.price };
+          return sum + ((p.price||0) * it.qty);
+        }, 0);
+        
+        let totalBreakdown = `Subtotal: ${formatNaira(subtotal)}`;
+        if (deliveryCharge > 0) {
+          totalBreakdown += `%0ADelivery Charge: ${formatNaira(deliveryCharge)}`;
+        }
+        totalBreakdown += `%0ATotal: ${encodeURIComponent(totalStr)}`;
+        
+        const msg = `Hello COJJ Gadgets,%0A%0AOrder Details:%0A${cartText}%0A%0A${totalBreakdown}%0A%0ACustomer:%0AName: ${encodeURIComponent(name)}%0APhone: ${encodeURIComponent(phone)}%0AAddress: ${encodeURIComponent(address||'-')}%0AFulfillment: ${encodeURIComponent(fulfillment)}%0APayment: ${encodeURIComponent(payment)}%0AColor Preference: ${encodeURIComponent(color||'Not specified')}%0A%0ABank Transfer Details:%0ABank: Monie Point%0AAccount: 5026485782%0AAccount Name: COJJ Gadgets%0A%0A${hasReceipt?encodeURIComponent('I will send the receipt image here.'):encodeURIComponent('No receipt attached.')}`;
+        const wa = `https://wa.me/2347036140846?text=${msg}`;
+        window.location.href = wa;
+      }
+    });
+  </script>
+</body>
+</html>
+
+

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Womens Fashion — COJJ</title>
+  <meta name="description" content="Shop Womens Fashion at COJJ: dresses and heels." />
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="./" class="logo"><span style="font-weight: 800; font-size: 22px; letter-spacing: 0.8px; color: #fff;">COJJ<img src="images/logo.jpg" alt="COJJ Gadgets Logo" style="height: 16px; width: auto; margin-left: 2px; vertical-align: middle;" /></span></a>
+      <div class="nav-search">
+        <div class="search-container">
+          <button onclick="history.back()" class="go-back-btn" aria-label="Go back">← Go Back</button>
+        </div>
+      </div>
+      <nav class="nav">
+        <a href="./">Home</a>
+        <a href="about.html">About</a>
+        <a href="cart.html">Cart (<span id="cartCount">0</span>)</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="category-hero">
+      <div class="container">
+        <h1>Womens Fashion</h1>
+        <p>Bags and Heels</p>
+      </div>
+    </section>
+
+    <section class="categories">
+      <div class="container">
+        <h2>Browse Subcategories</h2>
+        <div class="category-grid">
+          <a href="#" class="category-card" onclick="filterSub('bags');return false;">
+            <div class="category-icon">👜</div>
+            <h3>Bags</h3>
+          </a>
+          <a href="#" class="category-card" onclick="filterSub('heels');return false;">
+            <div class="category-icon">👠</div>
+            <h3>Heels</h3>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <div class="search-bar" style="text-align:center; margin:20px 0;">
+      <input 
+        type="text" 
+        id="searchInput" 
+        placeholder="Search products..." 
+        style="width:60%; max-width:400px; padding:10px; border:1px solid #ccc; border-radius:4px;"
+      >
+    </div>
+
+    <section class="products">
+      <div class="container">
+        <div id="productsSource" hidden>
+          <div data-product data-id="w1" data-name="DENIM WOVEN HANDBAG" data-price="60000" data-image="images/DENIM WOVEN HANDBAG1.jpeg" data-images="images/DENIM WOVEN HANDBAG2.jpeg|images/DENIM WOVEN HANDBAG3.jpeg" data-specs="DENIM WOVEN HANDBAG" data-category="womens" data-subcategory="bags" data-size-type="clothes"></div>
+          <div data-product data-id="w2" data-name="RHINESTONE AND GEM EMBELLISHED BAG - PINK" data-price="60000" data-image="images/RHINESTONE AND GEM EMBELLISHED BAG - PINK1.jpeg" data-images="images/RHINESTONE AND GEM EMBELLISHED BAG - PINK2.jpeg|images/RHINESTONE AND GEM EMBELLISHED BAG - PINK3.jpeg" data-specs="RHINESTONE" data-category="womens" data-subcategory="bags" data-size-type="bags"></div>
+          <div data-product data-id="w3" data-name="CHANEL LUXE SHOULDER BAG - IVORY" data-price="170000" data-image="images/CHANEL LUXE SHOULDER BAG - IVORY A1.jpeg" data-images="images/CHANEL LUXE SHOULDER BAG - IVORY A1.jpeg|images/CHANEL LUXE SHOULDER BAG - IVORY A2.jpeg" data-specs="Chanel" data-category="womens" data-subcategory="bags" data-size-type="bags"></div>
+          <div data-product data-id="w4" data-name="RHINESTONE AND GEM EMBELLISHED BAG - GREEN" data-price="60000" data-image="images/RHINESTONE AND GEM EMBELLISHED BAG - GREEN A1.jpeg" data-images="images/RHINESTONE AND GEM EMBELLISHED BAG - GREEN A2.jpeg|images/RHINESTONE AND GEM EMBELLISHED BAG - GREEN A3.jpeg" data-specs="RHINESTONE" data-category="womens" data-subcategory="bags" data-size-type="bags"></div>
+          <div data-product data-id="w5" data-name="RHINESTONE AND GEM EMBELLISHED BAG - BLACK" data-price="60000" data-image="images/RHINESTONE AND GEM EMBELLISHED BAG - BLACK A1.jpeg" data-images="images/RHINESTONE AND GEM EMBELLISHED BAG - BLACK A2.jpeg|images/RHINESTONE AND GEM EMBELLISHED BAG - BLACK A3.jpeg" data-specs="RHINESTONE" data-category="womens" data-subcategory="bags" data-size-type="bags"></div>
+          <div data-product data-id="w6" data-name="RHINESTONE AND GEM EMBELLISHED BAG - SILVER" data-price="60000" data-image="images/RHINESTONE AND GEM EMBELLISHED BAG - SILVER A1.jpeg" data-images="images/RHINESTONE AND GEM EMBELLISHED BAG - SILVER A2.jpeg|images/RHINESTONE AND GEM EMBELLISHED BAG - SILVER A3.jpeg" data-specs="RHINESTONE" data-category="womens" data-subcategory="bags" data-size-type="bags"></div>
+          <div data-product data-id="w7" data-name="STRAPPY HOBO BAG - SILVER" data-price="62000" data-image="images/STRAPPY HOBO BAG - SILVER A1.jpeg" data-images="images/STRAPPY HOBO BAG - SILVER A2.jpeg|images/STRAPPY HOBO BAG - SILVER A3.jpeg" data-specs="Strappy" data-category="womens" data-subcategory="bags" data-size-type="bags"></div>
+          <div data-product data-id="w8" data-name="FULLY EMBELLISHED CROSSBODY HANDBAG" data-price="65000" data-image="images/FULLY EMBELLISHED CROSSBODY HANDBAG A1.jpeg" data-images="images/FULLY EMBELLISHED CROSSBODY HANDBAG A2.jpeg|images/FULLY EMBELLISHED CROSSBODY HANDBAG A3.jpeg" data-specs="Crossbody" data-category="womens" data-subcategory="bags" data-size-type="bags"></div>
+          <div data-product data-id="w9" data-name="POSHEVES VIBES - GOLD" data-price="105000" data-image="images/POSHEVES VIBES - GOLD A1.jpeg" data-images="images/POSHEVES VIBES - GOLD A2.jpeg|images/POSHEVES VIBES - GOLD A3.jpeg" data-specs="Posheves" data-category="womens" data-subcategory="heels" data-size-type="shoes"></div>
+          <div data-product data-id="w10" data-name="REEBOK WOMEN'S NANO GYM SNEAKERS" data-price="105000" data-image="images/REEBOK WOMEN'S NANO GYM SNEAKERS A1.jpeg" data-images="images/REEBOK WOMEN'S NANO GYM SNEAKERS A2.jpeg|images/REEBOK WOMEN'S NANO GYM SNEAKERS A3.jpeg" data-specs="Reebok" data-category="womens" data-subcategory="heels" data-size-type="shoes"></div>
+          <div data-product data-id="w11" data-name="ADIDAS FASHION SNEAKERS" data-price="105000" data-image="images/ADIDAS FASHION SNEAKERS A1.jpeg" data-images="images/ADIDAS FASHION SNEAKERS A2.jpeg|images/ADIDAS FASHION SNEAKERS A3.jpeg" data-specs="Adidas" data-category="womens" data-subcategory="heels" data-size-type="shoes"></div>
+          <div data-product data-id="w12" data-name="NIKE VOMERO 5" data-price="105000" data-image="images/NIKE VOMERO 5 A1.jpeg" data-images="images/NIKE VOMERO 5 A2.jpeg|images/NIKE VOMERO 5 A3.jpeg" data-specs="Nike" data-category="womens" data-subcategory="heels" data-size-type="shoes"></div>
+          <div data-product data-id="w13" data-name="NEW BALANCE 9060" data-price="105000" data-image="images/NEW BALANCE 9060 A1.jpeg" data-images="images/NEW BALANCE 9060 A2.jpeg|images/NEW BALANCE 9060 A3.jpeg" data-specs="Dior" data-category="womens" data-subcategory="heels" data-size-type="shoes"></div>
+          <div data-product data-id="w14" data-name="ASICS GEL NYC" data-price="105000" data-image="images/ASICS GEL NYC A1.jpeg" data-images="images/ASICS GEL NYC A2.jpeg|images/ASICS GEL NYC A3.jpeg" data-specs="Dior" data-category="womens" data-subcategory="heels" data-size-type="shoes"></div>
+          <div data-product data-id="w15" data-name="NIKE ZOOM X SNEAKERS" data-price="105000" data-image="images/NIKE ZOOM X SNEAKERS A1.jpeg" data-images="images/NIKE ZOOM X SNEAKERS A2.jpeg|images/NIKE ZOOM X SNEAKERS A3.jpeg" data-specs="Dior" data-category="womens" data-subcategory="heels" data-size-type="shoes"></div>
+          <div data-product data-id="w16" data-name="NIKE VISTA LITE SNEAKERS" data-price="105000" data-image="images/NIKE VISTA LITE SNEAKERS A1.jpeg" data-images="images/NIKE VISTA LITE SNEAKERS A2.jpeg|images/NIKE VISTA LITE SNEAKERS A3.jpeg" data-specs="Dior" data-category="womens" data-subcategory="heels" data-size-type="shoes"></div>
+          <div data-product data-id="w17" data-name="GUCCI SCREENER SNEAKERS - WHITE" data-price="100000" data-image="images/GUCCI SCREENER SNEAKERS - WHITE A1.jpeg" data-images="images/GUCCI SCREENER SNEAKERS - WHITE A2.jpeg|images/GUCCI SCREENER SNEAKERS - WHITE A3.jpeg" data-specs="Dior" data-category="womens" data-subcategory="heels" data-size-type="shoes"></div>
+          <div data-product data-id="w18" data-name="LOUBS PUMPS" data-price="85000" data-image="images/LOUBS PUMPS A1.jpeg" data-images="images/LOUBS PUMPS A2.jpeg|images/LOUBS PUMPS A3.jpeg" data-specs="Dior" data-category="womens" data-subcategory="heels" data-size-type="shoes"></div>
+          <div data-product data-id="w19" data-name="YSL SLING-BACK HEELS - BURGUNDY" data-price="80000" data-image="images/YSL SLING-BACK HEELS - BURGUNDY A1.jpeg" data-images="images/YSL SLING-BACK HEELS - BURGUNDY A2.jpeg|images/YSL SLING-BACK HEELS - BURGUNDY A3.jpeg" data-specs="Dior" data-category="womens" data-subcategory="heels" data-size-type="shoes"></div>
+          <div data-product data-id="w20" data-name="YSL SLING-BACK HEELS - BLACK" data-price="80000" data-image="images/YSL SLING-BACK HEELS - BLACK A1.jpeg" data-images="images/YSL SLING-BACK HEELS - BLACK A2.jpeg|images/YSL SLING-BACK HEELS - BLACK A3.jpeg" data-specs="Dior" data-category="womens" data-subcategory="heels" data-size-type="shoes"></div>
+          <div data-product data-id="w21" data-name="VALENTINO STUD HEELS" data-price="85000" data-image="images/VALENTINO STUD HEELS A1.jpeg" data-images="images/VALENTINO STUD HEELS A2.jpeg|images/VALENTINO STUD HEELS A3.jpeg" data-specs="Dior" data-category="womens" data-subcategory="heels" data-size-type="shoes"></div>
+          <div data-product data-id="w22" data-name="J'ADIOR LOW HEEL SLING-BACK -BLACK" data-price="85000" data-image="images/J'ADIOR LOW HEEL SLING-BACK -BLACK A1.jpeg" data-images="images/J'ADIOR LOW HEEL SLING-BACK -BLACK A2.jpeg|images/J'ADIOR LOW HEEL SLING-BACK -BLACK A3.jpeg" data-specs="Dior" data-category="womens" data-subcategory="heels" data-size-type="shoes"></div>
+          <div data-product data-id="w23" data-name="J'ADIOR CRYSTAL SLING-BACK HEELS -BLACK" data-price="80000" data-image="images/J'ADIOR CRYSTAL SLING-BACK HEELS -BLACK1.jpeg" data-images="images/J'ADIOR CRYSTAL SLING-BACK HEELS -BLACK2.jpeg|images/J'ADIOR CRYSTAL SLING-BACK HEELS -BLACK3.jpeg" data-specs="Dior" data-category="womens" data-subcategory="heels" data-size-type="shoes"></div>
+          <div data-product data-id="w24" data-name="J'ADIOR SLING-BACK HEELS - BURGUNDY" data-price="75000" data-image="images/J'ADIOR SLING-BACK HEELS - BURGUNDY A1.jpeg" data-images="images/J'ADIOR SLING-BACK HEELS - BURGUNDY A2.jpeg|images/J'ADIOR SLING-BACK HEELS - BURGUNDY A3.jpeg" data-specs="Dior" data-category="womens" data-subcategory="heels" data-size-type="shoes"></div>
+          <div data-product data-id="w25" data-name="J'ADIOR SLING-BACK HEELS - NUDE" data-price="75000" data-image="images/J'ADIOR SLING-BACK HEELS - NUDE A1.jpeg" data-images="images/J'ADIOR SLING-BACK HEELS - NUDE A2.jpeg|images/J'ADIOR SLING-BACK HEELS - NUDE A3.jpeg" data-specs="Dior" data-category="womens" data-subcategory="heels" data-size-type="shoes"></div>
+          <div data-product data-id="w26" data-name="LEMONADE STILETTO HEELS - GOLD" data-price="58000" data-image="images/LEMONADE STILETTO HEELS - GOLD A1.jpeg" data-images="images/LEMONADE STILETTO HEELS - GOLD A2.jpeg|images/LEMONADE STILETTO HEELS - GOLD A3.jpeg" data-specs="Dior" data-category="womens" data-subcategory="heels" data-size-type="shoes"></div>
+          <div data-product data-id="w27" data-name="J'ADIOR SLING-BACK HEELS -BLACK" data-price="75000" data-image="images/J'ADIOR SLING-BACK HEELS -BLACK A1.jpeg" data-images="images/J'ADIOR SLING-BACK HEELS -BLACK A2.jpeg|images/J'ADIOR SLING-BACK HEELS -BLACK A3.jpeg" data-specs="Dior" data-category="womens" data-subcategory="heels" data-size-type="shoes"></div>
+          <div data-product data-id="w28" data-name="LEMONADE STILETTO HEELS - BLACK" data-price="58000" data-image="images/LEMONADE STILETTO HEELS - BLACK A1.jpeg" data-images="images/LEMONADE STILETTO HEELS - BLACK A2.jpeg|images/LEMONADE STILETTO HEELS - BLACK A3.jpeg" data-specs="Dior" data-category="womens" data-subcategory="heels" data-size-type="shoes"></div>
+          <div data-product data-id="w29" data-name="LEMONADE STILETTO HEELS - SILVER" data-price="58000" data-image="images/LEMONADE STILETTO HEELS - SILVER A1.jpeg" data-images="images/LEMONADE STILETTO HEELS - SILVER A2.jpeg|images/LEMONADE STILETTO HEELS - SILVER A3.jpeg" data-specs="Dior" data-category="womens" data-subcategory="heels" data-size-type="shoes"></div>
+          <div data-product data-id="w30" data-name="LEMONADE STILETTO HEELS - RED" data-price="58000" data-image="images/LEMONADE STILETTO HEELS - RED A1.jpeg" data-images="images/LEMONADE STILETTO HEELS - RED A2.jpeg|images/LEMONADE STILETTO HEELS - RED A3.jpeg" data-specs="Dior" data-category="womens" data-subcategory="heels" data-size-type="shoes"></div>
+          <div data-product data-id="w31" data-name="LEMONADE STILETTO HEELS - NUDE" data-price="58000" data-image="images/LEMONADE STILETTO HEELS - NUDE A1.jpeg" data-images="images/LEMONADE STILETTO HEELS - NUDE A2.jpeg|images/LEMONADE STILETTO HEELS - NUDE A3.jpeg" data-specs="Dior" data-category="womens" data-subcategory="heels" data-size-type="shoes"></div>
+          <div data-product data-id="w32" data-name="ROGER VIVIER PUMPS" data-price="70000" data-image="images/ROGER VIVIER PUMPS A1.jpeg" data-images="images/ROGER VIVIER PUMPS A2.jpeg|images/ROGER VIVIER PUMPS A3.jpeg" data-specs="Dior" data-category="womens" data-subcategory="heels" data-size-type="shoes"></div>
+          <div data-product data-id="w33" data-name="BALENCIAGA LUXE SANDALS - PINK" data-price="118000" data-image="images/BALENCIAGA LUXE SANDALS - PINK A1.jpeg" data-images="images/BALENCIAGA LUXE SANDALS - PINK A2.jpeg|images/BALENCIAGA LUXE SANDALS - PINK A3.jpeg" data-specs="Dior" data-category="womens" data-subcategory="heels" data-size-type="shoes"></div>
+          <div data-product data-id="w34" data-name="BALENCIAGA LUXE SANDALS - BLACK" data-price="118000" data-image="images/BALENCIAGA LUXE SANDALS - BLACK A1.jpeg" data-images="images/BALENCIAGA LUXE SANDALS - BLACK A2.jpeg|images/BALENCIAGA LUXE SANDALS - BLACK A3.jpeg" data-specs="Dior" data-category="womens" data-subcategory="heels" data-size-type="shoes"></div>
+          <div data-product data-id="w35" data-name="CHANEL CAUSAL SLIDE - GOLD" data-price="65000" data-image="images/CHANEL CAUSAL SLIDE - GOLD A1.jpeg" data-images="images/CHANEL CAUSAL SLIDE - GOLD A2.jpeg|images/CHANEL CAUSAL SLIDE - GOLD A3.jpeg" data-specs="Dior" data-category="womens" data-subcategory="heels" data-size-type="shoes"></div>
+          <div data-product data-id="w36" data-name="CHANEL CAUSAL SLIDE - WHITE" data-price="65000" data-image="images/CHANEL CAUSAL SLIDE - WHITE A1.jpeg" data-images="images/CHANEL CAUSAL SLIDE - WHITE A2.jpeg|images/CHANEL CAUSAL SLIDE - WHITE A3.jpeg" data-specs="Dior" data-category="womens" data-subcategory="heels" data-size-type="shoes"></div>
+          <div data-product data-id="w37" data-name="CHANEL CAUSAL SLIDE - BLACK" data-price="65000" data-image="images/CHANEL CAUSAL SLIDE - BLACK A1.jpeg" data-images="images/CHANEL CAUSAL SLIDE - BLACK A2.jpeg|images/CHANEL CAUSAL SLIDE - BLACK A3.jpeg" data-specs="Dior" data-category="womens" data-subcategory="heels" data-size-type="shoes"></div>
+          <div data-product data-id="w38" data-name="NAKED WOLF HALF SHOE" data-price="95000" data-image="images/NAKED WOLF HALF SHOE A1.jpeg" data-images="images/NAKED WOLF HALF SHOE A2.jpeg|images/NAKED WOLF HALF SHOE A3.jpeg" data-specs="Dior" data-category="womens" data-subcategory="heels" data-size-type="shoes"></div>
+          <div data-product data-id="w39" data-name="GUCCI DRESSY SNEAKERS" data-price="80000" data-image="images/GUCCI DRESSY SNEAKERS A1.jpeg" data-images="images/GUCCI DRESSY SNEAKERS A2.jpeg|images/GUCCI DRESSY SNEAKERS A3.jpeg" data-specs="Dior" data-category="womens" data-subcategory="heels" data-size-type="shoes"></div>
+          <div data-product data-id="w40" data-name="LV ARCHLIGHT SOCK BOOT" data-price="145000" data-image="images/LV ARCHLIGHT SOCK BOOT A1.jpeg" data-images="images/LV ARCHLIGHT SOCK BOOT A2.jpeg|images/LV ARCHLIGHT SOCK BOOT A3.jpeg" data-specs="Dior" data-category="womens" data-subcategory="heels" data-size-type="shoes"></div>  
+          <div data-product data-id="w41" data-name="DIORACT SANDALS - PINK" data-price="125000" data-image="images/DIORACT SANDALS - PINK A1.jpeg" data-images="images/DIORACT SANDALS - PINK A2.jpeg|images/DIORACT SANDALS - PINK A3.jpeg" data-specs="Dior" data-category="womens" data-subcategory="heels" data-size-type="shoes"></div>
+          <div data-product data-id="w42" data-name="DIORACT SANDALS -BLACK" data-price="125000" data-image="images/DIORACT SANDALS -BLACK A1.jpeg" data-images="images/DIORACT SANDALS -BLACK A2.jpeg|images/DIORACT SANDALS -BLACK A3.jpeg" data-specs="Dior" data-category="womens" data-subcategory="heels" data-size-type="shoes"></div>
+          <div data-product data-id="w43" data-name="NIKE ZOOM VOMERO 5" data-price="85000" data-image="images/NIKE ZOOM VOMERO 5 A1.jpeg" data-images="images/NIKE ZOOM VOMERO 5 A2.jpeg|images/NIKE ZOOM VOMERO 5 A3.jpeg" data-specs="Dior" data-category="womens" data-subcategory="heels" data-size-type="shoes"></div>
+          <div data-product data-id="w44" data-name="LV Archlight Luxe Sandal - BLUE" data-price="145000" data-image="images/LV Archlight Luxe Sandal - BLUE A1.jpeg" data-images="images/LV Archlight Luxe Sandal - BLUE A2.jpeg|images/LV Archlight Luxe Sandal - BLUE A3.jpeg" data-specs="Dior" data-category="womens" data-subcategory="heels" data-size-type="shoes"></div>
+          <div data-product data-id="w45" data-name="MiuMiu X New Balance - BROWN" data-price="105000" data-image="images/MiuMiu X New Balance - BROWN A1.jpeg" data-images="images/MiuMiu X New Balance - BROWN A2.jpeg|images/MiuMiu X New Balance - BROWN A3.jpeg" data-specs="Dior" data-category="womens" data-subcategory="heels" data-size-type="shoes"></div>
+          <div data-product data-id="w46" data-name="MiuMiu X New Balance - NUDE" data-price="105000" data-image="images/MiuMiu X New Balance - NUDE A1.jpeg" data-images="images/MiuMiu X New Balance - NUDE A2.jpeg|images/MiuMiu X New Balance - NUDE A3.jpeg" data-specs="Dior" data-category="womens" data-subcategory="heels" data-size-type="shoes"></div>
+          <div data-product data-id="w47" data-name="Louis Vuitton; Pool Pillow Comfort Sandal" data-price="145000" data-image="images/Louis Vuitton; Pool Pillow Comfort Sandal A1.jpeg" data-images="images/Louis Vuitton; Pool Pillow Comfort Sandal A2.jpeg|images/Louis Vuitton; Pool Pillow Comfort Sandal A3.jpeg" data-specs="Dior" data-category="womens" data-subcategory="heels" data-size-type="shoes"></div>
+          <div data-product data-id="w48" data-name="Gucci Rhyton GG Sneakers" data-price="95000" data-image="images/Gucci Rhyton GG Sneakers A1.jpeg" data-images="images/Gucci Rhyton GG Sneakers A2.jpeg|images/Gucci Rhyton GG Sneakers A3.jpeg" data-specs="Dior" data-category="womens" data-subcategory="heels" data-size-type="shoes"></div>
+          <div data-product data-id="w49" data-name="Sophia Webster Heels - Orange Mix" data-price="70000" data-image="images/Sophia Webster Heels - Orange Mix A1.jpeg" data-images="images/Sophia Webster Heels - Orange Mix A2.jpeg|images/Sophia Webster Heels - Orange Mix A3.jpeg" data-specs="Dior" data-category="womens" data-subcategory="heels" data-size-type="shoes"></div>
+          <div data-product data-id="w50" data-name="Sophia Webster Heels - GOLD" data-price="70000" data-image="images/Sophia Webster Heels - GOLD A1.jpeg" data-images="images/Sophia Webster Heels - GOLD A2.jpeg|images/Sophia Webster Heels - GOLD A3.jpeg" data-specs="Dior" data-category="womens" data-subcategory="heels" data-size-type="shoes"></div>  
+          <div data-product data-id="w51" data-name="Sophia Webster Heels - Black" data-price="70000" data-image="images/Sophia Webster Heels - Black A1.jpeg" data-images="images/Sophia Webster Heels - Black A2.jpeg|images/Sophia Webster Heels - Black A3.jpeg" data-specs="Dior" data-category="womens" data-subcategory="heels" data-size-type="shoes"></div>
+          <div data-product data-id="w52" data-name="Versace Half Pump - GOLD" data-price="65000" data-image="images/Versace Half Pump - GOLD A1.jpeg" data-images="images/Versace Half Pump - GOLD A2.jpeg|images/Versace Half Pump - GOLD A3.jpeg" data-specs="Dior" data-category="womens" data-subcategory="heels" data-size-type="shoes"></div>
+          <div data-product data-id="w53" data-name="Lemonade Spiral Crystal Heel - GOLD" data-price="80000" data-image="images/Lemonade Spiral Crystal Heel - GOLD A1.jpeg" data-images="images/Lemonade Spiral Crystal Heel - GOLD A2.jpeg|images/Lemonade Spiral Crystal Heel - GOLD A3.jpeg" data-specs="Dior" data-category="womens" data-subcategory="heels" data-size-type="shoes"></div>
+          <div data-product data-id="w54" data-name="RENE Caovilla Spiral - BLACK" data-price="75000" data-image="images/RENE Caovilla Spiral - BLACK A1.jpeg" data-images="images/RENE Caovilla Spiral - BLACK A2.jpeg|images/RENE Caovilla Spiral - BLACK A3.jpeg" data-specs="Dior" data-category="womens" data-subcategory="heels" data-size-type="shoes"></div>
+          <div data-product data-id="w55" data-name="RENE Caovilla Chandelier - BLACK" data-price="80000" data-image="images/RENE Caovilla Chandelier - BLACK A1.jpeg" data-images="images/RENE Caovilla Chandelier - BLACK A2.jpeg|images/RENE Caovilla Chandelier - BLACK A3.jpeg" data-specs="Dior" data-category="womens" data-subcategory="heels" data-size-type="shoes"></div>
+          <div data-product data-id="w56" data-name="GUCCI Light-weight Platform Slide - Pink" data-price="60000" data-image="images/GUCCI Light-weight Platform Slide - Pink A1.jpeg" data-images="images/GUCCI Light-weight Platform Slide - Pink A2.jpeg|images/GUCCI Light-weight Platform Slide - Pink A3.jpeg" data-specs="Dior" data-category="womens" data-subcategory="heels" data-size-type="shoes"></div>
+          <div data-product data-id="w57" data-name="GUCCI Casual Sneakers" data-price="65000" data-image="images/GUCCI Casual Sneakers A1.jpeg" data-images="images/GUCCI Casual Sneakers A2.jpeg|images/GUCCI Casual Sneakers A3.jpeg" data-specs="Dior" data-category="womens" data-subcategory="heels" data-size-type="shoes"></div>
+          <div data-product data-id="w58" data-name="KAYLEEN DIALOG - PINK" data-price="55000" data-image="images/KAYLEEN DIALOG - PINK A1.jpeg" data-images="images/KAYLEEN DIALOG - PINK A2.jpeg|images/KAYLEEN DIALOG - PINK A3.jpeg" data-specs="Dior" data-category="womens" data-subcategory="heels" data-size-type="shoes"></div>
+          <div data-product data-id="w59" data-name="KAYLEEN DIALOG - WHITE" data-price="55000" data-image="images/KAYLEEN DIALOG - WHITE A1.jpeg" data-images="images/KAYLEEN DIALOG - WHITE A2.jpeg|images/KAYLEEN DIALOG - WHITE A3.jpeg" data-specs="Dior" data-category="womens" data-subcategory="heels" data-size-type="shoes"></div>
+          <div data-product data-id="w60" data-name="KAYLEEN DIALOG - BLACK" data-price="55000" data-image="images/KAYLEEN DIALOG - BLACK A1.jpeg" data-images="images/KAYLEEN DIALOG - BLACK A2.jpeg|images/KAYLEEN DIALOG - BLACK A3.jpeg" data-specs="Dior" data-category="womens" data-subcategory="heels" data-size-type="shoes"></div>  
+          <div data-product data-id="w61" data-name="HERMES SLIDE - BROWN" data-price="55000" data-image="images/HERMES SLIDE - BROWN A1.jpeg" data-images="images/HERMES SLIDE - BROWN A2.jpeg|images/HERMES SLIDE - BROWN A3.jpeg" data-specs="Dior" data-category="womens" data-subcategory="heels" data-size-type="shoes"></div>
+          <div data-product data-id="w62" data-name="HERMES SLIDE - BLACK" data-price="55000" data-image="images/HERMES SLIDE - BLACK A1.jpeg" data-images="images/HERMES SLIDE - BLACK A2.jpeg|images/HERMES SLIDE - BLACK A3.jpeg" data-specs="Dior" data-category="womens" data-subcategory="heels" data-size-type="shoes"></div>  
+          <div data-product data-id="w63" data-name="HERMES SLIDE - WHITE" data-price="50000" data-image="images/HERMES SLIDE - WHITE A1.jpeg" data-images="images/HERMES SLIDE - WHITE A2.jpeg|images/HERMES SLIDE - WHITE A3.jpeg" data-specs="Dior" data-category="womens" data-subcategory="heels" data-size-type="shoes"></div>
+           
+          
+        </div>
+        <div id="productsGrid" class="grid" aria-live="polite"></div>
+        <div class="pagination">
+          <button id="prevPage" class="pagination-btn">Previous</button>
+          <div id="pageNumbers" class="page-numbers"></div>
+          <button id="nextPage" class="pagination-btn">Next</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p style="text-align:center;color:#94a3b8">&copy; <span id="year"></span> COJJ</p>
+    </div>
+  </footer>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+    function filterSub(sub){
+      const all = getProducts().filter(p=> (p.category||'')==='womens');
+      const items = sub ? all.filter(p=> (p.subcategory||'')===sub) : all;
+      const grid = document.getElementById('productsGrid');
+      if (!grid) return;
+      grid.innerHTML = items.map(p => {
+        const sizeType = (p.sizeType||'').toLowerCase();
+        const category = (p.category||'').toLowerCase();
+        const subcategory = (p.subcategory||'').toLowerCase();
+        const shoeSizes = category==='womens' ? ['37','38','39','40','41','42','43'] : ['40','41','42','43','44','45','46','47'];
+        const clothSizes = ['M','L','XL','XXL'];
+        const hasSizes = (sizeType==='shoes' || sizeType==='clothes') && subcategory!=='bags';
+        const sizeOptions = sizeType==='shoes' ? shoeSizes : (sizeType==='clothes' ? clothSizes : []);
+        
+        return `
+        <article class="card" aria-label="${p.name}">
+          <img src="${p.image}" alt="${p.name}" loading="lazy" />
+          <div class="content">
+            <h3>${p.name}</h3>
+            <div class="price">${formatNaira(p.price)}</div>
+            ${hasSizes ? `
+              <div class="size-selector" style="margin-top: 10px;">
+                <label for="size-${p.id}" style="font-size: 12px; color: #666; display: block; margin-bottom: 4px;">Select Size:</label>
+                <select id="size-${p.id}" class="form-select" style="width: 100%; padding: 6px; border: 1px solid #ddd; border-radius: 4px; font-size: 12px;">
+                  <option value="">Choose size...</option>
+                  ${sizeOptions.map(size => `<option value="${size}">${size}</option>`).join('')}
+                </select>
+              </div>
+            ` : ''}
+          </div>
+          <div class="actions">
+            <a class="btn" href="product.html?id=${encodeURIComponent(p.id)}">View</a>
+            <button type="button" class="add" data-id="${p.id}" ${hasSizes ? 'disabled' : ''}>Add to Cart</button>
+          </div>
+        </article>
+      `;
+      }).join('');
+      grid.querySelectorAll('button.add').forEach(btn=> {
+        btn.addEventListener('click', ()=>{
+          const sizeSelect = document.getElementById(`size-${btn.dataset.id}`);
+          const selectedSize = sizeSelect ? sizeSelect.value : null;
+          addToCart(btn.dataset.id, 1, selectedSize);
+          updateCartCount();
+        });
+      });
+      
+      // Add size change listeners to enable/disable add to cart buttons
+      grid.querySelectorAll('select[id^="size-"]').forEach(select => {
+        select.addEventListener('change', ()=>{
+          const productId = select.id.replace('size-', '');
+          const addBtn = grid.querySelector(`button[data-id="${productId}"]`);
+          if (addBtn) {
+            addBtn.disabled = !select.value;
+            addBtn.style.opacity = select.value ? '1' : '0.5';
+          }
+        });
+      });
+    }
+    document.addEventListener('DOMContentLoaded', ()=>{
+      const y=document.getElementById('year'); if (y) y.textContent=new Date().getFullYear();
+      const source = document.getElementById('productsSource');
+      if (source){
+        const htmlProducts = Array.from(source.querySelectorAll('[data-product]')).map(el=>({
+          id: el.getAttribute('data-id'),
+          name: el.getAttribute('data-name'),
+          price: Number(el.getAttribute('data-price')||0),
+          image: el.getAttribute('data-image'),
+          images: (el.getAttribute('data-images')||'').split('|').filter(Boolean),
+          specs: el.getAttribute('data-specs')||'',
+          category: el.getAttribute('data-category')||'',
+          subcategory: el.getAttribute('data-subcategory')||'',
+          sizeType: el.getAttribute('data-size-type')||''
+        }));
+        const existing = getProducts();
+        const ids = new Set(existing.map(p=>p.id));
+        const merged = existing.concat(htmlProducts.filter(p=>!ids.has(p.id)));
+        setProducts(merged);
+      }
+      filterSub('');
+    });
+  </script>
+</body>
+</html>
